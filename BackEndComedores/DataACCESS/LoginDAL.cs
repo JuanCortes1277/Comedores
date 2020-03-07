@@ -20,7 +20,7 @@ namespace BackEndComedores.DataACCESS
                   //  var comedor = context.DiningRoom.SingleOrDefault(x => x.Code == code);
 
 
-                    var result = context.SystemUser.SingleOrDefault(b => b.Password == password );
+                    var result = context.SystemUser.SingleOrDefault(b => b.Password == password  && user==b.Username);
                     if (result != null)
                     {
                         SystemUser usere = new SystemUser();
