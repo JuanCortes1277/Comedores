@@ -32,6 +32,14 @@ namespace BackEndComedores.Controllers
 
         }
         [HttpGet]
+        [Route("ExtractById")]
+        public DiningRoom ExtractComedorByID(long Id)
+        {
+            LogicBL logicBL = new LogicBL();
+            return logicBL.ExtractComedorByID(Id);
+
+        }
+        [HttpGet]
         [Route("ExtractAll")]
         public List<DiningRoom> ExtractAll()
         {

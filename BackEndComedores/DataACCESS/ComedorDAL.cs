@@ -105,6 +105,53 @@ namespace BackEndComedores.DataACCESS
         }
 
 
+        public DiningRoom ExtractByID(long id)
+        {
+
+            using (var context = new ProyectoMaestriaEntities())
+            {
+                // Query for all blogs with names starting with B
+                //var ComedorExtracted = from b in context.Comedor
+                //            where b.ID.Equals(id)
+                //            select b;
+                var comedor = context.DiningRoom.SingleOrDefault(x => x.ID == id);
+                if (comedor != null)
+                {
+                    return new DiningRoom
+                    {
+                        ID = comedor.ID,
+                        Code = comedor.Code,
+                        Name = comedor.Name,
+                        Address = comedor.Address,
+                        Phone = comedor.Phone,
+                        Email = comedor.Email,
+                        Neiborhood = comedor.Neiborhood,
+                        City = comedor.City,
+                        Contact = comedor.Contact,
+                        ContactEmail = comedor.ContactEmail,
+                        ContactPhone = comedor.ContactPhone,
+                        ChildNumber = comedor.ChildNumber,
+                        ScheduleReception = comedor.ScheduleReception
+                    };
+                }
+                else return null;
+                //// Query for the Blog named ADO.NET Blog
+                //var blog = context.Blogs
+                //                .Where(b => b.Name == "ADO.NET Blog")
+                //                .FirstOrDefault();
+
+
+
+
+            }
+
+
+
+        }
+
+        
+
+
         public string Modify(DiningRoom comedor)
         {
 

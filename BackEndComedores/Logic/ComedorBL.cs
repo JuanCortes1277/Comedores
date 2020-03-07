@@ -19,6 +19,15 @@ namespace BackEndComedores.Logic
             ComedorDAL comedordal = new ComedorDAL();
             return comedordal.Extract(code);
         }
+        public DiningRoom ExtractByID(long id)
+        {
+            ComedorDAL comedordal = new ComedorDAL();
+            return comedordal.ExtractByID(id);
+        }
+
+
+
+        
         public string Modify(DiningRoom code)
         {
             ComedorDAL comedordal = new ComedorDAL();
