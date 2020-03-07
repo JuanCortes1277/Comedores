@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace BackEndComedores.Controllers
 {
@@ -14,6 +15,7 @@ namespace BackEndComedores.Controllers
     [RoutePrefix("api/login")]
     public class LoginController : ApiController
     {
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         [HttpGet]
         [Route("echoping")]
         public IHttpActionResult EchoPing()
@@ -21,6 +23,7 @@ namespace BackEndComedores.Controllers
             return Ok(true);
         }
 
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         [HttpGet]
         [Route("echouser")]
         public IHttpActionResult EchoUser()
@@ -29,6 +32,7 @@ namespace BackEndComedores.Controllers
             return Ok($" IPrincipal-user: {identity.Name} - IsAuthenticated: {identity.IsAuthenticated}");
         }
 
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         [HttpPost]
         [Route("authenticate")]
         public IHttpActionResult Authenticate(LoginRequest login)
