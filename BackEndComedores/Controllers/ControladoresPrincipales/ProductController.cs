@@ -23,27 +23,36 @@ namespace BackEndComedores.Controllers
 
         }
         [HttpGet]
-        [Route("Extract")]
-        public Product Extract(string code)
+        [Route("Get")]
+        public Product Get(string code)
         {
             LogicBL logicBL = new LogicBL();
-            return logicBL.ExtractProducto(code);
+            return logicBL.GetProducto(code);
 
         }
         [HttpGet]
-        [Route("ExtractAll")]
-        public List<Product> ExtractAll()
+        [Route("GetById")]
+        public Product GetById(long? code)
         {
             LogicBL logicBL = new LogicBL();
-            return logicBL.ExtractAllProducts();
+            return logicBL.GetProductoByID(code);
+
+        }
+       
+        [HttpGet]
+        [Route("GetAll")]
+        public List<Product> GetAll()
+        {
+            LogicBL logicBL = new LogicBL();
+            return logicBL.GettAllProducts();
 
         }
         [HttpPut]
-        [Route("Modify")]
-        public string Modify(Product product)
+        [Route("Update")]
+        public string Update(Product product)
         {
             LogicBL logicBL = new LogicBL();
-            return logicBL.ModifyProduct(product);
+            return logicBL.UpdateProduct(product);
 
         }
         [HttpDelete]

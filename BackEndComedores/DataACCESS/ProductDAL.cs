@@ -54,7 +54,7 @@ namespace BackEndComedores.DataACCESS
             }
 
         }
-        public Product Extract(string code)
+        public Product Get(string code)
         {
 
             using (var context = new ProyectoMaestriaEntities())
@@ -79,7 +79,7 @@ namespace BackEndComedores.DataACCESS
 
 
         }
-        public Product ExtractById(long? code)
+        public Product GetById(long? code)
         {
 
             using (var context = new ProyectoMaestriaEntities())
@@ -106,7 +106,7 @@ namespace BackEndComedores.DataACCESS
 
 
         }
-        public List<Product> ExtractAllProducts()
+        public List<Product> GetAllProducts()
         {
             List<Product> Products = new List<Product>();
 
@@ -145,7 +145,7 @@ namespace BackEndComedores.DataACCESS
 
 
         }
-        public string Modify(Product producto)
+        public string Update(Product producto)
         {
 
             int modify = 0;

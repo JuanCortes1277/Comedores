@@ -59,7 +59,7 @@ namespace BackEndComedores.DataACCESS
 
         }
 
-        public Ingredient Extract(long IDProduct, long IDRecipe)
+        public Ingredient GetIngredient(long IDProduct, long IDRecipe)
         {
 
             using (var context = new ProyectoMaestriaEntities())
@@ -94,7 +94,7 @@ namespace BackEndComedores.DataACCESS
 
         }
 
-        public List<Ingredient> ExtractAllFromRecipe( long IDRecipe)
+        public List<Ingredient> GetAllFromRecipe( long IDRecipe)
         {
 
             using (var context = new ProyectoMaestriaEntities())
@@ -137,7 +137,7 @@ namespace BackEndComedores.DataACCESS
         }
 
 
-        public string Modify(Ingredient ingredient)
+        public string Update(Ingredient ingredient)
         {
 
             int modify = 0;
@@ -223,7 +223,7 @@ namespace BackEndComedores.DataACCESS
 
 
         }
-        public List<Ingredient> ExtractAll()
+        public List<Ingredient> GettAll()
         {
             List<Ingredient> ingredients = new List<Ingredient>();
 

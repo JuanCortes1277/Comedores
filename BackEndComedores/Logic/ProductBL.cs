@@ -16,22 +16,31 @@ namespace BackEndComedores.Logic
             return productDAL.InsertarProducto(producto);
         }
 
-        public Product Extract(string Code)
+        public Product Get(string Code)
         {
             ProductDAL productDAL = new ProductDAL();
-            return productDAL.Extract(Code);
+            return productDAL.Get(Code);
 
         }
-        public List<Product> ExtractAllProducts()
+        public Product GetByID(long? Code)
         {
             ProductDAL productDAL = new ProductDAL();
-            return productDAL.ExtractAllProducts();
+            return productDAL.GetById(Code);
+
+        }
+
+
+        
+        public List<Product> GetAllProducts()
+        {
+            ProductDAL productDAL = new ProductDAL();
+            return productDAL.GetAllProducts();
 
         }
         public string Modify(Product product)
         {
             ProductDAL productDAL = new ProductDAL();
-            return productDAL.Modify(product);
+            return productDAL.Update(product);
 
         }
         public string Delete(string Code)
@@ -43,7 +52,7 @@ namespace BackEndComedores.Logic
         public Product ExtractById(long? code)
         {
             ProductDAL productDAL = new ProductDAL();
-            return productDAL.ExtractById(code);
+            return productDAL.GetById(code);
         }
 
 

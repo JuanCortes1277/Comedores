@@ -13,22 +13,22 @@ namespace BackEndComedores.Logic
             RecipeDAL userdal = new RecipeDAL();
             return userdal.Insertar(user);
         }
-        public Recipe Extract(string user)
+        public Recipe Get(string user)
         {
             RecipeDAL userdal = new RecipeDAL();
-            return userdal.Extract(user);
+            return userdal.Get(user);
         }
-        public List<Recipe> ExtractAll()
+        public List<Recipe> GetAll()
         {
             RecipeDAL userdal = new RecipeDAL();
-            return userdal.ExtractAll();
+            return userdal.GetAll();
         }
-        public string Modify(Recipe user)
+        public string Update(Recipe user)
         {
             RecipeDAL userdal = new RecipeDAL();
 
 
-            return userdal.Modify(user);
+            return userdal.Update(user);
 
         }
         public string Delete(string code)
@@ -40,10 +40,10 @@ namespace BackEndComedores.Logic
 
         }
 
-        public Recipe ExtractById(long? code)
+        public Recipe GetById(long? code)
         {
             RecipeDAL userdal = new RecipeDAL();
-            return userdal.ExtractById(code);
+            return userdal.GetById(code);
 
         }
 

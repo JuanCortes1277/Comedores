@@ -24,26 +24,26 @@ namespace BackEndComedores.Controllers.ControladoresPrincipales
         }
         [HttpGet]
         [Route("Extract")]
-        public SystemUserReturnEntity Extract(string username)
+        public SystemUserReturnEntity Extract(long ID)
         {
             LogicBL logicBL = new LogicBL();
-            return logicBL.ExtractUser(username);
+            return logicBL.GetUser(ID);
 
         }
         [HttpGet]
-        [Route("ExtractAll")]
-        public List<SystemUserReturnEntity> ExtractAll()
+        [Route("GetAll")]
+        public List<SystemUserReturnEntity> GeAll()
         {
             LogicBL logicBL = new LogicBL();
-            return logicBL.ExtractAllUsers();
+            return logicBL.GetAllUsers();
 
         }
         [HttpPut]
         [Route("Modify")]
-        public string Modify(SystemUser transport)
+        public string Update(SystemUser transport)
         {
             LogicBL logicBL = new LogicBL();
-            return logicBL.ModifyUser(transport);
+            return logicBL.UpdateUser(transport);
 
         }
         [HttpDelete]

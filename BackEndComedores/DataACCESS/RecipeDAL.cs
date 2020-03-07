@@ -52,7 +52,7 @@ namespace BackEndComedores.DataACCESS
             }
 
         }
-        public Recipe Extract(string code)
+        public Recipe Get(string code)
         {
 
             using (var context = new ProyectoMaestriaEntities())
@@ -77,7 +77,7 @@ namespace BackEndComedores.DataACCESS
 
         }
 
-        public Recipe ExtractById(long? code)
+        public Recipe GetById(long? code)
         {
 
             using (var context = new ProyectoMaestriaEntities())
@@ -101,7 +101,7 @@ namespace BackEndComedores.DataACCESS
 
 
         }
-        public List<Recipe> ExtractAll()
+        public List<Recipe> GetAll()
         {
             List<Recipe> Products = new List<Recipe>();
 
@@ -138,7 +138,7 @@ namespace BackEndComedores.DataACCESS
 
 
         }
-        public string Modify(Recipe producto)
+        public string Update(Recipe producto)
         {
 
             int modify = 0;

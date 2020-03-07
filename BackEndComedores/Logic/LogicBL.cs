@@ -16,40 +16,40 @@ namespace BackEndComedores.Logic
             return comedorbl.InsertarComedor(comedor);
 
         }
-        public DiningRoom ExtractComedor(string code)
+        public DiningRoom GetComedor(string code)
         {
             ComedorBL comedorbl = new ComedorBL();
-            return comedorbl.Extract(code);
+            return comedorbl.GetComedor(code);
 
 
         }
-        public DiningRoom ExtractComedorByID(long Id)
+        public DiningRoom GetComedorByID(long Id)
         {
             ComedorBL comedorbl = new ComedorBL();
-            return comedorbl.ExtractByID(Id);
+            return comedorbl.GetComedorByID(Id);
 
 
         }
 
    
-        public string ModifyComedor(DiningRoom comedor)
+        public string UpdateDinner(DiningRoom comedor)
         {
             ComedorBL comedorbl = new ComedorBL();
-            return comedorbl.Modify(comedor);
+            return comedorbl.UpdateDinner(comedor);
 
 
         }
-        public string DeleteComedor(string code)
+        public string DeleteComedor(long code)
         {
             ComedorBL comedorbl = new ComedorBL();
             return comedorbl.Delete(code);
 
 
         }
-        public List<DiningRoom> ExtractAllComedores()
+        public List<DiningRoom> GettAllDinners()
         {
             ComedorBL comedorbl = new ComedorBL();
-            return comedorbl.ExtractAll();
+            return comedorbl.GettAllDinners();
 
 
         }
@@ -73,22 +73,31 @@ namespace BackEndComedores.Logic
             return ProductBL.InsertarProducto(comedor);
 
         }
-        public Product ExtractProducto(string code)
+        public Product GetProducto(string code)
         {
             ProductBL ProductBL = new ProductBL();
-            return ProductBL.Extract(code);
+            return ProductBL.Get(code);
+
+
+        }
+        public Product GetProductoByID(long? code)
+        {
+            ProductBL ProductBL = new ProductBL();
+            return ProductBL.GetByID(code);
 
 
         }
 
-        public List<Product> ExtractAllProducts()
+        
+
+        public List<Product> GettAllProducts()
         {
             ProductBL ProductBL = new ProductBL();
-            return ProductBL.ExtractAllProducts();
+            return ProductBL.GetAllProducts();
 
 
         }
-        public string ModifyProduct(Product product)
+        public string UpdateProduct(Product product)
         {
             ProductBL ProductBL = new ProductBL();
             return ProductBL.Modify(product);
@@ -224,11 +233,11 @@ namespace BackEndComedores.Logic
             return userBL.Insert(user);
 
         }
-        public SystemUserReturnEntity ExtractUser(string Code)
+        public SystemUserReturnEntity GetUser(long Code)
         {
             SystemUserBL userBL = new SystemUserBL();
             ProviderBL providerbl = new ProviderBL();
-            SystemUser systemu = userBL.Extract(Code);
+            SystemUser systemu = userBL.GetByID(Code);
             Provider provider = new Provider();
             provider = providerbl.ExtractById(systemu.ProviderID);
 
@@ -249,7 +258,7 @@ namespace BackEndComedores.Logic
             return systemReturn;
 
         }
-        public List<SystemUserReturnEntity> ExtractAllUsers()
+        public List<SystemUserReturnEntity> GetAllUsers()
         {
             List<SystemUserReturnEntity> sysreturn = new List<SystemUserReturnEntity>();
             SystemUserBL userBL = new SystemUserBL();
@@ -278,10 +287,10 @@ namespace BackEndComedores.Logic
 
 
         }
-        public string ModifyUser(SystemUser provider)
+        public string UpdateUser(SystemUser provider)
         {
             SystemUserBL userBL = new SystemUserBL();
-            return userBL.Modify(provider);
+            return userBL.Update(provider);
 
         }
         public string DeleteUser(string code)
@@ -302,19 +311,19 @@ namespace BackEndComedores.Logic
         public Recipe ExtractRecipe(string Code)
         {
             RecipeBL userBL = new RecipeBL();
-            return userBL.Extract(Code);
+            return userBL.Get(Code);
 
         }
         public List<Recipe> ExtractAllRecipes()
         {
             RecipeBL userBL = new RecipeBL();
-            return userBL.ExtractAll();
+            return userBL.GetAll();
 
         }
         public string ModifyRecipe(Recipe provider)
         {
             RecipeBL userBL = new RecipeBL();
-            return userBL.Modify(provider);
+            return userBL.Update(provider);
 
         }
         public string DeleteRecipe(string code)
@@ -339,13 +348,13 @@ namespace BackEndComedores.Logic
             return ingredientbl.Insert(ingredient);
 
         }
-        public IngredientReturnEntity ExtractIngredient(long idproduct, long idrecipe)
+        public IngredientReturnEntity GetIngredient(long idproduct, long idrecipe)
         {
             IngredientBL ingredientbl = new IngredientBL();
-            Ingredient ingredientr = ingredientbl.Extract(idproduct, idrecipe);
+            Ingredient ingredientr = ingredientbl.GetIngredient(idproduct, idrecipe);
 
             RecipeBL recipebl = new RecipeBL();
-            Recipe reciper = recipebl.ExtractById(idrecipe);
+            Recipe reciper = recipebl.GetById(idrecipe);
 
             ProductBL productbl = new ProductBL();
             Product productr = productbl.ExtractById(idproduct);
@@ -364,7 +373,7 @@ namespace BackEndComedores.Logic
         {
             List<Ingredient> ingredients = new List<Ingredient>();
             IngredientBL ingredientbl = new IngredientBL();
-             ingredients = ingredientbl.ExtractAll();
+             ingredients = ingredientbl.GetAll();
             RecipeBL recipebl = new RecipeBL();
             ProductBL productbl = new ProductBL();
             List<IngredientReturnEntity> ingredientsRet = new List<IngredientReturnEntity>();
@@ -379,7 +388,7 @@ namespace BackEndComedores.Logic
                 IngredientReturnEntity ingredientret = new IngredientReturnEntity();
 
                 Recipe reciper = new Recipe();
-                reciper = recipebl.ExtractById(i.IDRecipe);
+                reciper = recipebl.GetById(i.IDRecipe);
                 Product productr = new Product();
                 productr = productbl.ExtractById(i.IDProduct);
                 ingredientret.Quantity = i.Quantity;
@@ -411,17 +420,17 @@ namespace BackEndComedores.Logic
             IngredientDAL ingredientdal = new IngredientDAL();
             RecipeBL recipebl = new RecipeBL();
 
-            Recipe recipe = recipebl.Extract(recipeCode);
+            Recipe recipe = recipebl.Get(recipeCode);
 
             CompleteRecipeReturnEntity complete = new CompleteRecipeReturnEntity();
             List<IngredientWithoutRecipeEntity> ingredientsinrecipe = new List<IngredientWithoutRecipeEntity>();
-            List<Ingredient> ingredients = ingredientdal.ExtractAllFromRecipe(recipe.ID);
+            List<Ingredient> ingredients = ingredientdal.GetAllFromRecipe(recipe.ID);
             ProductBL productBL = new ProductBL();
             foreach(Ingredient ingr in ingredients)
             {
                 IngredientWithoutRecipeEntity ingredientresult = new IngredientWithoutRecipeEntity();
                 Product product = productBL.ExtractById(ingr.IDProduct);
-                Recipe recipe1 = recipebl.ExtractById(ingr.IDRecipe);
+                Recipe recipe1 = recipebl.GetById(ingr.IDRecipe);
 
                 ingredientresult.Id = ingr.Id;
                 ingredientresult.IDProduct = product;

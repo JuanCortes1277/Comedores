@@ -14,34 +14,34 @@ namespace BackEndComedores.Logic
             return comedordal.InsertarComedor(comedor);
         }
 
-        public DiningRoom Extract(string code)
+        public DiningRoom GetComedor(string code)
         {
             ComedorDAL comedordal = new ComedorDAL();
-            return comedordal.Extract(code);
+            return comedordal.GetComedor(code);
         }
-        public DiningRoom ExtractByID(long id)
+        public DiningRoom GetComedorByID(long id)
         {
             ComedorDAL comedordal = new ComedorDAL();
-            return comedordal.ExtractByID(id);
+            return comedordal.GetComedorByID(id);
         }
 
 
 
         
-        public string Modify(DiningRoom code)
+        public string UpdateDinner(DiningRoom code)
         {
             ComedorDAL comedordal = new ComedorDAL();
-            return comedordal.Modify(code);
+            return comedordal.UpdateDinner(code);
         }
-        public string Delete(string code)
+        public string Delete(long code)
         {
             ComedorDAL comedordal = new ComedorDAL();
             return comedordal.Delete(code);
         }
-        public List<DiningRoom> ExtractAll()
+        public List<DiningRoom> GettAllDinners()
         {
             ComedorDAL comedordal = new ComedorDAL();
-            return comedordal.ExtractAll();
+            return comedordal.GettAllDinners();
         }
 
 

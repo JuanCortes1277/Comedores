@@ -60,7 +60,7 @@ namespace BackEndComedores.DataACCESS
 
         }
 
-        public DiningRoom Extract(string code)
+        public DiningRoom GetComedor(string code)
         {
         
                 using (var context = new ProyectoMaestriaEntities())
@@ -69,7 +69,7 @@ namespace BackEndComedores.DataACCESS
                     //var ComedorExtracted = from b in context.Comedor
                     //            where b.ID.Equals(id)
                     //            select b;
-                var comedor = context.DiningRoom.SingleOrDefault(x => x.Code == code);
+                var comedor = context.DiningRoom.FirstOrDefault(x => x.Code == code);
                 if (comedor != null)
                 {
                     return new DiningRoom
@@ -105,7 +105,7 @@ namespace BackEndComedores.DataACCESS
         }
 
 
-        public DiningRoom ExtractByID(long id)
+        public DiningRoom GetComedorByID(long id)
         {
 
             using (var context = new ProyectoMaestriaEntities())
@@ -152,7 +152,7 @@ namespace BackEndComedores.DataACCESS
         
 
 
-        public string Modify(DiningRoom comedor)
+        public string UpdateDinner(DiningRoom comedor)
         {
 
             int modify=0;
@@ -161,7 +161,7 @@ namespace BackEndComedores.DataACCESS
                 using (var context = new ProyectoMaestriaEntities())
                 {
 
-                    var result = context.DiningRoom.SingleOrDefault(b => b.Code == comedor.Code);
+                    var result = context.DiningRoom.SingleOrDefault(b => b.ID == comedor.ID);
                     if (result != null)
                     {
 
@@ -207,7 +207,7 @@ namespace BackEndComedores.DataACCESS
 
 
         }
-        public string Delete(string code)
+        public string Delete(long code)
         {
 
             try
@@ -215,7 +215,7 @@ namespace BackEndComedores.DataACCESS
                 using (var context = new ProyectoMaestriaEntities())
                 {
 
-                    var result = context.DiningRoom.SingleOrDefault(b => b.Code == code);
+                    var result = context.DiningRoom.SingleOrDefault(b => b.ID == code);
                     if (result != null)
                     {
                         context.DiningRoom.Remove(result);
@@ -238,7 +238,7 @@ namespace BackEndComedores.DataACCESS
 
 
         }
-        public List<DiningRoom> ExtractAll()
+        public List<DiningRoom> GettAllDinners()
         {
             List<DiningRoom> diningRooms = new List<DiningRoom>();
            

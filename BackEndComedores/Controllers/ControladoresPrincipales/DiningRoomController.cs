@@ -9,9 +9,9 @@ using BackEndComedores.Logic;
 
 namespace BackEndComedores.Controllers
 {
-  [Authorize]
-    [RoutePrefix("api/comedor")]
-    public class ComedorController : ApiController
+//  [Authorize]
+    [RoutePrefix("api/DiningRoom")]
+    public class DiningRoomController : ApiController
     {
         // GET api/<controller>
   
@@ -24,51 +24,51 @@ namespace BackEndComedores.Controllers
 
         }
         [HttpGet]
-        [Route("Extract")]
-        public DiningRoom Extract(string code)
+        [Route("GetByCode")]
+        public DiningRoom GetByCode(string code)
         {
             LogicBL logicBL = new LogicBL();
-            return logicBL.ExtractComedor(code);
+            return logicBL.GetComedor(code);
 
         }
         [HttpGet]
-        [Route("ExtractById")]
-        public DiningRoom ExtractComedorByID(long Id)
+        [Route("GetByID")]
+        public DiningRoom GetByID(long ID)
         {
             LogicBL logicBL = new LogicBL();
-            return logicBL.ExtractComedorByID(Id);
+            return logicBL.GetComedorByID(ID);
 
         }
         [HttpGet]
-        [Route("ExtractAll")]
-        public List<DiningRoom> ExtractAll()
+        [Route("GettAllDinners")]
+        public List<DiningRoom> GettAllDinners()
         {
             LogicBL logicBL = new LogicBL();
-            return logicBL.ExtractAllComedores();
+            return logicBL.GettAllDinners();
 
         }
         [HttpPut]
-        [Route("Modify")]
-        public string Modify(DiningRoom comedor)
+        [Route("Update")]
+        public string Update(DiningRoom comedor)
         {
             LogicBL logicBL = new LogicBL();
-            return logicBL.ModifyComedor(comedor);
+            return logicBL.UpdateDinner(comedor);
 
         }
         [HttpDelete]
         [Route("Delete")]
-        public string Delete(string code)
+        public string Delete(long ID)
         {
             LogicBL logicBL = new LogicBL();
-            return logicBL.DeleteComedor(code);
+            return logicBL.DeleteComedor(ID);
 
         }
         [HttpGet]
-        [Route("ExtractAllDiners")]
-        public List<DiningRoom> ExtractAllDiners()
+        [Route("GetAll")]
+        public List<DiningRoom> GetAll()
         {
             LogicBL logicBL = new LogicBL();
-            return logicBL.ExtractAllComedores();
+            return logicBL.GettAllDinners();
 
         }
     }

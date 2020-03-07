@@ -9,32 +9,32 @@ namespace BackEndComedores.Logic
     public class SystemUserBL
     {
 
-        public SystemUser ExtractById(string code)
+        public SystemUser GetByID(long code)
         {
             SystemUserDAL userdal = new SystemUserDAL();
-            return userdal.Extract(code);
+            return userdal.GetByID(code);
         }
         public string Insert(SystemUser user)
         {
             SystemUserDAL userdal = new SystemUserDAL();
             return userdal.Insertar(user);
         }
-        public SystemUser Extract(string user)
+        public SystemUser Get(string user)
         {
             SystemUserDAL userdal = new SystemUserDAL();
-            return userdal.Extract(user);
+            return userdal.Get(user);
         }
         public List<SystemUser> ExtractAll()
         {
             SystemUserDAL userdal = new SystemUserDAL();
-            return userdal.ExtractAll();
+            return userdal.GetAll();
         }
-        public string Modify(SystemUser user)
+        public string Update(SystemUser user)
         {
             SystemUserDAL userdal = new SystemUserDAL();
 
 
-            return userdal.Modify(user);
+            return userdal.Update(user);
 
         }
         public string Delete(string code)

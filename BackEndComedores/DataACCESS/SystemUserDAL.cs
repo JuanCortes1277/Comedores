@@ -58,7 +58,7 @@ namespace BackEndComedores.DataACCESS
 
         }
 
-        public SystemUser Extract(string username)
+        public SystemUser Get(string username)
         {
 
             using (var context = new ProyectoMaestriaEntities())
@@ -97,7 +97,48 @@ namespace BackEndComedores.DataACCESS
         }
 
 
-        public string Modify(SystemUser systemuser)
+
+        public SystemUser GetByID(long username)
+        {
+
+            using (var context = new ProyectoMaestriaEntities())
+            {
+                // Query for all blogs with names starting with B
+                //var ComedorExtracted = from b in context.Comedor
+                //            where b.ID.Equals(id)
+                //            select b;
+                var systemuser = context.SystemUser.SingleOrDefault(x => x.ID == username);
+                if (systemuser != null)
+                {
+                    return new SystemUser
+                    {
+                        ID = systemuser.ID,
+                        Username = systemuser.Username,
+                        Password = systemuser.Password,
+                        Name = systemuser.Name,
+                        LastName = systemuser.LastName,
+                        UserType = systemuser.UserType,
+                        ProviderID = systemuser.ProviderID
+                    };
+                }
+                else return null;
+                //// Query for the Blog named ADO.NET Blog
+                //var blog = context.Blogs
+                //                .Where(b => b.Name == "ADO.NET Blog")
+                //                .FirstOrDefault();
+
+
+
+
+            }
+
+
+
+        }
+
+
+
+        public string Update(SystemUser systemuser)
         {
 
             int modify = 0;
@@ -184,7 +225,7 @@ namespace BackEndComedores.DataACCESS
 
 
         }
-        public List<SystemUser> ExtractAll()
+        public List<SystemUser> GetAll()
         {
             List<SystemUser> transports = new List<SystemUser>();
 

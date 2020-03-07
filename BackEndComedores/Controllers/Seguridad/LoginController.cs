@@ -32,7 +32,7 @@ namespace BackEndComedores.Controllers
             return Ok($" IPrincipal-user: {identity.Name} - IsAuthenticated: {identity.IsAuthenticated}");
         }
 
-        [EnableCors(origins: "*", headers: "*", methods: "*")]
+     //   [EnableCors(origins: "*", headers: "*", methods: "*")]
         [HttpPost]
         [Route("authenticate")]
         public IHttpActionResult Authenticate(LoginRequest login)

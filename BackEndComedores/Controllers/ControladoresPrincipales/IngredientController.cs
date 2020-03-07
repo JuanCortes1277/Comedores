@@ -24,15 +24,15 @@ namespace BackEndComedores.Controllers.ControladoresPrincipales
 
         }
         [HttpGet]
-        [Route("Extract")]
-        public IngredientReturnEntity Extract(long idproduct,long idrecipe)
+        [Route("GetIngredient")]
+        public IngredientReturnEntity GetIngredient(long idproduct,long idrecipe)
         {
             LogicBL logicBL = new LogicBL();
-            return logicBL.ExtractIngredient(idproduct,idrecipe);
+            return logicBL.GetIngredient(idproduct,idrecipe);
 
         }
         [HttpGet]
-        [Route("ExtractAll")]
+        [Route("GetAll")]
         public List<IngredientReturnEntity> ExtractAll()
         {
             LogicBL logicBL = new LogicBL();

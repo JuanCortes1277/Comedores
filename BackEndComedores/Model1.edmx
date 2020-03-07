@@ -127,13 +127,13 @@
       <Schema Namespace="ProyectoMaestriaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="ProyectoMaestriaEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Disponibility" EntityType="ProyectoMaestriaModel.Disponibility" />
-          <EntitySet Name="DiningRoom" EntityType="ProyectoMaestriaModel.DiningRoom" />
           <EntitySet Name="Ingredient" EntityType="ProyectoMaestriaModel.Ingredient" />
           <EntitySet Name="Product" EntityType="ProyectoMaestriaModel.Product" />
           <EntitySet Name="Recipe" EntityType="ProyectoMaestriaModel.Recipe" />
           <EntitySet Name="Provider" EntityType="ProyectoMaestriaModel.Provider" />
           <EntitySet Name="SystemUser" EntityType="ProyectoMaestriaModel.SystemUser" />
           <EntitySet Name="Transport" EntityType="ProyectoMaestriaModel.Transport" />
+          <EntitySet Name="DiningRoom" EntityType="ProyectoMaestriaModel.DiningRoom" />
           </EntityContainer>
         <EntityType Name="Disponibility">
           <Key>
@@ -145,24 +145,6 @@
           <Property Name="Quantity" Type="Int32" />
           <Property Name="UnitValue" Type="Decimal" Precision="16" Scale="2" />
           <Property Name="ExpirationDate" Type="DateTime" Precision="0" />
-        </EntityType>
-        <EntityType Name="DiningRoom">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Code" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="Address" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="Phone" Type="Int64" />
-          <Property Name="Email" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="Contact" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="ContactEmail" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="ContactPhone" Type="Int64" />
-          <Property Name="ChildNumber" Type="Int64" />
-          <Property Name="ScheduleReception" Type="Time" Precision="7" />
-          <Property Name="Neiborhood" Type="Int32" />
-          <Property Name="City" Type="Int32" />
         </EntityType>
         <EntityType Name="Ingredient">
           <Key>
@@ -241,6 +223,24 @@
           <Property Name="PaymentMeasurement" Type="Int32" />
           <Property Name="IDProvider" Type="Int64" />
         </EntityType>
+        <EntityType Name="DiningRoom">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="Int64" />
+          <Property Name="Email" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Contact" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="ContactEmail" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="ContactPhone" Type="Int64" />
+          <Property Name="ChildNumber" Type="Int64" />
+          <Property Name="ScheduleReception" Type="Time" Precision="7" />
+          <Property Name="Neiborhood" Type="Int32" />
+          <Property Name="City" Type="Int32" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -256,25 +256,6 @@
                 <ScalarProperty Name="IDProduct" ColumnName="IDProduct" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="IDProvider" ColumnName="IDProvider" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DiningRoom">
-            <EntityTypeMapping TypeName="ProyectoMaestriaModel.DiningRoom">
-              <MappingFragment StoreEntitySet="DiningRoom">
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="Neiborhood" ColumnName="Neiborhood" />
-                <ScalarProperty Name="ScheduleReception" ColumnName="ScheduleReception" />
-                <ScalarProperty Name="ChildNumber" ColumnName="ChildNumber" />
-                <ScalarProperty Name="ContactPhone" ColumnName="ContactPhone" />
-                <ScalarProperty Name="ContactEmail" ColumnName="ContactEmail" />
-                <ScalarProperty Name="Contact" ColumnName="Contact" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -356,6 +337,25 @@
                 <ScalarProperty Name="Year" ColumnName="Year" />
                 <ScalarProperty Name="Brand" ColumnName="Brand" />
                 <ScalarProperty Name="CarPlate" ColumnName="CarPlate" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DiningRoom">
+            <EntityTypeMapping TypeName="ProyectoMaestriaModel.DiningRoom">
+              <MappingFragment StoreEntitySet="DiningRoom">
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Neiborhood" ColumnName="Neiborhood" />
+                <ScalarProperty Name="ScheduleReception" ColumnName="ScheduleReception" />
+                <ScalarProperty Name="ChildNumber" ColumnName="ChildNumber" />
+                <ScalarProperty Name="ContactPhone" ColumnName="ContactPhone" />
+                <ScalarProperty Name="ContactEmail" ColumnName="ContactEmail" />
+                <ScalarProperty Name="Contact" ColumnName="Contact" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
