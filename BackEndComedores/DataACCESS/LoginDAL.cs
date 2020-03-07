@@ -22,6 +22,7 @@ namespace BackEndComedores.DataACCESS
 
                     var result = context.SystemUser.SingleOrDefault(b => b.Password == password  && user==b.Username);
 
+
                     if (result != null)
                     {
                         SystemUser usere = new SystemUser();
