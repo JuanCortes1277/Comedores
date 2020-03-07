@@ -23,6 +23,15 @@ namespace BackEndComedores.Logic
 
 
         }
+        public DiningRoom ExtractComedorByID(long Id)
+        {
+            ComedorBL comedorbl = new ComedorBL();
+            return comedorbl.ExtractByID(Id);
+
+
+        }
+
+   
         public string ModifyComedor(DiningRoom comedor)
         {
             ComedorBL comedorbl = new ComedorBL();
