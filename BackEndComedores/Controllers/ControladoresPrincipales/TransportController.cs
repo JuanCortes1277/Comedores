@@ -9,6 +9,7 @@ using System.Web.Http;
 
 namespace BackEndComedores.Controllers
 {
+    [Authorize]
     [RoutePrefix("api/transport")]
 
 

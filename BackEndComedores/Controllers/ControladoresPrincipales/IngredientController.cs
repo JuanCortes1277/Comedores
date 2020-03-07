@@ -9,6 +9,8 @@ using System.Web.Http;
 
 namespace BackEndComedores.Controllers.ControladoresPrincipales
 {
+    [Authorize]
+
     [RoutePrefix("api/ingredient")]
 
     public class IngredientController : ApiController

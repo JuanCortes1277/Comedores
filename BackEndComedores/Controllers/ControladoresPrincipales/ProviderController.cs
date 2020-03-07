@@ -8,7 +8,9 @@ using System.Web.Http;
 
 namespace BackEndComedores.Controllers
 {
+    [Authorize]
     [RoutePrefix("api/Provider")]
+   
     public class ProviderController : ApiController
     {
         // GET: api/Provider

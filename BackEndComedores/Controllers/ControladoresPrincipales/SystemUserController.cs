@@ -9,7 +9,9 @@ using System.Web.Http;
 
 namespace BackEndComedores.Controllers.ControladoresPrincipales
 {
+    [Authorize]
     [RoutePrefix("api/systemUser")]
+  
     public class SystemUserController : ApiController
     {
         [HttpPost]

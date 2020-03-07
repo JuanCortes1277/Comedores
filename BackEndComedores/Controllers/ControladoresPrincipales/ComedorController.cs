@@ -9,7 +9,7 @@ using BackEndComedores.Logic;
 
 namespace BackEndComedores.Controllers
 {
-//   [Authorize]
+  [Authorize]
     [RoutePrefix("api/comedor")]
     public class ComedorController : ApiController
     {
