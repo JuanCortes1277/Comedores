@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="af702905b1fa437a9436eb5052c89617" Name="Diagram1">
+        <EntityTypeShape EntityType="ProyectoMaestriaModel.Disponibility" Width="1.5" PointX="11.75" PointY="2.5" />
+        <EntityTypeShape EntityType="ProyectoMaestriaModel.DiningRoom" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ProyectoMaestriaModel.Ingredient" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="ProyectoMaestriaModel.Product" Width="1.5" PointX="2.75" PointY="5.75" />
+        <EntityTypeShape EntityType="ProyectoMaestriaModel.Recipe" Width="1.5" PointX="4.75" PointY="5.75" />
+        <EntityTypeShape EntityType="ProyectoMaestriaModel.Provider" Width="1.5" PointX="8.375" PointY="0.75" />
+        <EntityTypeShape EntityType="ProyectoMaestriaModel.SystemUser" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ProyectoMaestriaModel.Transport" Width="1.5" PointX="7.375" PointY="5.75" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

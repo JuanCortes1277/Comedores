@@ -1,0 +1,572 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ProyectoMaestriaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Comedor">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Codigo" Type="nvarchar" MaxLength="80" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="300" />
+          <Property Name="Direccion" Type="nvarchar" MaxLength="300" />
+          <Property Name="Telefono" Type="nvarchar" MaxLength="300" />
+          <Property Name="Email" Type="nvarchar" MaxLength="300" />
+          <Property Name="Pais" Type="nvarchar" MaxLength="300" />
+          <Property Name="Departamento" Type="nvarchar" MaxLength="300" />
+          <Property Name="Ciudad" Type="nvarchar" MaxLength="300" />
+          <Property Name="Contacto" Type="nvarchar" MaxLength="300" />
+          <Property Name="Email_Contacto" Type="nvarchar" MaxLength="300" />
+          <Property Name="Telefono_Contacto" Type="nvarchar" MaxLength="300" />
+          <Property Name="Numero_Niños" Type="nvarchar" MaxLength="300" />
+          <Property Name="ZonaHorarioRecepción" Type="time" Precision="7" />
+        </EntityType>
+        <EntityType Name="Compania">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="300" />
+          <Property Name="Pais" Type="nvarchar" MaxLength="80" />
+          <Property Name="Departamento" Type="nvarchar" MaxLength="80" />
+          <Property Name="Ciudad" Type="nvarchar" MaxLength="80" />
+          <Property Name="Code" Type="nvarchar" MaxLength="80" />
+          <Property Name="Dirección" Type="nvarchar" MaxLength="80" />
+          <Property Name="NIT" Type="nvarchar" MaxLength="80" />
+          <Property Name="Telefono" Type="nvarchar" MaxLength="80" />
+        </EntityType>
+        <EntityType Name="Disponibilidad">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="IDProveedor" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDProducto" Type="int" Nullable="false" />
+          <Property Name="Cantidad" Type="int" />
+          <Property Name="Valor Unitario" Type="numeric" Precision="16" Scale="2" />
+          <Property Name="Fecha_Vencimiento" Type="date" />
+        </EntityType>
+        <EntityType Name="Ingrediente">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="300" />
+          <Property Name="IdReceta" Type="int" />
+          <Property Name="IdProducto" Type="int" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Codigo" Type="nvarchar" MaxLength="80" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="80" />
+          <Property Name="Descripción" Type="nvarchar" MaxLength="80" />
+          <Property Name="Preservación" Type="nvarchar" MaxLength="1" />
+          <Property Name="Unidad_Medida" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Proveedor">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Codigo" Type="nvarchar" MaxLength="80" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="300" />
+          <Property Name="Direccion" Type="nvarchar" MaxLength="300" />
+          <Property Name="Pais" Type="nvarchar" MaxLength="100" />
+          <Property Name="Departamento" Type="nvarchar" MaxLength="100" />
+          <Property Name="Ciudad" Type="nvarchar" MaxLength="100" />
+          <Property Name="Telefono" Type="nvarchar" MaxLength="100" />
+          <Property Name="Contacto" Type="nvarchar" MaxLength="100" />
+          <Property Name="Telefono_Contacto" Type="nvarchar" MaxLength="100" />
+          <Property Name="Email_Contacto" Type="nvarchar" MaxLength="100" />
+          <Property Name="Email_Empresa" Type="nvarchar" MaxLength="100" />
+          <Property Name="NIT" Type="nvarchar" MaxLength="100" />
+          <Property Name="Tipo" Type="nvarchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="Receta">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="30" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="Transporte">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Codigo" Type="nvarchar" MaxLength="80" />
+          <Property Name="Placas" Type="nvarchar" MaxLength="10" />
+          <Property Name="Marca" Type="nvarchar" MaxLength="80" />
+          <Property Name="Anio" Type="nvarchar" MaxLength="80" />
+          <Property Name="Tipo_Transporte" Type="nvarchar" MaxLength="80" />
+          <Property Name="Encargado" Type="nvarchar" MaxLength="80" />
+          <Property Name="Telefono_Encargardo" Type="nvarchar" MaxLength="80" />
+          <Property Name="Email_Encargado" Type="nvarchar" MaxLength="80" />
+          <Property Name="Tipo_Cobro" Type="nvarchar" MaxLength="1" />
+          <Property Name="Unidad_Cobro" Type="nvarchar" MaxLength="80" />
+          <Property Name="Medida_cobro" Type="numeric" Precision="16" Scale="2" />
+          <Property Name="Valor_cobro" Type="numeric" Precision="16" Scale="2" />
+          <Property Name="Disponible" Type="bit" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="80" />
+          <Property Name="Password" Type="nvarchar" MaxLength="80" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="80" />
+          <Property Name="Apellido" Type="nvarchar" MaxLength="80" />
+          <Property Name="TipoUsuario" Type="nvarchar" MaxLength="1" />
+        </EntityType>
+        <Association Name="FK_Disonibilidad_Product">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="Disponibilidad" Type="Self.Disponibilidad" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Disponibilidad">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Disonibilidad_Proveedor">
+          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
+          <End Role="Disponibilidad" Type="Self.Disponibilidad" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Disponibilidad">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ingrediente_Producto1">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="Ingrediente" Type="Self.Ingrediente" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ingrediente">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ingrediente_Receta1">
+          <End Role="Receta" Type="Self.Receta" Multiplicity="1" />
+          <End Role="Ingrediente" Type="Self.Ingrediente" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Receta">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ingrediente">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProyectoMaestriaModelStoreContainer">
+          <EntitySet Name="Comedor" EntityType="Self.Comedor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Compania" EntityType="Self.Compania" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Disponibilidad" EntityType="Self.Disponibilidad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ingrediente" EntityType="Self.Ingrediente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Proveedor" EntityType="Self.Proveedor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Receta" EntityType="Self.Receta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transporte" EntityType="Self.Transporte" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Disonibilidad_Product" Association="Self.FK_Disonibilidad_Product">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="Disponibilidad" EntitySet="Disponibilidad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Disonibilidad_Proveedor" Association="Self.FK_Disonibilidad_Proveedor">
+            <End Role="Proveedor" EntitySet="Proveedor" />
+            <End Role="Disponibilidad" EntitySet="Disponibilidad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ingrediente_Producto1" Association="Self.FK_Ingrediente_Producto1">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="Ingrediente" EntitySet="Ingrediente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ingrediente_Receta1" Association="Self.FK_Ingrediente_Receta1">
+            <End Role="Receta" EntitySet="Receta" />
+            <End Role="Ingrediente" EntitySet="Ingrediente" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ProyectoMaestriaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Comedor">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Codigo" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Nombre" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Direccion" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Telefono" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Pais" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Departamento" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Ciudad" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Contacto" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Email_Contacto" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Telefono_Contacto" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Numero_Niños" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="ZonaHorarioRecepción" Type="Time" Precision="7" />
+        </EntityType>
+        <EntityType Name="Compania">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Pais" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Departamento" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Ciudad" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Dirección" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="NIT" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Telefono" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Disponibilidad">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="IDProveedor" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDProducto" Type="Int32" Nullable="false" />
+          <Property Name="Cantidad" Type="Int32" />
+          <Property Name="Valor_Unitario" Type="Decimal" Precision="16" Scale="2" />
+          <Property Name="Fecha_Vencimiento" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK_Disonibilidad_Product" FromRole="Disponibilidad" ToRole="Producto" />
+          <NavigationProperty Name="Proveedor" Relationship="Self.FK_Disonibilidad_Proveedor" FromRole="Disponibilidad" ToRole="Proveedor" />
+        </EntityType>
+        <EntityType Name="Ingrediente">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="IdReceta" Type="Int32" />
+          <Property Name="IdProducto" Type="Int32" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK_Ingrediente_Producto1" FromRole="Ingrediente" ToRole="Producto" />
+          <NavigationProperty Name="Receta" Relationship="Self.FK_Ingrediente_Receta1" FromRole="Ingrediente" ToRole="Receta" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Codigo" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Nombre" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Descripción" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Preservación" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="Unidad_Medida" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Disponibilidad" Relationship="Self.FK_Disonibilidad_Product" FromRole="Producto" ToRole="Disponibilidad" />
+          <NavigationProperty Name="Ingrediente" Relationship="Self.FK_Ingrediente_Producto1" FromRole="Producto" ToRole="Ingrediente" />
+        </EntityType>
+        <EntityType Name="Proveedor">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Codigo" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Nombre" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Direccion" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Pais" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Departamento" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Ciudad" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Telefono" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Contacto" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Telefono_Contacto" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Email_Contacto" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Email_Empresa" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NIT" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Tipo" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Disponibilidad" Relationship="Self.FK_Disonibilidad_Proveedor" FromRole="Proveedor" ToRole="Disponibilidad" />
+        </EntityType>
+        <EntityType Name="Receta">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Nombre" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ingrediente" Relationship="Self.FK_Ingrediente_Receta1" FromRole="Receta" ToRole="Ingrediente" />
+        </EntityType>
+        <EntityType Name="Transporte">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Codigo" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Placas" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Marca" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Anio" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Tipo_Transporte" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Encargado" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Telefono_Encargardo" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Email_Encargado" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Tipo_Cobro" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="Unidad_Cobro" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Medida_cobro" Type="Decimal" Precision="16" Scale="2" />
+          <Property Name="Valor_cobro" Type="Decimal" Precision="16" Scale="2" />
+          <Property Name="Disponible" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Nombre" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Apellido" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="TipoUsuario" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Disonibilidad_Product">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="Disponibilidad" Type="Self.Disponibilidad" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Disponibilidad">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Disonibilidad_Proveedor">
+          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
+          <End Role="Disponibilidad" Type="Self.Disponibilidad" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Disponibilidad">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ingrediente_Producto1">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="Ingrediente" Type="Self.Ingrediente" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ingrediente">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ingrediente_Receta1">
+          <End Role="Receta" Type="Self.Receta" Multiplicity="1" />
+          <End Role="Ingrediente" Type="Self.Ingrediente" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Receta">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ingrediente">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProyectoMaestriaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Comedor" EntityType="Self.Comedor" />
+          <EntitySet Name="Compania" EntityType="Self.Compania" />
+          <EntitySet Name="Disponibilidad" EntityType="Self.Disponibilidad" />
+          <EntitySet Name="Ingrediente" EntityType="Self.Ingrediente" />
+          <EntitySet Name="Producto" EntityType="Self.Producto" />
+          <EntitySet Name="Proveedor" EntityType="Self.Proveedor" />
+          <EntitySet Name="Receta" EntityType="Self.Receta" />
+          <EntitySet Name="Transporte" EntityType="Self.Transporte" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <AssociationSet Name="FK_Disonibilidad_Product" Association="Self.FK_Disonibilidad_Product">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="Disponibilidad" EntitySet="Disponibilidad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Disonibilidad_Proveedor" Association="Self.FK_Disonibilidad_Proveedor">
+            <End Role="Proveedor" EntitySet="Proveedor" />
+            <End Role="Disponibilidad" EntitySet="Disponibilidad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ingrediente_Producto1" Association="Self.FK_Ingrediente_Producto1">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="Ingrediente" EntitySet="Ingrediente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ingrediente_Receta1" Association="Self.FK_Ingrediente_Receta1">
+            <End Role="Receta" EntitySet="Receta" />
+            <End Role="Ingrediente" EntitySet="Ingrediente" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ProyectoMaestriaModelStoreContainer" CdmEntityContainer="ProyectoMaestriaEntities">
+          <EntitySetMapping Name="Comedor">
+            <EntityTypeMapping TypeName="ProyectoMaestriaModel.Comedor">
+              <MappingFragment StoreEntitySet="Comedor">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Pais" ColumnName="Pais" />
+                <ScalarProperty Name="Departamento" ColumnName="Departamento" />
+                <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
+                <ScalarProperty Name="Contacto" ColumnName="Contacto" />
+                <ScalarProperty Name="Email_Contacto" ColumnName="Email_Contacto" />
+                <ScalarProperty Name="Telefono_Contacto" ColumnName="Telefono_Contacto" />
+                <ScalarProperty Name="Numero_Niños" ColumnName="Numero_Niños" />
+                <ScalarProperty Name="ZonaHorarioRecepción" ColumnName="ZonaHorarioRecepción" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Compania">
+            <EntityTypeMapping TypeName="ProyectoMaestriaModel.Compania">
+              <MappingFragment StoreEntitySet="Compania">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Pais" ColumnName="Pais" />
+                <ScalarProperty Name="Departamento" ColumnName="Departamento" />
+                <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Dirección" ColumnName="Dirección" />
+                <ScalarProperty Name="NIT" ColumnName="NIT" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Disponibilidad">
+            <EntityTypeMapping TypeName="ProyectoMaestriaModel.Disponibilidad">
+              <MappingFragment StoreEntitySet="Disponibilidad">
+                <ScalarProperty Name="IDProveedor" ColumnName="IDProveedor" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDProducto" ColumnName="IDProducto" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Valor_Unitario" ColumnName="Valor Unitario" />
+                <ScalarProperty Name="Fecha_Vencimiento" ColumnName="Fecha_Vencimiento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ingrediente">
+            <EntityTypeMapping TypeName="ProyectoMaestriaModel.Ingrediente">
+              <MappingFragment StoreEntitySet="Ingrediente">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdReceta" ColumnName="IdReceta" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Producto">
+            <EntityTypeMapping TypeName="ProyectoMaestriaModel.Producto">
+              <MappingFragment StoreEntitySet="Producto">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripción" ColumnName="Descripción" />
+                <ScalarProperty Name="Preservación" ColumnName="Preservación" />
+                <ScalarProperty Name="Unidad_Medida" ColumnName="Unidad_Medida" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Proveedor">
+            <EntityTypeMapping TypeName="ProyectoMaestriaModel.Proveedor">
+              <MappingFragment StoreEntitySet="Proveedor">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Pais" ColumnName="Pais" />
+                <ScalarProperty Name="Departamento" ColumnName="Departamento" />
+                <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Contacto" ColumnName="Contacto" />
+                <ScalarProperty Name="Telefono_Contacto" ColumnName="Telefono_Contacto" />
+                <ScalarProperty Name="Email_Contacto" ColumnName="Email_Contacto" />
+                <ScalarProperty Name="Email_Empresa" ColumnName="Email_Empresa" />
+                <ScalarProperty Name="NIT" ColumnName="NIT" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Receta">
+            <EntityTypeMapping TypeName="ProyectoMaestriaModel.Receta">
+              <MappingFragment StoreEntitySet="Receta">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transporte">
+            <EntityTypeMapping TypeName="ProyectoMaestriaModel.Transporte">
+              <MappingFragment StoreEntitySet="Transporte">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Placas" ColumnName="Placas" />
+                <ScalarProperty Name="Marca" ColumnName="Marca" />
+                <ScalarProperty Name="Anio" ColumnName="Anio" />
+                <ScalarProperty Name="Tipo_Transporte" ColumnName="Tipo_Transporte" />
+                <ScalarProperty Name="Encargado" ColumnName="Encargado" />
+                <ScalarProperty Name="Telefono_Encargardo" ColumnName="Telefono_Encargardo" />
+                <ScalarProperty Name="Email_Encargado" ColumnName="Email_Encargado" />
+                <ScalarProperty Name="Tipo_Cobro" ColumnName="Tipo_Cobro" />
+                <ScalarProperty Name="Unidad_Cobro" ColumnName="Unidad_Cobro" />
+                <ScalarProperty Name="Medida_cobro" ColumnName="Medida_cobro" />
+                <ScalarProperty Name="Valor_cobro" ColumnName="Valor_cobro" />
+                <ScalarProperty Name="Disponible" ColumnName="Disponible" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="ProyectoMaestriaModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="TipoUsuario" ColumnName="TipoUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a8f41c363603463994ec0a71c374a5f9" Name="Diagram1">
+        <EntityTypeShape EntityType="ProyectoMaestriaModel.Comedor" Width="1.5" PointX="5.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProyectoMaestriaModel.Compania" Width="1.5" PointX="2.75" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProyectoMaestriaModel.Disponibilidad" Width="1.5" PointX="3" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProyectoMaestriaModel.Ingrediente" Width="1.5" PointX="6" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProyectoMaestriaModel.Producto" Width="1.5" PointX="0.75" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProyectoMaestriaModel.Proveedor" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProyectoMaestriaModel.Receta" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProyectoMaestriaModel.Transporte" Width="1.5" PointX="7.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProyectoMaestriaModel.Usuario" Width="1.5" PointX="8.75" PointY="1.5" IsExpanded="true" />
+        <AssociationConnector Association="ProyectoMaestriaModel.FK_Disonibilidad_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="ProyectoMaestriaModel.FK_Disonibilidad_Proveedor" ManuallyRouted="false" />
+        <AssociationConnector Association="ProyectoMaestriaModel.FK_Ingrediente_Producto1" ManuallyRouted="false" />
+        <AssociationConnector Association="ProyectoMaestriaModel.FK_Ingrediente_Receta1" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
