@@ -104,7 +104,7 @@ namespace BackEndComedores.Logic
 
 
         }
-        public string DeleteProduct(string code)
+        public string DeleteProduct(long code)
         {
             ProductBL ProductBL = new ProductBL();
             return ProductBL.Delete(code);

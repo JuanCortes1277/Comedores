@@ -43,7 +43,7 @@ namespace BackEndComedores.Logic
             return productDAL.Update(product);
 
         }
-        public string Delete(string Code)
+        public string Delete(long Code)
         {
             ProductDAL productDAL = new ProductDAL();
             return productDAL.Delete(Code);

@@ -8,7 +8,7 @@ using System.Web.Http;
 
 namespace BackEndComedores.Controllers
 {
-    [Authorize]
+   // [Authorize]
 
     [RoutePrefix("api/Product")]
 
@@ -23,8 +23,8 @@ namespace BackEndComedores.Controllers
 
         }
         [HttpGet]
-        [Route("Get")]
-        public Product Get(string code)
+        [Route("GetByCode")]
+        public Product GetByCode(string code)
         {
             LogicBL logicBL = new LogicBL();
             return logicBL.GetProducto(code);
@@ -32,10 +32,10 @@ namespace BackEndComedores.Controllers
         }
         [HttpGet]
         [Route("GetById")]
-        public Product GetById(long? code)
+        public Product GetById(long? Id)
         {
             LogicBL logicBL = new LogicBL();
-            return logicBL.GetProductoByID(code);
+            return logicBL.GetProductoByID(Id);
 
         }
        
@@ -57,10 +57,10 @@ namespace BackEndComedores.Controllers
         }
         [HttpDelete]
         [Route("Delete")]
-        public string Delete(string code)
+        public string Delete(long Id)
         {
             LogicBL logicBL = new LogicBL();
-            return logicBL.DeleteProduct(code);
+            return logicBL.DeleteProduct(Id);
 
         }
     }
