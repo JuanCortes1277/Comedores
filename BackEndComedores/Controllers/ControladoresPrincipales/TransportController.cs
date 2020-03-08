@@ -25,24 +25,32 @@ namespace BackEndComedores.Controllers
 
         }
         [HttpGet]
-        [Route("Extract")]
-        public TransportReturnEntity Extract(string code)
+        [Route("GetByCode")]
+        public TransportReturnEntity GetByCode(string code)
         {
             LogicBL logicBL = new LogicBL();
             return logicBL.ExtractTransport(code);
 
         }
         [HttpGet]
-        [Route("ExtractAll")]
-        public List<TransportReturnEntity> ExtractAll()
+        [Route("GetByID")]
+        public TransportReturnEntity GetByID(long ID)
+        {
+            LogicBL logicBL = new LogicBL();
+            return logicBL.ExtractTransportByID(ID);
+
+        }
+        [HttpGet]
+        [Route("GetAll")]
+        public List<TransportReturnEntity> GetAll()
         {
             LogicBL logicBL = new LogicBL();
             return logicBL.ExtractAllTransports();
 
         }
         [HttpPut]
-        [Route("Modify")]
-        public string Modify(Transport transport)
+        [Route("Update")]
+        public string Update(Transport transport)
         {
             LogicBL logicBL = new LogicBL();
             return logicBL.ModifyTransport(transport);

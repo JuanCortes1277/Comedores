@@ -9,49 +9,50 @@ using System.Web.Http;
 
 namespace BackEndComedores.Controllers.ControladoresPrincipales
 {
-    [Authorize]
-    [RoutePrefix("api/systemUser")]
-  
-    public class SystemUserController : ApiController
+    [RoutePrefix("api/disponibility")]
+
+    public class DisponibilityController : ApiController
     {
         [HttpPost]
         [Route("Insert")]
-        public string Insert(SystemUser user)
+        public string Insert(Disponibility disponibility)
         {
             LogicBL logicBL = new LogicBL();
-            return logicBL.InsertUser(user);
+            return logicBL.InsertDisponibility(disponibility);
 
         }
+       
         [HttpGet]
-        [Route("GetByID")]
-        public SystemUserReturnEntity GetByID(long ID)
+        [Route("GetById")]
+        public DisponibilityReturnEntity GetById(long Id)
         {
             LogicBL logicBL = new LogicBL();
-            return logicBL.GetUser(ID);
+            return logicBL.GetDisponibility(Id);
 
         }
+
         [HttpGet]
         [Route("GetAll")]
-        public List<SystemUserReturnEntity> GeAll()
+        public List<DisponibilityReturnEntity> GetAll()
         {
             LogicBL logicBL = new LogicBL();
-            return logicBL.GetAllUsers();
+            return logicBL.GetAllDisponibility();
 
         }
         [HttpPut]
         [Route("Update")]
-        public string Update(SystemUser transport)
+        public string Update(Disponibility product)
         {
             LogicBL logicBL = new LogicBL();
-            return logicBL.UpdateUser(transport);
+            return logicBL.UpdateDisponibility(product);
 
         }
         [HttpDelete]
         [Route("Delete")]
-        public string Delete(long ID)
+        public string Delete(long Id)
         {
             LogicBL logicBL = new LogicBL();
-            return logicBL.DeleteUser(ID);
+            return logicBL.DeleteDisponibility(Id);
 
         }
     }

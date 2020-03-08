@@ -106,6 +106,53 @@ namespace BackEndComedores.DataACCESS
         }
 
 
+        public Transport Extract(long code)
+        {
+
+            using (var context = new ProyectoMaestriaEntities())
+            {
+                // Query for all blogs with names starting with B
+                //var ComedorExtracted = from b in context.Comedor
+                //            where b.ID.Equals(id)
+                //            select b;
+                var transport = context.Transport.SingleOrDefault(x => x.ID == code);
+                if (transport != null)
+                {
+                    return new Transport
+                    {
+                        ID = transport.ID,
+                        Code = transport.Code,
+                        CarPlate = transport.CarPlate,
+                        Brand = transport.Brand,
+                        Year = transport.Year,
+                        PersonInCharge = transport.PersonInCharge,
+                        PhonePersonInCharge = transport.PhonePersonInCharge,
+                        MailPersonInCharge = transport.MailPersonInCharge,
+                        PaymentUnity = transport.PaymentUnity,
+                        PaymentMeasurement = transport.PaymentMeasurement,
+                        PaymentValue = transport.PaymentValue,
+                        Availability = transport.Availability,
+                        TransportType = transport.TransportType,
+                        IDProvider = transport.IDProvider
+                    };
+                }
+                else return null;
+                //// Query for the Blog named ADO.NET Blog
+                //var blog = context.Blogs
+                //                .Where(b => b.Name == "ADO.NET Blog")
+                //                .FirstOrDefault();
+
+
+
+
+            }
+
+
+
+        }
+
+
+
 
         public Transport ExtractById(long code)
         {

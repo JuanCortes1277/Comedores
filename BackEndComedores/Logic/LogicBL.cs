@@ -1,5 +1,4 @@
-﻿using BackEndComedores.DataACCESS;
-using BackEndComedores.Entidades;
+﻿using BackEndComedores.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -124,6 +123,14 @@ namespace BackEndComedores.Logic
             return providerBL.Extractprovider(Code);
 
         }
+        public Provider ExtractproviderByID(long Code)
+        {
+            ProviderBL providerBL = new ProviderBL();
+            return providerBL.ExtractproviderByID(Code);
+
+        }
+
+        
         public List<Provider> ExtractAllProviders()
         {
             ProviderBL providerBL = new ProviderBL();
@@ -136,7 +143,7 @@ namespace BackEndComedores.Logic
             return providerBL.ModifyProvider(provider);
 
         }
-        public string DeleteProvider(string code)
+        public string DeleteProvider(long code)
         {
             ProviderBL providerBL = new ProviderBL();
             return providerBL.DeleteProvider(code);
@@ -180,6 +187,37 @@ namespace BackEndComedores.Logic
             return transportret;
 
         }
+        public TransportReturnEntity ExtractTransportByID(long Code)
+        {
+            TransportBL transport = new TransportBL();
+
+            Transport transportr = transport.ExtractTransport(Code);
+
+            ProviderBL providerbl = new ProviderBL();
+            Provider provider = new Provider();
+            provider = providerbl.ExtractById(transportr.IDProvider);
+            TransportReturnEntity transportret = new TransportReturnEntity();
+            transportret.ID = transportr.ID;
+            transportret.Code = transportr.Code;
+            transportret.CarPlate = transportr.CarPlate;
+            transportret.Brand = transportr.Brand;
+            transportret.Year = transportr.Year;
+            transportret.PersonInCharge = transportr.PersonInCharge;
+            transportret.PhonePersonInCharge = transportr.PhonePersonInCharge;
+            transportret.MailPersonInCharge = transportr.MailPersonInCharge;
+            transportret.PaymentValue = transportr.PaymentValue;
+            transportret.Availability = transportr.Availability;
+            transportret.TransportType = transportr.TransportType;
+            transportret.PaymentUnity = transportr.PaymentUnity;
+            transportret.PaymentMeasurement = transportr.PaymentMeasurement;
+            transportret.IDProvider = provider;
+
+
+            return transportret;
+
+        }
+
+        
         public List<TransportReturnEntity> ExtractAllTransports()
         {
             ProviderBL providerbl = new ProviderBL();
@@ -293,7 +331,7 @@ namespace BackEndComedores.Logic
             return userBL.Update(provider);
 
         }
-        public string DeleteUser(string code)
+        public string DeleteUser(long code)
         {
             SystemUserBL userBL = new SystemUserBL();
             return userBL.Delete(code);
@@ -308,12 +346,20 @@ namespace BackEndComedores.Logic
             return userBL.Insert(user);
 
         }
-        public Recipe ExtractRecipe(string Code)
+        public Recipe GetRecipeByCode(string Code)
         {
             RecipeBL userBL = new RecipeBL();
             return userBL.Get(Code);
 
         }
+        public Recipe GetRecipeByID(long Code)
+        {
+            RecipeBL userBL = new RecipeBL();
+            return userBL.GetByID(Code);
+
+        }
+
+        
         public List<Recipe> ExtractAllRecipes()
         {
             RecipeBL userBL = new RecipeBL();
@@ -326,7 +372,7 @@ namespace BackEndComedores.Logic
             return userBL.Update(provider);
 
         }
-        public string DeleteRecipe(string code)
+        public string DeleteRecipe(long code)
         {
             RecipeBL userBL = new RecipeBL();
             return userBL.Delete(code);
@@ -369,6 +415,28 @@ namespace BackEndComedores.Logic
             return ingredientret;
 
         }
+        public IngredientReturnEntity GetIngredient(long ID)
+        {
+            IngredientBL ingredientbl = new IngredientBL();
+            Ingredient ingredientr = ingredientbl.GetIngredient(ID);
+
+            RecipeBL recipebl = new RecipeBL();
+            Recipe reciper = recipebl.GetById(ingredientr.IDRecipe);
+
+            ProductBL productbl = new ProductBL();
+            Product productr = productbl.ExtractById(ingredientr.IDProduct);
+
+            IngredientReturnEntity ingredientret = new IngredientReturnEntity();
+            ingredientret.Id = ingredientr.Id;
+            ingredientret.IDProduct = productr;
+            ingredientret.IDRecipe = reciper;
+
+
+
+            return ingredientret;
+
+        }
+
         public List<IngredientReturnEntity> ExtractAllIngredients()
         {
             List<Ingredient> ingredients = new List<Ingredient>();
@@ -415,16 +483,29 @@ namespace BackEndComedores.Logic
             return ingredient.Delete(idproduct,idrecipe);
 
         }
+        public string DeleteIngredient(long ID)
+        {
+            IngredientBL ingredient = new IngredientBL();
+            return ingredient.Delete(ID);
+
+        }
+
+        public List<Ingredient> GetByRecipe( long idrecipe)
+        {
+            IngredientBL ingredient = new IngredientBL();
+            return ingredient.GetByRecipe( idrecipe);
+
+        }
         public CompleteRecipeReturnEntity GetAllIngredientsFromRecipe(string recipeCode)
         {
-            IngredientDAL ingredientdal = new IngredientDAL();
+            IngredientBL ingredientdal = new IngredientBL();
             RecipeBL recipebl = new RecipeBL();
 
             Recipe recipe = recipebl.Get(recipeCode);
 
             CompleteRecipeReturnEntity complete = new CompleteRecipeReturnEntity();
             List<IngredientWithoutRecipeEntity> ingredientsinrecipe = new List<IngredientWithoutRecipeEntity>();
-            List<Ingredient> ingredients = ingredientdal.GetAllFromRecipe(recipe.ID);
+            List<Ingredient> ingredients = ingredientdal.GetByRecipe(recipe.ID);
             ProductBL productBL = new ProductBL();
             foreach(Ingredient ingr in ingredients)
             {
@@ -450,5 +531,101 @@ namespace BackEndComedores.Logic
 
 
         }
+
+
+
+        public string InsertDisponibility(Disponibility user)
+        {
+            DisponibilityBL disponibilityBL = new DisponibilityBL();
+            return disponibilityBL.Insert(user);
+
+        }
+        public DisponibilityReturnEntity GetDisponibility(long Code)
+        {
+            DisponibilityBL userBL = new DisponibilityBL();
+            ProviderBL providerbl = new ProviderBL();
+            Disponibility systemu = userBL.GetByID(Code);
+            Provider provider = new Provider();
+            provider = providerbl.ExtractById(systemu.IDProvider);
+            Product product = new Product();
+            ProductBL productBL = new ProductBL();
+            product = productBL.ExtractById(systemu.IDProduct);
+
+
+
+        //     public Nullable<long> IDProvider { get; set; }
+        //public long ID { get; set; }
+        //public Nullable<long> IDProduct { get; set; }
+        //public Nullable<int> Quantity { get; set; }
+        //public Nullable<decimal> UnitValue { get; set; }
+        //public Nullable<System.DateTime> ExpirationDate { get; set; }
+
+        DisponibilityReturnEntity dis = new DisponibilityReturnEntity();
+            dis.ID = systemu.ID;
+            dis.IDProduct = product;
+            dis.IDProvider = provider;
+            dis.Quantity = systemu.Quantity;
+            dis.UnitValue = systemu.UnitValue;
+            
+
+
+
+
+
+
+
+            return dis;
+
+        }
+        public List<DisponibilityReturnEntity> GetAllDisponibility()
+        {
+            List<DisponibilityReturnEntity> sysreturn = new List<DisponibilityReturnEntity>();
+            DisponibilityBL disponibilityBL = new DisponibilityBL();
+            ProviderBL providerbl = new ProviderBL();
+            ProductBL productBL = new ProductBL();
+
+            List<Disponibility> users = disponibilityBL.GettAll();
+            foreach (Disponibility s in users)
+            {
+
+                DisponibilityReturnEntity dis = new DisponibilityReturnEntity();
+                Provider provider = new Provider();
+                provider = providerbl.ExtractById(s.IDProvider);
+                Product product = new Product();
+                product = productBL.GetByID(s.IDProduct);
+
+                dis.ID = s.ID;
+                dis.IDProduct = product;
+                dis.IDProvider = provider;
+                dis.Quantity = s.Quantity;
+                dis.UnitValue = s.UnitValue;
+
+              
+             
+
+                sysreturn.Add(dis);
+
+            }
+            return sysreturn;
+
+
+        }
+        public string UpdateDisponibility(Disponibility provider)
+        {
+            DisponibilityBL userBL = new DisponibilityBL();
+            return userBL.Update(provider);
+
+        }
+        public string DeleteDisponibility(long code)
+        {
+            DisponibilityBL userBL = new DisponibilityBL();
+            return userBL.Delete(code);
+
+        }
+
+
+
+
+
     }
 }

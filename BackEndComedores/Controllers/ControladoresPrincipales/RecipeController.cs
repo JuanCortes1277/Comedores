@@ -24,24 +24,32 @@ namespace BackEndComedores.Controllers.ControladoresPrincipales
 
         }
         [HttpGet]
-        [Route("Extract")]
-        public Recipe Extract(string code)
+        [Route("GetByCode")]
+        public Recipe GetByCode(string code)
         {
             LogicBL logicBL = new LogicBL();
-            return logicBL.ExtractRecipe(code);
+            return logicBL.GetRecipeByCode(code);
 
         }
         [HttpGet]
-        [Route("ExtractAll")]
-        public List<Recipe> ExtractAll()
+        [Route("GetByID")]
+        public Recipe GetByID(long ID)
+        {
+            LogicBL logicBL = new LogicBL();
+            return logicBL.GetRecipeByID(ID);
+
+        }
+        [HttpGet]
+        [Route("GetAll")]
+        public List<Recipe> GetAll()
         {
             LogicBL logicBL = new LogicBL();
             return logicBL.ExtractAllRecipes();
 
         }
         [HttpPut]
-        [Route("Modify")]
-        public string Modify(Recipe transport)
+        [Route("Update")]
+        public string Update(Recipe transport)
         {
             LogicBL logicBL = new LogicBL();
             return logicBL.ModifyRecipe(transport);
@@ -49,10 +57,10 @@ namespace BackEndComedores.Controllers.ControladoresPrincipales
         }
         [HttpDelete]
         [Route("Delete")]
-        public string Delete(string code)
+        public string Delete(long ID)
         {
             LogicBL logicBL = new LogicBL();
-            return logicBL.DeleteRecipe(code);
+            return logicBL.DeleteRecipe(ID);
 
         }
         [HttpGet]

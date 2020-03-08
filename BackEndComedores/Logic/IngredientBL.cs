@@ -18,6 +18,12 @@ namespace BackEndComedores.Logic
             IngredientDAL userdal = new IngredientDAL();
             return userdal.GetIngredient( idproduct,  Idrecipe);
         }
+
+        public Ingredient GetIngredient(long ID)
+        {
+            IngredientDAL userdal = new IngredientDAL();
+            return userdal.GetIngredient(ID);
+        }
         public List<Ingredient> GetAll()
         {
             IngredientDAL userdal = new IngredientDAL();
@@ -39,6 +45,26 @@ namespace BackEndComedores.Logic
             return userdal.Delete(idproduct,Idrecipe);
 
         }
+        public string Delete(long ID)
+        {
+            IngredientDAL userdal = new IngredientDAL();
+
+
+            return userdal.Delete(ID);
+
+        }
+        public List<Ingredient> GetByRecipe( long Idrecipe)
+        {
+            IngredientDAL userdal = new IngredientDAL();
+
+
+            return userdal.GetByRecipe( Idrecipe);
+
+        }
+
+
+
+        
         public List<Ingredient> ExtractAllFromRecipe(long IDRecipe)
         {
             IngredientDAL userdal = new IngredientDAL();

@@ -152,6 +152,10 @@ namespace BackEndComedores.DataACCESS
 
 
         }
+
+
+
+        
         public Provider ExtractproviderByID(long code)
         {
 
@@ -295,7 +299,7 @@ namespace BackEndComedores.DataACCESS
 
 
         }
-        public string DeleteProvider(string code)
+        public string DeleteProvider(long code)
         {
 
             try
@@ -303,7 +307,7 @@ namespace BackEndComedores.DataACCESS
                 using (var context = new ProyectoMaestriaEntities())
                 {
 
-                    var result = context.Provider.SingleOrDefault(b => b.Code == code);
+                    var result = context.Provider.SingleOrDefault(b => b.ID == code);
                     if (result != null)
                     {
                         context.Provider.Remove(result);

@@ -77,6 +77,33 @@ namespace BackEndComedores.DataACCESS
 
         }
 
+        public Recipe GetByID(long code)
+        {
+
+            using (var context = new ProyectoMaestriaEntities())
+            {
+
+                var product = context.Recipe.SingleOrDefault(x => x.ID == code);
+                if (product != null)
+                {
+                    return new Recipe
+                    {
+                        ID = product.ID,
+                        Code = product.Code,
+                        Name = product.Name
+
+                    };
+                }
+                else return null;
+
+            }
+
+
+
+        }
+
+        
+
         public Recipe GetById(long? code)
         {
 
@@ -185,7 +212,7 @@ namespace BackEndComedores.DataACCESS
 
 
         }
-        public string Delete(string code)
+        public string Delete(long code)
         {
 
             try
@@ -193,7 +220,7 @@ namespace BackEndComedores.DataACCESS
                 using (var context = new ProyectoMaestriaEntities())
                 {
 
-                    var result = context.Recipe.SingleOrDefault(b => b.Code == code);
+                    var result = context.Recipe.SingleOrDefault(b => b.ID == code);
                     if (result != null)
                     {
                         context.Recipe.Remove(result);

@@ -29,6 +29,10 @@ namespace BackEndComedores.Logic
             ProviderDAL providerdal = new ProviderDAL();
             return providerdal.Extractprovider(provider);
         }
+     
+
+
+        
         public List<Provider> ExtractAllProviders()
         {
             ProviderDAL providerdal = new ProviderDAL();
@@ -42,7 +46,7 @@ namespace BackEndComedores.Logic
             return providerdal.ModifyProvider(provider);
 
         }
-        public string DeleteProvider(string code)
+        public string DeleteProvider(long code)
         {
             ProviderDAL providerdal = new ProviderDAL();
 

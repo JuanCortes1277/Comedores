@@ -194,7 +194,7 @@ namespace BackEndComedores.DataACCESS
 
 
         }
-        public string Delete(string code)
+        public string Delete(long code)
         {
 
             try
@@ -202,7 +202,7 @@ namespace BackEndComedores.DataACCESS
                 using (var context = new ProyectoMaestriaEntities())
                 {
 
-                    var result = context.SystemUser.SingleOrDefault(b => b.Username == code);
+                    var result = context.SystemUser.SingleOrDefault(b => b.ID == code);
                     if (result != null)
                     {
                         context.SystemUser.Remove(result);

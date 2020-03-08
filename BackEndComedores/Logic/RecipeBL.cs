@@ -13,11 +13,18 @@ namespace BackEndComedores.Logic
             RecipeDAL userdal = new RecipeDAL();
             return userdal.Insertar(user);
         }
-        public Recipe Get(string user)
+        public Recipe Get(string code)
         {
             RecipeDAL userdal = new RecipeDAL();
-            return userdal.Get(user);
+            return userdal.Get(code);
         }
+        public Recipe GetByID(long  ID)
+        {
+            RecipeDAL userdal = new RecipeDAL();
+            return userdal.GetByID(ID);
+        }
+
+        
         public List<Recipe> GetAll()
         {
             RecipeDAL userdal = new RecipeDAL();
@@ -31,7 +38,7 @@ namespace BackEndComedores.Logic
             return userdal.Update(user);
 
         }
-        public string Delete(string code)
+        public string Delete(long code)
         {
             RecipeDAL userdal = new RecipeDAL();
 

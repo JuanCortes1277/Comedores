@@ -37,7 +37,7 @@ namespace BackEndComedores.Logic
             return userdal.Update(user);
 
         }
-        public string Delete(string code)
+        public string Delete(long code)
         {
             SystemUserDAL userdal = new SystemUserDAL();
 

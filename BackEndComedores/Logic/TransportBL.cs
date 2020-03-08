@@ -19,6 +19,11 @@ namespace BackEndComedores.Logic
             TransportDAL providerdal = new TransportDAL();
             return providerdal.Extract(provider);
         }
+        public Transport ExtractTransport(long provider)
+        {
+            TransportDAL providerdal = new TransportDAL();
+            return providerdal.Extract(provider);
+        }
         public Transport ExtractTransportByID(long provider)
         {
             TransportDAL providerdal = new TransportDAL();

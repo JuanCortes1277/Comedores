@@ -31,6 +31,15 @@ namespace BackEndComedores.Controllers.ControladoresPrincipales
             return logicBL.GetIngredient(idproduct,idrecipe);
 
         }
+
+        [HttpGet]
+        [Route("GetByID")]
+        public IngredientReturnEntity GetByID(long ID)
+        {
+            LogicBL logicBL = new LogicBL();
+            return logicBL.GetIngredient(ID);
+
+        }
         [HttpGet]
         [Route("GetAll")]
         public List<IngredientReturnEntity> ExtractAll()
@@ -40,8 +49,8 @@ namespace BackEndComedores.Controllers.ControladoresPrincipales
 
         }
         [HttpPut]
-        [Route("Modify")]
-        public string Modify(Ingredient ingredient)
+        [Route("Update")]
+        public string Update(Ingredient ingredient)
         {
             LogicBL logicBL = new LogicBL();
             return logicBL.ModifyIngredient(ingredient);
@@ -55,5 +64,25 @@ namespace BackEndComedores.Controllers.ControladoresPrincipales
             return logicBL.DeleteIngredient(idproduct,idrecipe);
 
         }
+        [HttpDelete]
+        [Route("Delete")]
+        public string Delete(long ID)
+        {
+            LogicBL logicBL = new LogicBL();
+            return logicBL.DeleteIngredient(ID);
+
+        }
+
+        [HttpGet]
+        [Route("GetByRecipe")]
+        public List<Ingredient> GetByRecipe( long idrecipe)
+        {
+            LogicBL logicBL = new LogicBL();
+            return logicBL.GetByRecipe( idrecipe);
+
+        }
+
+
+        
     }
 }

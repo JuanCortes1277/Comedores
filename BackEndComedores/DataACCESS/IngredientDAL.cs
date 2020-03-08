@@ -93,6 +93,41 @@ namespace BackEndComedores.DataACCESS
 
 
         }
+        public Ingredient GetIngredient(long ID)
+        {
+
+            using (var context = new ProyectoMaestriaEntities())
+            {
+                // Query for all blogs with names starting with B
+                //var ComedorExtracted = from b in context.Comedor
+                //            where b.ID.Equals(id)
+                //            select b;
+                var repetido = context.Ingredient.SingleOrDefault(x => x.Id == ID);
+                if (repetido != null)
+                {
+                    return new Ingredient
+                    {
+                        Id = repetido.Id,
+                        IDRecipe = repetido.IDRecipe,
+                        IDProduct = repetido.IDProduct,
+                        Quantity = repetido.Quantity
+                    };
+                }
+                else return null;
+                //// Query for the Blog named ADO.NET Blog
+                //var blog = context.Blogs
+                //                .Where(b => b.Name == "ADO.NET Blog")
+                //                .FirstOrDefault();
+
+
+
+
+            }
+
+
+
+        }
+
 
         public List<Ingredient> GetAllFromRecipe( long IDRecipe)
         {
@@ -135,6 +170,43 @@ namespace BackEndComedores.DataACCESS
 
 
         }
+        public List<Ingredient> GetByRecipe( long IDRecipe)
+        {
+            List<Ingredient> ingredients = new List<Ingredient>();
+
+            using (var context = new ProyectoMaestriaEntities())
+            {
+                // Query for all blogs with names starting with B
+                //var ComedorExtracted = from b in context.Comedor
+                //            where b.ID.Equals(id)
+                //            select b;
+                var repetido = context.Ingredient.Where(x => x.IDRecipe == IDRecipe);
+                foreach (Ingredient ing in repetido)
+                {
+                    Ingredient ingr = new Ingredient();
+                    ingr.Id = ing.Id;
+                    ingr.IDRecipe = ing.IDRecipe;
+                    ingr.IDProduct = ing.IDProduct;
+                    ingr.Quantity = ing.Quantity;
+
+                    ingredients.Add(ingr);
+
+                }
+            }
+
+
+
+            return ingredients;
+
+
+
+            
+
+
+
+        }
+
+        
 
 
         public string Update(Ingredient ingredient)
@@ -223,6 +295,40 @@ namespace BackEndComedores.DataACCESS
 
 
         }
+
+
+        public string Delete(long ID)
+        {
+
+            try
+            {
+                using (var context = new ProyectoMaestriaEntities())
+                {
+
+                    var result = context.Ingredient.SingleOrDefault(x => x.Id == ID);
+                    if (result != null)
+                    {
+                        context.Ingredient.Remove(result);
+                        context.SaveChanges();
+                        return "Registro eliminado satisfactroriamente";
+                    }
+                    else return "no se ha encontrado el registro a eliminar";
+
+
+
+                }
+
+
+            }
+
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+
+
+        }
+
         public List<Ingredient> GettAll()
         {
             List<Ingredient> ingredients = new List<Ingredient>();

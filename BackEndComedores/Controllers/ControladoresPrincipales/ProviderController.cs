@@ -24,24 +24,32 @@ namespace BackEndComedores.Controllers
 
         }
         [HttpGet]
-        [Route("Extract")]
-        public Provider Extract(string code)
+        [Route("GetByCode")]
+        public Provider GetByCode(string code)
         {
             LogicBL logicBL = new LogicBL();
             return logicBL.Extractprovider(code);
 
         }
         [HttpGet]
-        [Route("ExtractAll")]
-        public List<Provider> ExtractAll()
+        [Route("GetByID")]
+        public Provider GetByID(long ID)
+        {
+            LogicBL logicBL = new LogicBL();
+            return logicBL.ExtractproviderByID(ID);
+
+        }
+        [HttpGet]
+        [Route("GetAll")]
+        public List<Provider> GetAll()
         {
             LogicBL logicBL = new LogicBL();
             return logicBL.ExtractAllProviders();
 
         }
         [HttpPut]
-        [Route("Modify")]
-        public string Modify(Provider provider)
+        [Route("Update")]
+        public string Update(Provider provider)
         {
             LogicBL logicBL = new LogicBL();
             return logicBL.ModifyProvider(provider);
@@ -49,10 +57,10 @@ namespace BackEndComedores.Controllers
         }
         [HttpDelete]
         [Route("Delete")]
-        public string Delete(string code)
+        public string Delete(long ID)
         {
             LogicBL logicBL = new LogicBL();
-            return logicBL.DeleteProvider(code);
+            return logicBL.DeleteProvider(ID);
 
         }
         
