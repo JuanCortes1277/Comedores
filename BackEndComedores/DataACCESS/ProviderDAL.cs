@@ -253,7 +253,7 @@ namespace BackEndComedores.DataACCESS
                 using (var context = new ProyectoMaestriaEntities())
                 {
 
-                    var result = context.Provider.SingleOrDefault(b => b.Code == provider.Code);
+                    var result = context.Provider.SingleOrDefault(b => b.ID == provider.ID);
                     if (result != null)
                     {
 

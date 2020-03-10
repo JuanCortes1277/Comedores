@@ -210,7 +210,7 @@ namespace BackEndComedores.DataACCESS
                 using (var context = new ProyectoMaestriaEntities())
                 {
 
-                    var result = context.Transport.SingleOrDefault(b => b.Code == transport.Code);
+                    var result = context.Transport.SingleOrDefault(b => b.ID == transport.ID);
                     if (result != null)
                     {
                         result.Code = transport.Code;
@@ -256,7 +256,7 @@ namespace BackEndComedores.DataACCESS
 
 
         }
-        public string Delete(string code)
+        public string Delete(long code)
         {
 
             try
@@ -264,7 +264,7 @@ namespace BackEndComedores.DataACCESS
                 using (var context = new ProyectoMaestriaEntities())
                 {
 
-                    var result = context.Transport.SingleOrDefault(b => b.Code == code);
+                    var result = context.Transport.SingleOrDefault(b => b.ID == code);
                     if (result != null)
                     {
                         context.Transport.Remove(result);

@@ -228,10 +228,10 @@ namespace BackEndComedores.DataACCESS
                         //       public string LastName { get; set; }
                         //       public string UserType { get; set; }
                         //       public Nullable<long> ProviderID { get; set; }
-                        result.IDProduct = result.IDProduct;
-                        result.IDRecipe = result.IDRecipe;
+                        result.IDProduct = ingredient.IDProduct;
+                        result.IDRecipe = ingredient.IDRecipe;
 
-                        result.Quantity = result.Quantity;
+                        result.Quantity = ingredient.Quantity;
                       
 
 

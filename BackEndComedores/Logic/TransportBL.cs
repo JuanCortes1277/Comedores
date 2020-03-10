@@ -42,7 +42,7 @@ namespace BackEndComedores.Logic
             return providerdal.Modify(provider);
 
         }
-        public string DeleteTransport(string code)
+        public string DeleteTransport(long code)
         {
             TransportDAL providerdal = new TransportDAL();
 

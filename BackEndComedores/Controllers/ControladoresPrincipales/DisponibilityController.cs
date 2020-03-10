@@ -9,6 +9,8 @@ using System.Web.Http;
 
 namespace BackEndComedores.Controllers.ControladoresPrincipales
 {
+    [Authorize]
+
     [RoutePrefix("api/disponibility")]
 
     public class DisponibilityController : ApiController

@@ -256,7 +256,7 @@ namespace BackEndComedores.Logic
             return transportBL.ModifyTransport(provider);
 
         }
-        public string DeleteTransport(string code)
+        public string DeleteTransport(long code)
         {
             TransportBL trasnport = new TransportBL();
             return trasnport.DeleteTransport(code);

@@ -8,7 +8,7 @@ using System.Web.Http;
 
 namespace BackEndComedores.Controllers
 {
-   // [Authorize]
+    [Authorize]
 
     [RoutePrefix("api/Product")]
 

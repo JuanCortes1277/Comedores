@@ -58,10 +58,10 @@ namespace BackEndComedores.Controllers
         }
         [HttpDelete]
         [Route("Delete")]
-        public string Delete(string code)
+        public string Delete(long Id)
         {
             LogicBL logicBL = new LogicBL();
-            return logicBL.DeleteTransport(code);
+            return logicBL.DeleteTransport(Id);
 
         }
     }

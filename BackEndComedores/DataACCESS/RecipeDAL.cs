@@ -174,7 +174,7 @@ namespace BackEndComedores.DataACCESS
                 using (var context = new ProyectoMaestriaEntities())
                 {
 
-                    var result = context.Recipe.SingleOrDefault(b => b.Code == producto.Code);
+                    var result = context.Recipe.SingleOrDefault(b => b.ID == producto.ID);
                     if (result != null)
                     {
 
