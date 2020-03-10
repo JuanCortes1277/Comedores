@@ -18,7 +18,7 @@ namespace BackEndComedores
         public string Code { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
-        public Nullable<int> Neiborhood { get; set; }
+        public string Neiborhood { get; set; }
         public string City { get; set; }
         public Nullable<long> Phone { get; set; }
         public string Contact { get; set; }

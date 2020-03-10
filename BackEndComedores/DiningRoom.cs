@@ -25,7 +25,7 @@ namespace BackEndComedores
         public Nullable<long> ContactPhone { get; set; }
         public Nullable<long> ChildNumber { get; set; }
         public Nullable<System.TimeSpan> ScheduleReception { get; set; }
-        public Nullable<int> Neiborhood { get; set; }
+        public string Neiborhood { get; set; }
         public Nullable<int> City { get; set; }
     }
 }

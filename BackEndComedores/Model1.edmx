@@ -20,7 +20,7 @@
           <Property Name="ContactPhone" Type="bigint" />
           <Property Name="ChildNumber" Type="bigint" />
           <Property Name="ScheduleReception" Type="time" Precision="7" />
-          <Property Name="Neiborhood" Type="int" />
+          <Property Name="Neiborhood" Type="nvarchar" MaxLength="80" />
           <Property Name="City" Type="int" />
         </EntityType>
         <EntityType Name="Disponibility">
@@ -62,7 +62,7 @@
           <Property Name="Code" Type="nvarchar" MaxLength="80" />
           <Property Name="Name" Type="nvarchar" MaxLength="300" />
           <Property Name="Address" Type="nvarchar" MaxLength="300" />
-          <Property Name="Neiborhood" Type="int" />
+          <Property Name="Neiborhood" Type="nvarchar" MaxLength="80" />
           <Property Name="City" Type="nvarchar" MaxLength="100" />
           <Property Name="Phone" Type="bigint" />
           <Property Name="Contact" Type="nvarchar" MaxLength="100" />
@@ -130,10 +130,10 @@
           <EntitySet Name="Ingredient" EntityType="ProyectoMaestriaModel.Ingredient" />
           <EntitySet Name="Product" EntityType="ProyectoMaestriaModel.Product" />
           <EntitySet Name="Recipe" EntityType="ProyectoMaestriaModel.Recipe" />
-          <EntitySet Name="Provider" EntityType="ProyectoMaestriaModel.Provider" />
           <EntitySet Name="SystemUser" EntityType="ProyectoMaestriaModel.SystemUser" />
           <EntitySet Name="Transport" EntityType="ProyectoMaestriaModel.Transport" />
           <EntitySet Name="DiningRoom" EntityType="ProyectoMaestriaModel.DiningRoom" />
+          <EntitySet Name="Provider" EntityType="ProyectoMaestriaModel.Provider" />
           </EntityContainer>
         <EntityType Name="Disponibility">
           <Key>
@@ -173,24 +173,6 @@
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Code" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Provider">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Code" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="Address" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="Neiborhood" Type="Int32" />
-          <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Phone" Type="Int64" />
-          <Property Name="Contact" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ContactPhone" Type="Int64" />
-          <Property Name="ContactMail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="EnterpriseMail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="NIT" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Type" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="SystemUser">
           <Key>
@@ -238,8 +220,26 @@
           <Property Name="ContactPhone" Type="Int64" />
           <Property Name="ChildNumber" Type="Int64" />
           <Property Name="ScheduleReception" Type="Time" Precision="7" />
-          <Property Name="Neiborhood" Type="Int32" />
+          <Property Name="Neiborhood" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
           <Property Name="City" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Provider">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Neiborhood" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="Int64" />
+          <Property Name="Contact" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ContactPhone" Type="Int64" />
+          <Property Name="ContactMail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EnterpriseMail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NIT" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -284,25 +284,6 @@
           <EntitySetMapping Name="Recipe">
             <EntityTypeMapping TypeName="ProyectoMaestriaModel.Recipe">
               <MappingFragment StoreEntitySet="Recipe">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Provider">
-            <EntityTypeMapping TypeName="ProyectoMaestriaModel.Provider">
-              <MappingFragment StoreEntitySet="Provider">
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="NIT" ColumnName="NIT" />
-                <ScalarProperty Name="EnterpriseMail" ColumnName="EnterpriseMail" />
-                <ScalarProperty Name="ContactMail" ColumnName="ContactMail" />
-                <ScalarProperty Name="ContactPhone" ColumnName="ContactPhone" />
-                <ScalarProperty Name="Contact" ColumnName="Contact" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="Neiborhood" ColumnName="Neiborhood" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -354,6 +335,25 @@
                 <ScalarProperty Name="Contact" ColumnName="Contact" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Provider">
+            <EntityTypeMapping TypeName="ProyectoMaestriaModel.Provider">
+              <MappingFragment StoreEntitySet="Provider">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="NIT" ColumnName="NIT" />
+                <ScalarProperty Name="EnterpriseMail" ColumnName="EnterpriseMail" />
+                <ScalarProperty Name="ContactMail" ColumnName="ContactMail" />
+                <ScalarProperty Name="ContactPhone" ColumnName="ContactPhone" />
+                <ScalarProperty Name="Contact" ColumnName="Contact" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Neiborhood" ColumnName="Neiborhood" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
