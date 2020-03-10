@@ -12,6 +12,7 @@ using System.Web.Http.Cors;
 namespace BackEndComedores.Controllers
 {
     [AllowAnonymous]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     [RoutePrefix("api/login")]
     public class LoginController : ApiController
     {
