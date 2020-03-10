@@ -39,14 +39,7 @@ namespace BackEndComedores.Controllers
             return logicBL.GetComedorByID(ID);
 
         }
-        [HttpGet]
-        [Route("GettAllDinners")]
-        public List<DiningRoom> GettAllDinners()
-        {
-            LogicBL logicBL = new LogicBL();
-            return logicBL.GettAllDinners();
-
-        }
+     
         [HttpPut]
         [Route("Update")]
         public string Update(DiningRoom comedor)
