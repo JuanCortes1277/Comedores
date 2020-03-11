@@ -43,7 +43,7 @@ namespace BackEndComedores.Controllers.ControladoresPrincipales
         }
         [HttpGet]
         [Route("GetAll")]
-        public List<IngredientReturnEntity> ExtractAll()
+        public List<IngredientReturnEntity> GetAll()
         {
             LogicBL logicBL = new LogicBL();
             return logicBL.ExtractAllIngredients();

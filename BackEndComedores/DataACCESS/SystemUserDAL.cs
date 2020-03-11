@@ -147,7 +147,7 @@ namespace BackEndComedores.DataACCESS
                 using (var context = new ProyectoMaestriaEntities())
                 {
 
-                    var result = context.SystemUser.SingleOrDefault(b => b.Username == systemuser.Username);
+                    var result = context.SystemUser.SingleOrDefault(b => b.ID == systemuser.ID);
                     if (result != null)
                     {
                         //public long ID { get; set; }

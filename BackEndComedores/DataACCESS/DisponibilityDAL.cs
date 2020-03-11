@@ -121,6 +121,7 @@ namespace BackEndComedores.DataACCESS
                         result.IDProvider = disponibility.IDProvider;
                         result.Quantity = disponibility.Quantity;
                         result.UnitValue = disponibility.UnitValue;
+                        result.IDProduct = disponibility.IDProduct;
                         result.ExpirationDate = disponibility.ExpirationDate;
                         modify = context.SaveChanges();
                         if (modify == 0)
@@ -199,6 +200,7 @@ namespace BackEndComedores.DataACCESS
                         Disponibility temp1 = new Disponibility();
                         temp1.ID = temp.ID;
                         temp1.IDProvider = temp.IDProvider;
+                        temp1.IDProduct = temp.IDProduct;
                         temp1.Quantity = temp.Quantity;
                         temp1.UnitValue = temp.UnitValue;
                         temp1.ExpirationDate = temp.ExpirationDate;

@@ -599,6 +599,7 @@ namespace BackEndComedores.Logic
                 dis.IDProvider = provider;
                 dis.Quantity = s.Quantity;
                 dis.UnitValue = s.UnitValue;
+                dis.ExpirationDate = s.ExpirationDate;
 
               
              
