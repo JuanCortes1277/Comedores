@@ -220,6 +220,7 @@
     <Compile Include="Entidades\DisponibilityReturnEntity.cs" />
     <Compile Include="Entidades\IngredientReturnEntity.cs" />
     <Compile Include="Entidades\IngredientWithoutRecipeEntity.cs" />
+    <Compile Include="Entidades\RecipeProductModelEntity.cs" />
     <Compile Include="Entidades\SystemUserReturnEntity.cs" />
     <Compile Include="Entidades\TransportReturnEntity.cs" />
     <Compile Include="Global.asax.cs">

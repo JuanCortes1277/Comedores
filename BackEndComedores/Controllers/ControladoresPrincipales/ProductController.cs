@@ -1,4 +1,5 @@
-﻿using BackEndComedores.Logic;
+﻿using BackEndComedores.Entidades;
+using BackEndComedores.Logic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,6 +63,14 @@ namespace BackEndComedores.Controllers
         {
             LogicBL logicBL = new LogicBL();
             return logicBL.DeleteProduct(Id);
+
+        }
+        [HttpGet]
+        [Route("GetRecomendedProducts")]
+        public List<RecipeProductModelEntity> GetRecomendedProducts()
+        {
+            LogicBL logicBL = new LogicBL();
+            return logicBL.GetRecomendedProducts();
 
         }
     }

@@ -96,6 +96,11 @@ namespace BackEndComedores.Logic
 
 
         }
+        public List<RecipeProductModelEntity> GetRecomendedProducts()
+        {
+            ProductBL ProductBL = new ProductBL();
+            return ProductBL.GetRecomendedProducts();
+        }
         public string UpdateProduct(Product product)
         {
             ProductBL ProductBL = new ProductBL();
@@ -531,6 +536,13 @@ namespace BackEndComedores.Logic
 
 
         }
+        public List<Recipe> GetRecomendedRecipes()
+        {
+            RecipeBL userBL = new RecipeBL();
+            return userBL.GetRecomendedRecipes();
+
+        }
+        
 
 
 

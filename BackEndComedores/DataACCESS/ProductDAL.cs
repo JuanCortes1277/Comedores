@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BackEndComedores.Entidades;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -145,6 +146,80 @@ namespace BackEndComedores.DataACCESS
 
 
         }
+        public List<RecipeProductModelEntity> GetRecomendedProducts()
+        {
+           
+                List<RecipeProductModelEntity> Products = new List<RecipeProductModelEntity>();
+
+            using (var context = new ProyectoMaestriaEntities())
+            {
+
+                var result = (
+   from P in context.Product
+   join D in context.Disponibility on P.ID equals D.IDProduct
+   join I in context.Ingredient on P.ID equals I.IDProduct 
+   into PI    from fd in PI.DefaultIfEmpty() 
+   where D.Quantity > 0 
+   group new { P,D,fd } by new { P.ID, P.Code, P.MeasurementUnit, P.Name, P.Preservation, P.Description,D.Quantity,fd.Id} into g
+       select new
+       {
+           ID = g.Key.ID,
+           Code = g.Key.Code,
+           MeasurementUnit=g.Key.MeasurementUnit,
+           Name = g.Key.Name,
+           Preservation=g.Key.Preservation,
+           Description= g.Key.Description,
+          leftfd=(long?)g.Key.Id,
+           Quantity=g.Sum(s=>s.D.Quantity)
+
+
+
+       }).ToList();
+
+
+
+
+                    if (result != null)
+                    {
+
+                        foreach (var temp in result)
+                        {
+                        if (temp.leftfd == null)
+                        {
+
+                            RecipeProductModelEntity product = new RecipeProductModelEntity();
+                            product.ID = temp.ID;
+                            product.Code = temp.Code;
+                            product.MeasurementUnit = temp.MeasurementUnit;
+                            product.Name = temp.Name;
+                            product.Preservation = temp.Preservation;
+                            product.Description = temp.Description;
+                            product.disponibility = temp.Quantity;
+
+                            //  product.Disponibility = temp.Disponibility;
+
+                            Products.Add(product);
+
+                        }
+                       
+                        }
+
+                        return Products;
+                    }
+                    else
+                        return Products;
+
+
+
+
+                }
+
+
+
+            }
+
+        
+
         public string Update(Product producto)
         {
 

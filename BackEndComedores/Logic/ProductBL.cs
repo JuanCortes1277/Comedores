@@ -1,4 +1,5 @@
 ﻿using BackEndComedores.DataACCESS;
+using BackEndComedores.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,13 @@ namespace BackEndComedores.Logic
         {
             ProductDAL productDAL = new ProductDAL();
             return productDAL.GetAllProducts();
+
+        }
+
+        public List<RecipeProductModelEntity> GetRecomendedProducts()
+        {
+            ProductDAL productDAL = new ProductDAL();
+            return productDAL.GetRecomendedProducts();
 
         }
         public string Modify(Product product)

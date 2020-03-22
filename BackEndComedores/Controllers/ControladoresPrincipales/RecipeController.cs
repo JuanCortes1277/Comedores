@@ -73,5 +73,13 @@ namespace BackEndComedores.Controllers.ControladoresPrincipales
             return logicBL.GetAllIngredientsFromRecipe(Recipecode);
 
         }
+        [HttpGet]
+        [Route("GetRecomendedRecipes")]
+        public List<Recipe> GetRecomendedRecipes()
+        {
+            LogicBL logicBL = new LogicBL();
+            return logicBL.GetRecomendedRecipes();
+
+        }
     }
 }

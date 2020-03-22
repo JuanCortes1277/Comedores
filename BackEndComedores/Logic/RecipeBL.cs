@@ -30,6 +30,13 @@ namespace BackEndComedores.Logic
             RecipeDAL userdal = new RecipeDAL();
             return userdal.GetAll();
         }
+
+        public List<Recipe> GetRecomendedRecipes()
+        {
+            RecipeDAL userdal = new RecipeDAL();
+            return userdal.GetRecomendedRecipes();
+        }
+        
         public string Update(Recipe user)
         {
             RecipeDAL userdal = new RecipeDAL();
