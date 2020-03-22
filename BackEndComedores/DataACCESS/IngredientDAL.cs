@@ -218,7 +218,7 @@ namespace BackEndComedores.DataACCESS
                 using (var context = new ProyectoMaestriaEntities())
                 {
 
-                    var result = context.Ingredient.SingleOrDefault(x => x.IDProduct == ingredient.IDProduct && x.IDRecipe == ingredient.IDRecipe);
+                        var result = context.Ingredient.SingleOrDefault(x => x.Id == ingredient.Id );
                     if (result != null)
                     {
                         //public long ID { get; set; }
