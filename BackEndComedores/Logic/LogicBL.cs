@@ -30,7 +30,7 @@ namespace BackEndComedores.Logic
 
         }
 
-   
+
         public string UpdateDinner(DiningRoom comedor)
         {
             ComedorBL comedorbl = new ComedorBL();
@@ -87,7 +87,7 @@ namespace BackEndComedores.Logic
 
         }
 
-        
+
 
         public List<Product> GettAllProducts()
         {
@@ -135,7 +135,7 @@ namespace BackEndComedores.Logic
 
         }
 
-        
+
         public List<Provider> ExtractAllProviders()
         {
             ProviderBL providerBL = new ProviderBL();
@@ -222,7 +222,7 @@ namespace BackEndComedores.Logic
 
         }
 
-        
+
         public List<TransportReturnEntity> ExtractAllTransports()
         {
             ProviderBL providerbl = new ProviderBL();
@@ -364,7 +364,7 @@ namespace BackEndComedores.Logic
 
         }
 
-        
+
         public List<Recipe> ExtractAllRecipes()
         {
             RecipeBL userBL = new RecipeBL();
@@ -446,7 +446,7 @@ namespace BackEndComedores.Logic
         {
             List<Ingredient> ingredients = new List<Ingredient>();
             IngredientBL ingredientbl = new IngredientBL();
-             ingredients = ingredientbl.GetAll();
+            ingredients = ingredientbl.GetAll();
             RecipeBL recipebl = new RecipeBL();
             ProductBL productbl = new ProductBL();
             List<IngredientReturnEntity> ingredientsRet = new List<IngredientReturnEntity>();
@@ -474,7 +474,7 @@ namespace BackEndComedores.Logic
 
             return ingredientsRet;
 
-       
+
         }
         public string ModifyIngredient(Ingredient ingredient)
         {
@@ -485,7 +485,7 @@ namespace BackEndComedores.Logic
         public string DeleteIngredient(long idproduct, long idrecipe)
         {
             IngredientBL ingredient = new IngredientBL();
-            return ingredient.Delete(idproduct,idrecipe);
+            return ingredient.Delete(idproduct, idrecipe);
 
         }
         public string DeleteIngredient(long ID)
@@ -495,10 +495,10 @@ namespace BackEndComedores.Logic
 
         }
 
-        public List<Ingredient> GetByRecipe( long idrecipe)
+        public List<Ingredient> GetByRecipe(long idrecipe)
         {
             IngredientBL ingredient = new IngredientBL();
-            return ingredient.GetByRecipe( idrecipe);
+            return ingredient.GetByRecipe(idrecipe);
 
         }
         public CompleteRecipeReturnEntity GetAllIngredientsFromRecipe(string recipeCode)
@@ -512,7 +512,7 @@ namespace BackEndComedores.Logic
             List<IngredientWithoutRecipeEntity> ingredientsinrecipe = new List<IngredientWithoutRecipeEntity>();
             List<Ingredient> ingredients = ingredientdal.GetByRecipe(recipe.ID);
             ProductBL productBL = new ProductBL();
-            foreach(Ingredient ingr in ingredients)
+            foreach (Ingredient ingr in ingredients)
             {
                 IngredientWithoutRecipeEntity ingredientresult = new IngredientWithoutRecipeEntity();
                 Product product = productBL.ExtractById(ingr.IDProduct);
@@ -521,7 +521,7 @@ namespace BackEndComedores.Logic
                 ingredientresult.Id = ingr.Id;
                 ingredientresult.IDProduct = product;
                 ingredientresult.Quantity = ingr.Quantity;
-                
+
 
                 ingredientsinrecipe.Add(ingredientresult);
 
@@ -542,7 +542,7 @@ namespace BackEndComedores.Logic
             return userBL.GetRecomendedRecipes();
 
         }
-        
+
 
 
 
@@ -565,20 +565,20 @@ namespace BackEndComedores.Logic
 
 
 
-        //     public Nullable<long> IDProvider { get; set; }
-        //public long ID { get; set; }
-        //public Nullable<long> IDProduct { get; set; }
-        //public Nullable<int> Quantity { get; set; }
-        //public Nullable<decimal> UnitValue { get; set; }
-        //public Nullable<System.DateTime> ExpirationDate { get; set; }
+            //     public Nullable<long> IDProvider { get; set; }
+            //public long ID { get; set; }
+            //public Nullable<long> IDProduct { get; set; }
+            //public Nullable<int> Quantity { get; set; }
+            //public Nullable<decimal> UnitValue { get; set; }
+            //public Nullable<System.DateTime> ExpirationDate { get; set; }
 
-        DisponibilityReturnEntity dis = new DisponibilityReturnEntity();
+            DisponibilityReturnEntity dis = new DisponibilityReturnEntity();
             dis.ID = systemu.ID;
             dis.IDProduct = product;
             dis.IDProvider = provider;
             dis.Quantity = systemu.Quantity;
             dis.UnitValue = systemu.UnitValue;
-            
+
 
 
 
@@ -613,8 +613,8 @@ namespace BackEndComedores.Logic
                 dis.UnitValue = s.UnitValue;
                 dis.ExpirationDate = s.ExpirationDate;
 
-              
-             
+
+
 
                 sysreturn.Add(dis);
 
@@ -635,6 +635,234 @@ namespace BackEndComedores.Logic
             return userBL.Delete(code);
 
         }
+
+
+
+        public List<PreOrderReturnEntity> GetPreorderByDinningRoom(long ID)
+        {
+            PreOrderBL preorderdal = new PreOrderBL();
+            List<PreOrder> preorders = preorderdal.GetByDinningRoom(ID);
+            List<PreOrderReturnEntity> preordersforeturn = new List<PreOrderReturnEntity>();
+            ProductBL productbl = new ProductBL();
+            //RecipeBL recipebl = new RecipeBL();
+            PreOrderItemBL ingredientBL = new PreOrderItemBL();
+
+            foreach (PreOrder pre in preorders)
+            {
+                long id = pre.ID;
+                // long id =long.Parse( pre.IDRecipe);
+                List<PreOrderItem> ingredients = ingredientBL.GetByOrder(id);
+                List<ProductReturnEntity> products = new List<ProductReturnEntity>();
+
+                foreach (PreOrderItem ing in ingredients)
+                {
+                    Product product = productbl.GetByID(ing.IDProduct);
+                    ProductReturnEntity pr = new ProductReturnEntity();
+                    pr.ID = product.ID;
+                    pr.MeasurementUnit = product.MeasurementUnit;
+                    pr.Name = product.Name;
+                    pr.Code = product.Code;
+                    pr.Preservation = product.Preservation;
+                    pr.Quantity = ing.Quantity;
+                    pr.Description = product.Description;
+                    products.Add(pr);
+                }
+                PreOrderReturnEntity preordernew = new PreOrderReturnEntity();
+                preordernew.ID = pre.ID;
+                preordernew.IDDiningRoom = pre.IDDiningRoom;
+                preordernew.IDRecipe = pre.IDRecipe;
+
+                preordernew.IDProduct = products;
+                preordersforeturn.Add(preordernew);
+
+            }
+            return preordersforeturn;
+        }
+ 
+
+
+
+        public PreOrderReturnEntity GetPreorderByD(long ID)
+        {
+            PreOrderBL preorderdal = new PreOrderBL();
+            PreOrder preorders = preorderdal.GetById(ID);
+            List<PreOrderReturnEntity> preordersforeturn = new List<PreOrderReturnEntity>();
+            ProductBL productbl = new ProductBL();
+            //RecipeBL recipebl = new RecipeBL();
+            PreOrderItemBL ingredientBL = new PreOrderItemBL();
+
+
+            long id = preorders.ID;
+            // long id =long.Parse( pre.IDRecipe);
+
+            List<PreOrderItem> ingredients = ingredientBL.GetByOrder(id);
+            List<ProductReturnEntity> products = new List<ProductReturnEntity>();
+
+            foreach (PreOrderItem ing in ingredients)
+            {
+
+                Product product = productbl.GetByID(ing.IDProduct);
+                ProductReturnEntity pr = new ProductReturnEntity();
+                pr.ID = product.ID;
+                pr.MeasurementUnit = product.MeasurementUnit;
+                pr.Name = product.Name;
+                pr.Code = product.Code;
+                pr.Preservation = product.Preservation;
+                pr.Quantity = ing.Quantity;
+                pr.Description = product.Description;
+                products.Add(pr);
+
+            }
+
+
+            PreOrderReturnEntity preordernew = new PreOrderReturnEntity();
+            preordernew.ID = preorders.ID;
+            preordernew.IDDiningRoom = preorders.IDDiningRoom;
+            preordernew.IDRecipe = preorders.IDRecipe;
+
+            preordernew.IDProduct = products;
+            preordersforeturn.Add(preordernew);
+
+
+            return preordernew;
+        }
+    
+    
+        public List<PreOrderReturnEntity> GetAllPreOrders()
+        {
+            PreOrderBL preorderdal = new PreOrderBL();
+            List<PreOrder> preorders = preorderdal.GetAll();
+            List<PreOrderReturnEntity> preordersforeturn = new List<PreOrderReturnEntity>();
+            ProductBL productbl = new ProductBL();
+            //RecipeBL recipebl = new RecipeBL();
+            PreOrderItemBL ingredientBL = new PreOrderItemBL();
+
+            
+            foreach (PreOrder pre in preorders)
+            {
+                long id = pre.ID;
+                // long id =long.Parse( pre.IDRecipe);
+                List<PreOrderItem> ingredients = ingredientBL.GetByOrder(id);
+                List<ProductReturnEntity> products = new List<ProductReturnEntity>();
+
+                foreach (PreOrderItem ing in ingredients)
+                {
+                    Product product = productbl.GetByID(ing.IDProduct);
+                    ProductReturnEntity pr = new ProductReturnEntity();
+                    pr.ID = product.ID;
+                    pr.MeasurementUnit = product.MeasurementUnit;
+                    pr.Name = product.Name;
+                    pr.Code = product.Code;
+                    pr.Preservation = product.Preservation;
+                    pr.Quantity = ing.Quantity;
+                    pr.Description = product.Description;
+                    products.Add(pr);
+                }
+                PreOrderReturnEntity preordernew = new PreOrderReturnEntity();
+                preordernew.ID = pre.ID;
+                preordernew.IDDiningRoom = pre.IDDiningRoom;
+                preordernew.IDRecipe = pre.IDRecipe;
+
+                preordernew.IDProduct = products;
+                preordersforeturn.Add(preordernew);
+
+            }
+            return preordersforeturn;
+
+        }
+        public List<PreOrderReturnEntity> GetPreOrderByDate(DateTime date)
+        {
+            PreOrderBL preorderdal = new PreOrderBL();
+            List<PreOrder> preorders = preorderdal.GetPreorderByDate(date);
+            List<PreOrderReturnEntity> preordersforeturn = new List<PreOrderReturnEntity>();
+            ProductBL productbl = new ProductBL();
+            //RecipeBL recipebl = new RecipeBL();
+            PreOrderItemBL ingredientBL = new PreOrderItemBL();
+
+
+            foreach (PreOrder pre in preorders)
+            {
+                long id = pre.ID;
+                // long id =long.Parse( pre.IDRecipe);
+                List<PreOrderItem> ingredients = ingredientBL.GetByOrder(id);
+                List<ProductReturnEntity> products = new List<ProductReturnEntity>();
+
+                foreach (PreOrderItem ing in ingredients)
+                {
+                    Product product = productbl.GetByID(ing.IDProduct);
+                    ProductReturnEntity pr = new ProductReturnEntity();
+                    pr.ID = product.ID;
+                    pr.MeasurementUnit = product.MeasurementUnit;
+                    pr.Name = product.Name;
+                    pr.Code = product.Code;
+                    pr.Preservation = product.Preservation;
+                    pr.Quantity = ing.Quantity;
+                    pr.Description = product.Description;
+                    products.Add(pr);
+                }
+                PreOrderReturnEntity preordernew = new PreOrderReturnEntity();
+                preordernew.ID = pre.ID;
+                preordernew.IDDiningRoom = pre.IDDiningRoom;
+                preordernew.IDRecipe = pre.IDRecipe;
+
+                preordernew.IDProduct = products;
+                preordersforeturn.Add(preordernew);
+
+            }
+            return preordersforeturn;
+
+        }
+        public string insertPreoRder(PreOrderReturnEntity preorder)
+        {
+            PreOrderBL preorderbl = new PreOrderBL();
+            PreOrder preord = new PreOrder();
+            preord.IDDiningRoom = preorder.IDDiningRoom;
+            preord.IDRecipe = preorder.IDRecipe;
+            PreOrderItemBL preOrderItemBL = new PreOrderItemBL();
+            List<PreOrderItem> preitems = new List<PreOrderItem>();
+            
+            string responseString = "";
+            int respons = 0;
+            responseString = preorderbl.insert(preord);
+
+            if (responseString.Length < 6)
+            {
+                respons = int.Parse(responseString);
+
+            }
+            if (respons > 0)
+            {
+                foreach (ProductReturnEntity produc in preorder.IDProduct)
+                {
+                    PreOrderItem pritem = new PreOrderItem();
+                    pritem.IDPreOrder = respons;
+                    pritem.IDProduct = produc.ID;
+                    pritem.Quantity = produc.Quantity;
+                    preitems.Add(pritem);
+                }
+                string resultitems=(preOrderItemBL.InsertList(preitems));
+                int resultitemsNum = int.Parse(resultitems);
+                if (resultitemsNum > 0)
+                {
+                    return "registros insertados";
+
+                }
+                else
+                {
+                    return "no se ha podido insertar los registros";
+                }
+
+            }
+            return "no se ha podido insertar los registros";
+
+
+
+
+
+
+        }
+
+
 
 
 

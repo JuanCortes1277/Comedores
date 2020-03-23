@@ -14,11 +14,20 @@ namespace BackEndComedores
     
     public partial class Product
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Product()
+        {
+            this.Disponibility = new HashSet<Disponibility>();
+        }
+    
         public long ID { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public Nullable<int> Preservation { get; set; }
         public Nullable<int> MeasurementUnit { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Disponibility> Disponibility { get; set; }
     }
 }

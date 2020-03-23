@@ -33,5 +33,7 @@ namespace BackEndComedores
         public virtual DbSet<Transport> Transport { get; set; }
         public virtual DbSet<DiningRoom> DiningRoom { get; set; }
         public virtual DbSet<Provider> Provider { get; set; }
+        public virtual DbSet<PreOrder> PreOrder { get; set; }
+        public virtual DbSet<PreOrderItem> PreOrderItem { get; set; }
     }
 }

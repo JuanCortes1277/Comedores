@@ -14,6 +14,12 @@ namespace BackEndComedores
     
     public partial class Provider
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Provider()
+        {
+            this.Disponibility = new HashSet<Disponibility>();
+        }
+    
         public long ID { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
@@ -27,5 +33,8 @@ namespace BackEndComedores
         public string EnterpriseMail { get; set; }
         public string NIT { get; set; }
         public string Type { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Disponibility> Disponibility { get; set; }
     }
 }

@@ -43,6 +43,25 @@
           <Property Name="IDProduct" Type="bigint" />
           <Property Name="Quantity" Type="int" />
         </EntityType>
+        <EntityType Name="PreOrder">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDDiningRoom" Type="bigint" />
+          <Property Name="IDRecipe" Type="bigint" />
+          <Property Name="PreOrderDate" Type="date" />
+          <Property Name="Accepted" Type="bit" />
+        </EntityType>
+        <EntityType Name="PreOrderItem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDProduct" Type="bigint" />
+          <Property Name="IDPreOrder" Type="bigint" />
+          <Property Name="Quantity" Type="numeric" Precision="14" Scale="2" />
+        </EntityType>
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="ID" />
@@ -111,15 +130,49 @@
           <Property Name="PaymentMeasurement" Type="int" />
           <Property Name="IDProvider" Type="bigint" />
         </EntityType>
+        <Association Name="FK_Disponibility_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Disponibility" Type="Self.Disponibility" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Disponibility">
+              <PropertyRef Name="IDProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Disponibility_Provider">
+          <End Role="Provider" Type="Self.Provider" Multiplicity="0..1" />
+          <End Role="Disponibility" Type="Self.Disponibility" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provider">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Disponibility">
+              <PropertyRef Name="IDProvider" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ProyectoMaestriaModelStoreContainer">
           <EntitySet Name="DiningRoom" EntityType="Self.DiningRoom" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Disponibility" EntityType="Self.Disponibility" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ingredient" EntityType="Self.Ingredient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PreOrder" EntityType="Self.PreOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PreOrderItem" EntityType="Self.PreOrderItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Provider" EntityType="Self.Provider" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Recipe" EntityType="Self.Recipe" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SystemUser" EntityType="Self.SystemUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transport" EntityType="Self.Transport" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Disponibility_Product" Association="Self.FK_Disponibility_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Disponibility" EntitySet="Disponibility" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Disponibility_Provider" Association="Self.FK_Disponibility_Provider">
+            <End Role="Provider" EntitySet="Provider" />
+            <End Role="Disponibility" EntitySet="Disponibility" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -134,6 +187,16 @@
           <EntitySet Name="Transport" EntityType="ProyectoMaestriaModel.Transport" />
           <EntitySet Name="DiningRoom" EntityType="ProyectoMaestriaModel.DiningRoom" />
           <EntitySet Name="Provider" EntityType="ProyectoMaestriaModel.Provider" />
+          <EntitySet Name="PreOrder" EntityType="ProyectoMaestriaModel.PreOrder" />
+          <EntitySet Name="PreOrderItem" EntityType="ProyectoMaestriaModel.PreOrderItem" />
+          <AssociationSet Name="FK_Disponibility_Product" Association="ProyectoMaestriaModel.FK_Disponibility_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Disponibility" EntitySet="Disponibility" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Disponibility_Provider" Association="ProyectoMaestriaModel.FK_Disponibility_Provider">
+            <End Role="Provider" EntitySet="Provider" />
+            <End Role="Disponibility" EntitySet="Disponibility" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Disponibility">
           <Key>
@@ -145,6 +208,8 @@
           <Property Name="Quantity" Type="Int32" />
           <Property Name="UnitValue" Type="Decimal" Precision="16" Scale="2" />
           <Property Name="ExpirationDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Product" Relationship="ProyectoMaestriaModel.FK_Disponibility_Product" FromRole="Disponibility" ToRole="Product" />
+          <NavigationProperty Name="Provider" Relationship="ProyectoMaestriaModel.FK_Disponibility_Provider" FromRole="Disponibility" ToRole="Provider" />
         </EntityType>
         <EntityType Name="Ingredient">
           <Key>
@@ -165,6 +230,7 @@
           <Property Name="Description" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
           <Property Name="Preservation" Type="Int32" />
           <Property Name="MeasurementUnit" Type="Int32" />
+          <NavigationProperty Name="Disponibility" Relationship="ProyectoMaestriaModel.FK_Disponibility_Product" FromRole="Product" ToRole="Disponibility" />
         </EntityType>
         <EntityType Name="Recipe">
           <Key>
@@ -240,7 +306,51 @@
           <Property Name="EnterpriseMail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="NIT" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Type" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Disponibility" Relationship="ProyectoMaestriaModel.FK_Disponibility_Provider" FromRole="Provider" ToRole="Disponibility" />
         </EntityType>
+        <EntityType Name="PreOrder">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDDiningRoom" Type="Int64" />
+          <Property Name="IDRecipe" Type="Int64" />
+          <Property Name="PreOrderDate" Type="DateTime" Precision="0" />
+          <Property Name="Accepted" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="PreOrderItem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDProduct" Type="Int64" />
+          <Property Name="IDPreOrder" Type="Int64" />
+          <Property Name="Quantity" Type="Decimal" Precision="14" Scale="2" />
+        </EntityType>
+        <Association Name="FK_Disponibility_Product">
+          <End Type="ProyectoMaestriaModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="ProyectoMaestriaModel.Disponibility" Role="Disponibility" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Disponibility">
+              <PropertyRef Name="IDProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Disponibility_Provider">
+          <End Type="ProyectoMaestriaModel.Provider" Role="Provider" Multiplicity="0..1" />
+          <End Type="ProyectoMaestriaModel.Disponibility" Role="Disponibility" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provider">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Disponibility">
+              <PropertyRef Name="IDProvider" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -357,6 +467,27 @@
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PreOrder">
+            <EntityTypeMapping TypeName="ProyectoMaestriaModel.PreOrder">
+              <MappingFragment StoreEntitySet="PreOrder">
+                <ScalarProperty Name="Accepted" ColumnName="Accepted" />
+                <ScalarProperty Name="PreOrderDate" ColumnName="PreOrderDate" />
+                <ScalarProperty Name="IDRecipe" ColumnName="IDRecipe" />
+                <ScalarProperty Name="IDDiningRoom" ColumnName="IDDiningRoom" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PreOrderItem">
+            <EntityTypeMapping TypeName="ProyectoMaestriaModel.PreOrderItem">
+              <MappingFragment StoreEntitySet="PreOrderItem">
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="IDPreOrder" ColumnName="IDPreOrder" />
+                <ScalarProperty Name="IDProduct" ColumnName="IDProduct" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -12,16 +12,11 @@ namespace BackEndComedores
     using System;
     using System.Collections.Generic;
     
-    public partial class Disponibility
+    public partial class PreOrderItem
     {
-        public Nullable<long> IDProvider { get; set; }
         public long ID { get; set; }
         public Nullable<long> IDProduct { get; set; }
-        public Nullable<int> Quantity { get; set; }
-        public Nullable<decimal> UnitValue { get; set; }
-        public Nullable<System.DateTime> ExpirationDate { get; set; }
-    
-        public virtual Product Product { get; set; }
-        public virtual Provider Provider { get; set; }
+        public Nullable<long> IDPreOrder { get; set; }
+        public Nullable<decimal> Quantity { get; set; }
     }
 }
