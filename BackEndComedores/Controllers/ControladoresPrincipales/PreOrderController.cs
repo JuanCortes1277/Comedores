@@ -18,10 +18,10 @@ public class PreOrderController : ApiController
         // GET: api/PreOrder
         [HttpGet]
         [Route("GetPreorderByDinningRoom")]
-        public List<PreOrderReturnEntity> GetPreorderByDinningRoom(long Id)
+        public List<PreOrderReturnEntity> GetPreorderByDinningRoom(long IdDinner)
         {
             LogicBL logicBL = new LogicBL();
-            return logicBL.GetPreorderByDinningRoom(Id);
+            return logicBL.GetPreorderByDinningRoom(IdDinner);
 
         }
         [HttpGet]
@@ -42,10 +42,10 @@ public class PreOrderController : ApiController
         }
         [HttpGet]
         [Route("GetByDate")]
-        public List<PreOrderReturnEntity> GetByDate(DateTime Id)
+        public List<PreOrderReturnEntity> GetByDate(DateTime Date)
         {
             LogicBL logicBL = new LogicBL();
-            return logicBL.GetPreOrderByDate(Id);
+            return logicBL.GetPreOrderByDate(Date);
 
         }
         [HttpPost]

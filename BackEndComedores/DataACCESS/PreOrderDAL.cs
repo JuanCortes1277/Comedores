@@ -25,7 +25,7 @@ namespace BackEndComedores.DataACCESS
                         PreOrder preorder = new PreOrder();
                         preorder.ID = temp.ID;
                         preorder.IDDiningRoom = temp.IDDiningRoom;
-                        preorder.IDRecipe = temp.IDDiningRoom;
+                        preorder.IDRecipe = temp.IDRecipe;
                         preorder.PreOrderDate = temp.PreOrderDate;
                         preorder.Accepted = temp.Accepted;
 
@@ -61,7 +61,7 @@ namespace BackEndComedores.DataACCESS
                         PreOrder preorder = new PreOrder();
                         preorder.ID = result.ID;
                         preorder.IDDiningRoom = result.IDDiningRoom;
-                        preorder.IDRecipe = result.IDDiningRoom;
+                        preorder.IDRecipe = result.IDRecipe;
                         preorder.PreOrderDate = result.PreOrderDate;
                         preorder.Accepted = result.Accepted;
 
@@ -98,7 +98,7 @@ namespace BackEndComedores.DataACCESS
                         PreOrder preorder = new PreOrder();
                         preorder.ID = temp.ID;
                         preorder.IDDiningRoom = temp.IDDiningRoom;
-                        preorder.IDRecipe = temp.IDDiningRoom;
+                        preorder.IDRecipe = temp.IDRecipe;
                         preorder.PreOrderDate = temp.PreOrderDate;
                         preorder.Accepted = temp.Accepted;
 
@@ -135,7 +135,7 @@ namespace BackEndComedores.DataACCESS
                         PreOrder preorder = new PreOrder();
                         preorder.ID = temp.ID;
                         preorder.IDDiningRoom = temp.IDDiningRoom;
-                        preorder.IDRecipe = temp.IDDiningRoom;
+                        preorder.IDRecipe = temp.IDRecipe;
                         preorder.PreOrderDate = temp.PreOrderDate;
                         preorder.Accepted = temp.Accepted;
 
@@ -163,6 +163,10 @@ namespace BackEndComedores.DataACCESS
                 using (var context = new ProyectoMaestriaEntities())
                 {
                   
+                    if(preorder.PreOrderDate==null )
+                    {
+                        preorder.PreOrderDate = DateTime.Now;
+                    }
 
                         var std = new PreOrder()
                         {
@@ -170,6 +174,8 @@ namespace BackEndComedores.DataACCESS
                             IDRecipe= preorder.IDRecipe,
                             PreOrderDate=preorder.PreOrderDate,
                             Accepted=preorder.Accepted
+                            
+                            
 
                          
 
