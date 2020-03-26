@@ -28,7 +28,9 @@ namespace BackEndComedores.DataACCESS
                             Name = product.Name,
                             Description = product.Description,
                             Preservation = product.Preservation,
-                            MeasurementUnit = product.MeasurementUnit
+                            MeasurementUnit = product.MeasurementUnit,
+                            ProductType=product.ProductType
+                            
 
 
 
@@ -70,7 +72,8 @@ namespace BackEndComedores.DataACCESS
                         Code = product.Code,
                         Name = product.Name,
                         Description = product.Description,
-                        Preservation = product.Preservation
+                        Preservation = product.Preservation,
+                        ProductType=product.ProductType
                     };
                 }
                 else return null;
@@ -96,7 +99,8 @@ namespace BackEndComedores.DataACCESS
                         Name = product.Name,
                         Description = product.Description,
                         Preservation = product.Preservation,
-                                                MeasurementUnit = product.MeasurementUnit
+                                                MeasurementUnit = product.MeasurementUnit,
+                                                ProductType=product.ProductType
 
                     };
                 }
@@ -129,6 +133,7 @@ namespace BackEndComedores.DataACCESS
                         product.Description = temp.Description;
                         product.Preservation = temp.Preservation;
                         product.MeasurementUnit = temp.MeasurementUnit;
+                        product.ProductType = temp.ProductType;
                       //  product.Disponibility = temp.Disponibility;
 
                         Products.Add(product);
@@ -160,7 +165,7 @@ namespace BackEndComedores.DataACCESS
    join I in context.Ingredient on P.ID equals I.IDProduct 
    into PI    from fd in PI.DefaultIfEmpty() 
    where D.Quantity > 0 
-   group new { P,D,fd } by new { P.ID, P.Code, P.MeasurementUnit, P.Name, P.Preservation, P.Description,D.Quantity,fd.Id} into g
+   group new { P,D,fd } by new {P.ProductType, P.ID, P.Code, P.MeasurementUnit, P.Name, P.Preservation, P.Description,D.Quantity,fd.Id} into g
        select new
        {
            ID = g.Key.ID,
@@ -169,6 +174,7 @@ namespace BackEndComedores.DataACCESS
            Name = g.Key.Name,
            Preservation=g.Key.Preservation,
            Description= g.Key.Description,
+           ProductType=g.Key.ProductType,
           leftfd=(long?)g.Key.Id,
            Quantity=g.Sum(s=>s.D.Quantity)
 
@@ -195,6 +201,8 @@ namespace BackEndComedores.DataACCESS
                             product.Preservation = temp.Preservation;
                             product.Description = temp.Description;
                             product.disponibility = temp.Quantity;
+                            product.ProductType = temp.ProductType;
+                            
 
                             //  product.Disponibility = temp.Disponibility;
 
@@ -238,6 +246,7 @@ namespace BackEndComedores.DataACCESS
                         result.Description = producto.Description;
                         result.Preservation = producto.Preservation;
                         result.MeasurementUnit = producto.MeasurementUnit;
+                        result.ProductType = producto.ProductType;
                         //  result.Disponibility = producto.Disponibility;
 
 

@@ -671,6 +671,9 @@ namespace BackEndComedores.Logic
                 preordernew.ID = pre.ID;
                 preordernew.IDDiningRoom = pre.IDDiningRoom;
                 preordernew.IDRecipe = pre.IDRecipe;
+                preordernew.PreOrderDate = pre.PreOrderDate;
+                preordernew.Accepted = pre.Accepted;
+                
 
                 preordernew.IDProduct = products;
                 preordersforeturn.Add(preordernew);
@@ -719,6 +722,8 @@ namespace BackEndComedores.Logic
             preordernew.ID = preorders.ID;
             preordernew.IDDiningRoom = preorders.IDDiningRoom;
             preordernew.IDRecipe = preorders.IDRecipe;
+            preordernew.PreOrderDate = preorders.PreOrderDate;
+            preordernew.Accepted = preorders.Accepted;
 
             preordernew.IDProduct = products;
             preordersforeturn.Add(preordernew);
@@ -762,6 +767,8 @@ namespace BackEndComedores.Logic
                 preordernew.ID = pre.ID;
                 preordernew.IDDiningRoom = pre.IDDiningRoom;
                 preordernew.IDRecipe = pre.IDRecipe;
+                preordernew.PreOrderDate = pre.PreOrderDate;
+                preordernew.Accepted = pre.Accepted;
 
                 preordernew.IDProduct = products;
                 preordersforeturn.Add(preordernew);

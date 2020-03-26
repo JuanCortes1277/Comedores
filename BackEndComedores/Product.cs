@@ -26,6 +26,7 @@ namespace BackEndComedores
         public string Description { get; set; }
         public Nullable<int> Preservation { get; set; }
         public Nullable<int> MeasurementUnit { get; set; }
+        public Nullable<int> ProductType { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Disponibility> Disponibility { get; set; }

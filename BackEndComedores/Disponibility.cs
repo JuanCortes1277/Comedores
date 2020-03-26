@@ -21,7 +21,7 @@ namespace BackEndComedores
         public Nullable<decimal> UnitValue { get; set; }
         public Nullable<System.DateTime> ExpirationDate { get; set; }
     
-        public virtual Product Product { get; set; }
         public virtual Provider Provider { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

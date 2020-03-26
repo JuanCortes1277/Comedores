@@ -72,6 +72,7 @@
           <Property Name="Description" Type="nvarchar" MaxLength="80" />
           <Property Name="Preservation" Type="int" />
           <Property Name="MeasurementUnit" Type="int" />
+          <Property Name="ProductType" Type="int" />
         </EntityType>
         <EntityType Name="Provider">
           <Key>
@@ -181,7 +182,6 @@
         <EntityContainer Name="ProyectoMaestriaEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Disponibility" EntityType="ProyectoMaestriaModel.Disponibility" />
           <EntitySet Name="Ingredient" EntityType="ProyectoMaestriaModel.Ingredient" />
-          <EntitySet Name="Product" EntityType="ProyectoMaestriaModel.Product" />
           <EntitySet Name="Recipe" EntityType="ProyectoMaestriaModel.Recipe" />
           <EntitySet Name="SystemUser" EntityType="ProyectoMaestriaModel.SystemUser" />
           <EntitySet Name="Transport" EntityType="ProyectoMaestriaModel.Transport" />
@@ -189,12 +189,13 @@
           <EntitySet Name="Provider" EntityType="ProyectoMaestriaModel.Provider" />
           <EntitySet Name="PreOrder" EntityType="ProyectoMaestriaModel.PreOrder" />
           <EntitySet Name="PreOrderItem" EntityType="ProyectoMaestriaModel.PreOrderItem" />
-          <AssociationSet Name="FK_Disponibility_Product" Association="ProyectoMaestriaModel.FK_Disponibility_Product">
-            <End Role="Product" EntitySet="Product" />
-            <End Role="Disponibility" EntitySet="Disponibility" />
-          </AssociationSet>
           <AssociationSet Name="FK_Disponibility_Provider" Association="ProyectoMaestriaModel.FK_Disponibility_Provider">
             <End Role="Provider" EntitySet="Provider" />
+            <End Role="Disponibility" EntitySet="Disponibility" />
+          </AssociationSet>
+          <EntitySet Name="Product" EntityType="ProyectoMaestriaModel.Product" />
+          <AssociationSet Name="FK_Disponibility_Product" Association="ProyectoMaestriaModel.FK_Disponibility_Product">
+            <End Role="Product" EntitySet="Product" />
             <End Role="Disponibility" EntitySet="Disponibility" />
           </AssociationSet>
           </EntityContainer>
@@ -208,8 +209,8 @@
           <Property Name="Quantity" Type="Int32" />
           <Property Name="UnitValue" Type="Decimal" Precision="16" Scale="2" />
           <Property Name="ExpirationDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Product" Relationship="ProyectoMaestriaModel.FK_Disponibility_Product" FromRole="Disponibility" ToRole="Product" />
           <NavigationProperty Name="Provider" Relationship="ProyectoMaestriaModel.FK_Disponibility_Provider" FromRole="Disponibility" ToRole="Provider" />
+          <NavigationProperty Name="Product" Relationship="ProyectoMaestriaModel.FK_Disponibility_Product" FromRole="Disponibility" ToRole="Product" />
         </EntityType>
         <EntityType Name="Ingredient">
           <Key>
@@ -219,18 +220,6 @@
           <Property Name="IDRecipe" Type="Int64" />
           <Property Name="IDProduct" Type="Int64" />
           <Property Name="Quantity" Type="Int32" />
-        </EntityType>
-        <EntityType Name="Product">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Code" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
-          <Property Name="Preservation" Type="Int32" />
-          <Property Name="MeasurementUnit" Type="Int32" />
-          <NavigationProperty Name="Disponibility" Relationship="ProyectoMaestriaModel.FK_Disponibility_Product" FromRole="Product" ToRole="Disponibility" />
         </EntityType>
         <EntityType Name="Recipe">
           <Key>
@@ -327,18 +316,6 @@
           <Property Name="IDPreOrder" Type="Int64" />
           <Property Name="Quantity" Type="Decimal" Precision="14" Scale="2" />
         </EntityType>
-        <Association Name="FK_Disponibility_Product">
-          <End Type="ProyectoMaestriaModel.Product" Role="Product" Multiplicity="0..1" />
-          <End Type="ProyectoMaestriaModel.Disponibility" Role="Disponibility" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Disponibility">
-              <PropertyRef Name="IDProduct" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Disponibility_Provider">
           <End Type="ProyectoMaestriaModel.Provider" Role="Provider" Multiplicity="0..1" />
           <End Type="ProyectoMaestriaModel.Disponibility" Role="Disponibility" Multiplicity="*" />
@@ -348,6 +325,31 @@
             </Principal>
             <Dependent Role="Disponibility">
               <PropertyRef Name="IDProvider" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Preservation" Type="Int32" />
+          <Property Name="MeasurementUnit" Type="Int32" />
+          <Property Name="ProductType" Type="Int32" />
+          <NavigationProperty Name="Disponibility" Relationship="ProyectoMaestriaModel.FK_Disponibility_Product" FromRole="Product" ToRole="Disponibility" />
+        </EntityType>
+        <Association Name="FK_Disponibility_Product">
+          <End Type="ProyectoMaestriaModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="ProyectoMaestriaModel.Disponibility" Role="Disponibility" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Disponibility">
+              <PropertyRef Name="IDProduct" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -376,18 +378,6 @@
                 <ScalarProperty Name="IDProduct" ColumnName="IDProduct" />
                 <ScalarProperty Name="IDRecipe" ColumnName="IDRecipe" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Product">
-            <EntityTypeMapping TypeName="ProyectoMaestriaModel.Product">
-              <MappingFragment StoreEntitySet="Product">
-                <ScalarProperty Name="MeasurementUnit" ColumnName="MeasurementUnit" />
-                <ScalarProperty Name="Preservation" ColumnName="Preservation" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -488,6 +478,19 @@
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="IDPreOrder" ColumnName="IDPreOrder" />
                 <ScalarProperty Name="IDProduct" ColumnName="IDProduct" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product">
+            <EntityTypeMapping TypeName="ProyectoMaestriaModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="ProductType" ColumnName="ProductType" />
+                <ScalarProperty Name="MeasurementUnit" ColumnName="MeasurementUnit" />
+                <ScalarProperty Name="Preservation" ColumnName="Preservation" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

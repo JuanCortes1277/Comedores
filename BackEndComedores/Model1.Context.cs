@@ -27,7 +27,6 @@ namespace BackEndComedores
     
         public virtual DbSet<Disponibility> Disponibility { get; set; }
         public virtual DbSet<Ingredient> Ingredient { get; set; }
-        public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<Recipe> Recipe { get; set; }
         public virtual DbSet<SystemUser> SystemUser { get; set; }
         public virtual DbSet<Transport> Transport { get; set; }
@@ -35,5 +34,6 @@ namespace BackEndComedores
         public virtual DbSet<Provider> Provider { get; set; }
         public virtual DbSet<PreOrder> PreOrder { get; set; }
         public virtual DbSet<PreOrderItem> PreOrderItem { get; set; }
+        public virtual DbSet<Product> Product { get; set; }
     }
 }

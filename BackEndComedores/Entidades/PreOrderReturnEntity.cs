@@ -11,5 +11,7 @@ namespace BackEndComedores.Entidades
         public Nullable<long> IDDiningRoom { get; set; }
         public Nullable<long> IDRecipe { get; set; }
         public List<ProductReturnEntity> IDProduct;
+        public Nullable<System.DateTime> PreOrderDate { get; set; }
+        public Nullable<bool> Accepted { get; set; }
     }
 }

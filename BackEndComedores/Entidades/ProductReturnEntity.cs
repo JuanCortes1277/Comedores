@@ -14,5 +14,7 @@ namespace BackEndComedores.Entidades
         public string Description { get; set; }
         public Nullable<int> Preservation { get; set; }
         public Nullable<int> MeasurementUnit { get; set; }
+        public Nullable<int> ProductType { get; set; }
+
     }
 }
