@@ -909,8 +909,9 @@ namespace BackEndComedores.Logic
             return order;
         }
 
-         public object[][] createArrayProvider(List<Disponibility> lstdisponibilities,  PreOrderItem ing, ref DiningRoom diningRoom)
+         public object[] createArrayProvider(List<Disponibility> lstdisponibilities,  PreOrderItem ing, ref DiningRoom diningRoom)
         {
+            object[] ArrayEfficiency = new object[lstdisponibilities.Count + 1];
             int[] objLamda = new int[lstdisponibilities.Count + 1];
             long[] objProvider = new long[lstdisponibilities.Count + 1];
             object[][] ArrayProvider = new object[lstdisponibilities.Count + 1][];
@@ -937,7 +938,7 @@ namespace BackEndComedores.Logic
 
                 countProveedor++;
             }
-            return ArrayProvider;
+            return ArrayEfficiency;
 
         }
 
