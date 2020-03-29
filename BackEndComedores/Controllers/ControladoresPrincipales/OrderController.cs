@@ -10,7 +10,7 @@ using System.Web.Http.Cors;
 
 namespace BackEndComedores.Controllers.ControladoresPrincipales
 {
-
+    [AllowAnonymous]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     [RoutePrefix("api/Order")]
     public class OrderController : ApiController
@@ -18,10 +18,10 @@ namespace BackEndComedores.Controllers.ControladoresPrincipales
 
         [HttpPost]
         [Route("ProcessOrder")]
-        public PreOrderReturnEntity ProcessOrder(PreOrderReturnEntity preorder)
+        public PreOrderReturnEntity ProcessOrder(long ID)
         {
             LogicBL logicBL = new LogicBL();
-            return logicBL.ProcessOrder(preorder); ;
+            return logicBL.ProcessOrder(ID); ;
 
         }
         

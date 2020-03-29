@@ -100,6 +100,42 @@ namespace BackEndComedores.DataACCESS
         }
 
 
+     
+        public List<Disponibility> GetByProduct(long IDProduct)
+        {
+            List<Disponibility> results = new List<Disponibility>();
+
+            using (var context = new ProyectoMaestriaEntities())
+            {
+
+                var result = context.Disponibility.Where(x => x.IDProduct == IDProduct);
+                if (result != null)
+                {
+
+                    foreach (var temp in result)
+                    {
+                        Disponibility temp1 = new Disponibility();
+                        temp1.ID = temp.ID;
+                        temp1.IDProvider = temp.IDProvider;
+                        temp1.IDProduct = temp.IDProduct;
+                        temp1.Quantity = temp.Quantity;
+                        temp1.UnitValue = temp.UnitValue;
+                        temp1.ExpirationDate = temp.ExpirationDate;
+                        results.Add(temp1);
+                    }
+
+                    return results;
+                }
+                else
+                    return results;
+
+
+
+
+            }
+        }
+
+
 
 
 

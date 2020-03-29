@@ -24,9 +24,16 @@ namespace BackEndComedores.Logic
             }
 
 
+            public List<Disponibility> GetByProduct(long IDProduct)
+            {
+                DisponibilityDAL comedordal = new DisponibilityDAL();
+                return comedordal.GetByProduct(IDProduct);
+            }
 
 
-            public string Update(Disponibility code)
+
+
+        public string Update(Disponibility code)
             {
             DisponibilityDAL comedordal = new DisponibilityDAL();
                 return comedordal.Update(code);

@@ -866,21 +866,100 @@ namespace BackEndComedores.Logic
 
 
 
-        public PreOrderReturnEntity ProcessOrder(PreOrderReturnEntity preorder)
+        public PreOrderReturnEntity ProcessOrder(long ID)
         {
 
+            /*ELEMENTO FINAL*/
             PreOrderReturnEntity order = new PreOrderReturnEntity();
+            /*ELEMENTO FINAL*/
 
 
+            PreOrderBL preorderdal = new PreOrderBL();
+            PreOrder preorders = preorderdal.GetById(ID);
 
+
+            List<PreOrderReturnEntity> preordersforeturn = new List<PreOrderReturnEntity>();
+            ProductBL productbl = new ProductBL();
+
+            PreOrderItemBL lstPreOrderItemBL = new PreOrderItemBL();
+            DisponibilityBL disponibilityBL = new DisponibilityBL();
+            DiningRoom diningRoom = GetComedorByID((long)preorders.IDDiningRoom);
+
+            long id = preorders.ID;
+            List<PreOrderItem> ingredients = lstPreOrderItemBL.GetByOrder(id);
+           
+
+            foreach (PreOrderItem ing in ingredients)
+            {
+               Product product = productbl.GetByID(ing.IDProduct);
+               List<Disponibility> lstDisponbilityHigher = disponibilityBL.GetByProduct(product.ID).Where(x => x.Quantity >= (ing.Quantity * diningRoom.ChildNumber)).ToList();
+                List<Disponibility> lstDisponbilityMinimum = disponibilityBL.GetByProduct(product.ID).Where(x => x.Quantity < (ing.Quantity * diningRoom.ChildNumber)).ToList();
+
+               if (lstDisponbilityHigher.Count > 0)
+               {
+                    int[] objLamda = new int[lstDisponbilityHigher.Count + 1];
+                    long[] objProvider = new long[lstDisponbilityHigher.Count + 1];
+                    object[][] objIdealProvider = new object[lstDisponbilityHigher.Count + 1][];
+                    int countProveedor = 0;
+
+                    foreach (Disponibility dis in lstDisponbilityHigher)
+                    {
+                        if (countProveedor > 0)
+                        {
+                            TimeSpan dayExperied = ((DateTime)dis.ExpirationDate - DateTime.Now);
+                            double quantity = (double)(ing.Quantity * diningRoom.ChildNumber);
+                            double cost = (quantity * (double)dis.UnitValue);
+                            objIdealProvider[countProveedor] = new object[] {cost, dayExperied, 15000, quantity}; /*COSTO,DIAS DE VENCIMIENTO,DISTANCIA,COSTO*/
+                            objLamda[countProveedor] = 0;
+                            objProvider[countProveedor] = (long)dis.IDProvider;
+                        }
+                        else
+                        {
+                            /*PROVEEDOR IDEAL*/
+                            objIdealProvider[0] = new object[] { 0, 3, 15000, ing.Quantity };  /*COSTO,DIAS DE VENCIMIENTO,DISTANCIA,COSTO*/
+                            objProvider[0] = -1;
+                            objLamda[countProveedor] = 1;
+                        }
+                       
+                        countProveedor++;
+                    }
+
+                } else
+                {
+
+                    int[] objLamda = new int[lstDisponbilityMinimum.Count + 1];
+                    long[] objProvider = new long[lstDisponbilityMinimum.Count + 1];
+                    object[][] objIdealProvider = new object[lstDisponbilityMinimum.Count + 1][];
+                    int countProveedor = 0;
+
+                    foreach (Disponibility dis in lstDisponbilityMinimum)
+                    {
+                        if (countProveedor > 0)
+                        {
+                            TimeSpan dayExperied = ((DateTime)dis.ExpirationDate - DateTime.Now);
+                            double quantity = (double)(ing.Quantity * diningRoom.ChildNumber);
+                            double cost = (quantity * (double)dis.UnitValue);
+                            objIdealProvider[countProveedor] = new object[] { cost, dayExperied, 15000, quantity }; /*COSTO,DIAS DE VENCIMIENTO,DISTANCIA,COSTO*/
+                            objLamda[countProveedor] = 0;
+                            objProvider[countProveedor] = (long)dis.IDProvider;
+                        }
+                        else
+                        {
+                            /*PROVEEDOR IDEAL*/
+                            objIdealProvider[0] = new object[] { 0, 3, 15000, ing.Quantity };  /*COSTO,DIAS DE VENCIMIENTO,DISTANCIA,COSTO*/
+                            objProvider[0] = -1;
+                            objLamda[countProveedor] = 1;
+                        }
+
+                        countProveedor++;
+                    }
+
+                }
+             }
+
+            
             return order;
         }
-
-
-
-
-
-
-
+        
     }
 }
