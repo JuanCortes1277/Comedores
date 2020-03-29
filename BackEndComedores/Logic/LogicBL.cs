@@ -862,11 +862,18 @@ namespace BackEndComedores.Logic
             }
             return "no se ha podido insertar los registros";
 
+        }
 
 
 
+        public PreOrderReturnEntity ProcessOrder(PreOrderReturnEntity preorder)
+        {
+
+            PreOrderReturnEntity order = new PreOrderReturnEntity();
 
 
+
+            return order;
         }
 
 

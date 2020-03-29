@@ -189,6 +189,7 @@
     <Compile Include="Controllers\ControladoresPrincipales\DiningRoomController.cs" />
     <Compile Include="Controllers\ControladoresPrincipales\DisponibilityController.cs" />
     <Compile Include="Controllers\ControladoresPrincipales\IngredientController.cs" />
+    <Compile Include="Controllers\ControladoresPrincipales\OrderController.cs" />
     <Compile Include="Controllers\ControladoresPrincipales\PreOrderController.cs" />
     <Compile Include="Controllers\ControladoresPrincipales\RecipeController.cs" />
     <Compile Include="Controllers\ControladoresPrincipales\SystemUserController.cs" />
