@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using BackEndComedores.Utils;
+using BackEndComedores.Models.ProcessModel;
 
 
 namespace BackEndComedores.Logic
@@ -893,16 +894,17 @@ namespace BackEndComedores.Logic
             foreach (PreOrderItem ing in ingredients)
             {
                Product product = productbl.GetByID(ing.IDProduct);
-               List<Disponibility> lstDisponbilityHigher = disponibilityBL.GetByProduct(product.ID).Where(x => x.Quantity >= (ing.Quantity * diningRoom.ChildNumber)).ToList();
-               List<Disponibility> lstDisponbilityMinimum = disponibilityBL.GetByProduct(product.ID).Where(x => x.Quantity < (ing.Quantity * diningRoom.ChildNumber)).ToList();
+               double quantityProduct = (double)(ing.Quantity * diningRoom.ChildNumber);
+               List<Disponibility> lstDisponbilityHigher = disponibilityBL.GetByProduct(product.ID).Where(x => x.Quantity >= quantityProduct).ToList();
+               List<Disponibility> lstDisponbilityMinimum = disponibilityBL.GetByProduct(product.ID).Where(x => x.Quantity < quantityProduct).ToList();
 
                if (lstDisponbilityHigher.Count > 0)
                 {
-                    createArrayProvider(lstDisponbilityHigher, ing, ref diningRoom);
+                    createArrayProvider(createObjectDisponibilityProvider(lstDisponbilityHigher,true, quantityProduct),ref diningRoom, true);
 
                 } else
                 {
-                    createArrayProvider(lstDisponbilityHigher, ing, ref diningRoom);
+                    createArrayProvider(createObjectDisponibilityProvider(lstDisponbilityMinimum, false, quantityProduct), ref diningRoom,false);
                 }
              }
 
@@ -910,7 +912,7 @@ namespace BackEndComedores.Logic
             return order;
         }
 
-         public object[] createArrayProvider(List<Disponibility> lstdisponibilities,  PreOrderItem ing, ref DiningRoom diningRoom)
+         public object[] createArrayProvider(List<DisponibilityProcess> lstdisponibilities, ref DiningRoom diningRoom, bool complete)
         {
             object[] ArrayEfficiency = new object[lstdisponibilities.Count + 1];
             int[] objLamda = new int[lstdisponibilities.Count + 1];
@@ -918,27 +920,46 @@ namespace BackEndComedores.Logic
             object[][] ArrayProvider = new object[lstdisponibilities.Count + 1][];
             int countProveedor = 0;
 
-            foreach (Disponibility dis in lstdisponibilities)
+            foreach (DisponibilityProcess dis in lstdisponibilities)
             {
                 if (countProveedor > 0)
                 {
                     TimeSpan diffExperied = ((DateTime)dis.ExpirationDate - DateTime.Now);
 
-                    double prueba = Utils.Utils.minmax(0,1,1);
-                    double quantity = Utils.Utils.ZScore((double)(ing.Quantity * diningRoom.ChildNumber));
-                    double cost = Utils.Utils.ZScore((quantity * (double)dis.UnitValue));
-                    double distance = Utils.Utils.ZScore(15000);
-                    double dayExperied = Utils.Utils.ZScore(diffExperied.Days);
+                    
+                    double quantity = Utils.Utils.minmax(dis.Quantity, 1,1);
+                    double cost = Utils.Utils.minmax(dis.Cost, 1,1);
+                    double distance = Utils.Utils.minmax(15000, 60000, 1);
+                    double dayExperied = Utils.Utils.minmax(diffExperied.Days,1,1);
 
-
-                    ArrayProvider[countProveedor] = new object[] { cost, dayExperied, distance, quantity }; /*COSTO,DIAS DE VENCIMIENTO,DISTANCIA,COSTO*/
+                    if(complete)
+                    {
+                        ArrayProvider[countProveedor] = new object[] { cost, dayExperied, distance}; /*COSTO,DIAS DE VENCIMIENTO,DISTANCIA,COSTO*/
+                    } else
+                    {
+                        ArrayProvider[countProveedor] = new object[] { cost, dayExperied, distance, quantity }; /*COSTO,DIAS DE VENCIMIENTO,DISTANCIA,COSTO*/
+                    }
+                    
                     objLamda[countProveedor] = 0;
                     objProvider[countProveedor] = (long)dis.IDProvider;
                 }
                 else
                 {
                     /*PROVEEDOR IDEAL*/
-                    ArrayProvider[0] = new object[] { 0, 3, 15000, ing.Quantity };  /*COSTO,DIAS DE VENCIMIENTO,DISTANCIA,COSTO*/
+                    double quantity = Utils.Utils.minmax(dis.Quantity+1, 1, 1);
+                    double cost = Utils.Utils.minmax(dis.Cost+1, 1, 1);
+                    double distance = Utils.Utils.minmax(15000, 60000, 1);
+                    double dayExperied = Utils.Utils.minmax(3, 1, 1);
+
+
+                    if (complete)
+                    {
+                        ArrayProvider[countProveedor] = new object[] { cost, dayExperied, distance }; /*COSTO,DIAS DE VENCIMIENTO,DISTANCIA,COSTO*/
+                    }
+                    else
+                    {
+                        ArrayProvider[countProveedor] = new object[] { cost, dayExperied, distance, quantity }; /*COSTO,DIAS DE VENCIMIENTO,DISTANCIA,COSTO*/
+                    }
                     objProvider[0] = -1;
                     objLamda[countProveedor] = 1;
                 }
@@ -947,6 +968,37 @@ namespace BackEndComedores.Logic
             }
             return ArrayEfficiency;
 
+        }
+
+
+        public List<DisponibilityProcess> createObjectDisponibilityProvider(List<Disponibility> lstDisponbility, bool complete, double quantityProduct)
+        {
+            List<DisponibilityProcess> lstdisponibilities = new List<DisponibilityProcess>();
+
+            foreach(Disponibility dis in lstDisponbility)
+            {
+                DisponibilityProcess dispon = new DisponibilityProcess();
+                
+
+                dispon.ID = dis.ID;
+                dispon.IDProvider = dis.IDProvider;
+                dispon.IDProduct =  dis.IDProduct;
+                dispon.UnitValue = (double)dis.UnitValue;
+                dispon.Cost = 0;
+                dispon.ExpirationDate = dis.ExpirationDate;
+                if (complete)
+                {
+                    dispon.Quantity = quantityProduct;
+                }
+                else
+                {
+                    dispon.Quantity = (double)dis.Quantity;
+                }
+                dispon.Cost = dispon.UnitValue * dispon.Quantity;
+                lstdisponibilities.Add(dispon);
+
+            }
+            return lstdisponibilities;
         }
 
     }
