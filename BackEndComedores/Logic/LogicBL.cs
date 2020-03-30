@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using BackEndComedores.Utils;
 
 
 namespace BackEndComedores.Logic
@@ -921,10 +922,16 @@ namespace BackEndComedores.Logic
             {
                 if (countProveedor > 0)
                 {
-                    TimeSpan dayExperied = ((DateTime)dis.ExpirationDate - DateTime.Now);
-                    double quantity = (double)(ing.Quantity * diningRoom.ChildNumber);
-                    double cost = (quantity * (double)dis.UnitValue);
-                    ArrayProvider[countProveedor] = new object[] { cost, dayExperied, 15000, quantity }; /*COSTO,DIAS DE VENCIMIENTO,DISTANCIA,COSTO*/
+                    TimeSpan diffExperied = ((DateTime)dis.ExpirationDate - DateTime.Now);
+
+                    double prueba = Utils.Utils.minmax(0,1,1);
+                    double quantity = Utils.Utils.ZScore((double)(ing.Quantity * diningRoom.ChildNumber));
+                    double cost = Utils.Utils.ZScore((quantity * (double)dis.UnitValue));
+                    double distance = Utils.Utils.ZScore(15000);
+                    double dayExperied = Utils.Utils.ZScore(diffExperied.Days);
+
+
+                    ArrayProvider[countProveedor] = new object[] { cost, dayExperied, distance, quantity }; /*COSTO,DIAS DE VENCIMIENTO,DISTANCIA,COSTO*/
                     objLamda[countProveedor] = 0;
                     objProvider[countProveedor] = (long)dis.IDProvider;
                 }
