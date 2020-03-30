@@ -13,6 +13,7 @@ namespace BackEndComedores.Models.ProcessModel
         public double Quantity { get; set; }
         public double UnitValue { get; set; }
         public double Cost { get; set; }
+        public double ExpirationDays { get; set; }
         public Nullable<System.DateTime> ExpirationDate { get; set; }
     }
 }

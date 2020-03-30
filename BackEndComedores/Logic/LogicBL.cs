@@ -921,17 +921,30 @@ namespace BackEndComedores.Logic
             object[][] ArrayProvider = new object[lstdisponibilities.Count + 1][];
             int countProveedor = 0;
 
+            /*MAXIMOS y MINIMOS*/
+
+            double maxquantity = lstdisponibilities.Max(item => item.Quantity);
+            double minquantity = lstdisponibilities.Min(item => item.Quantity);
+            double maxcost     = lstdisponibilities.Max(item => item.Cost);
+            double mincost     = lstdisponibilities.Min(item => item.Cost);
+            double maxdistance = 70000;
+            double mindistance = 0;
+            double maxdayExperied = 20;
+            double mindayExperied = lstdisponibilities.Max(item => item.ExpirationDays);
+
+            /*MAXIMOS y MINIMOS*/
+            
             foreach (DisponibilityProcess dis in lstdisponibilities)
             {
                 if (countProveedor > 0)
                 {
-                    TimeSpan diffExperied = ((DateTime)dis.ExpirationDate - DateTime.Now);
+                    
 
                     
-                    double quantity = Utils.Utils.minmax(dis.Quantity, 1,1);
-                    double cost = Utils.Utils.minmax(dis.Cost, 1,1);
-                    double distance = Utils.Utils.minmax(15000, 60000, 1);
-                    double dayExperied = Utils.Utils.minmax(diffExperied.Days,1,1);
+                    double quantity = Utils.Utils.minmax(dis.Quantity, maxquantity, minquantity);
+                    double cost = Utils.Utils.minmax(dis.Cost, maxcost, mincost);
+                    double distance = Utils.Utils.minmax(15000, maxdistance, mindistance);
+                    double dayExperied = Utils.Utils.minmax(dis.ExpirationDays, maxdayExperied, mindayExperied);
 
                     if(complete)
                     {
@@ -947,10 +960,10 @@ namespace BackEndComedores.Logic
                 else
                 {
                     /*PROVEEDOR IDEAL*/
-                    double quantity = Utils.Utils.minmax(dis.Quantity+1, 1, 1);
-                    double cost = Utils.Utils.minmax(dis.Cost+1, 1, 1);
-                    double distance = Utils.Utils.minmax(15000, 60000, 1);
-                    double dayExperied = Utils.Utils.minmax(3, 1, 1);
+                    double quantity = Utils.Utils.minmax(dis.Quantity+1, maxquantity, minquantity);
+                    double cost = Utils.Utils.minmax(dis.Cost+1, maxcost, mincost);
+                    double distance = Utils.Utils.minmax(15000, maxdistance, mindistance);
+                    double dayExperied = Utils.Utils.minmax(10, maxdayExperied, mindayExperied);
 
 
                     if (complete)
@@ -979,8 +992,8 @@ namespace BackEndComedores.Logic
             foreach(Disponibility dis in lstDisponbility)
             {
                 DisponibilityProcess dispon = new DisponibilityProcess();
-                
 
+                TimeSpan diffExperied = ((DateTime)dis.ExpirationDate - DateTime.Now);
                 dispon.ID = dis.ID;
                 dispon.IDProvider = dis.IDProvider;
                 dispon.IDProduct =  dis.IDProduct;
@@ -996,6 +1009,7 @@ namespace BackEndComedores.Logic
                     dispon.Quantity = (double)dis.Quantity;
                 }
                 dispon.Cost = dispon.UnitValue * dispon.Quantity;
+                dispon.ExpirationDays = (double)diffExperied.Days;
                 lstdisponibilities.Add(dispon);
 
             }
