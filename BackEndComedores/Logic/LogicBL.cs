@@ -865,8 +865,9 @@ namespace BackEndComedores.Logic
             return "no se ha podido insertar los registros";
 
         }
+        
 
-
+        /*PROCESO DE ORDEN*/
 
         public PreOrderReturnEntity ProcessOrder(long ID)
         {
@@ -1000,6 +1001,8 @@ namespace BackEndComedores.Logic
             }
             return lstdisponibilities;
         }
+
+        /*PROCESO DE ORDEN*/
 
     }
 
