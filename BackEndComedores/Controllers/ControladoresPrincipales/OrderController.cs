@@ -24,6 +24,16 @@ namespace BackEndComedores.Controllers.ControladoresPrincipales
             return logicBL.ProcessOrder(ID); ;
 
         }
-        
+
+
+        [HttpGet]
+        [Route("DistanceMatrix")]
+        public Object DistanceMatrix(string origin, string destination)
+        {
+
+            return Utils.Utils.getDistanceMatrix(origin, destination);
+
+        }
+
     }
 }

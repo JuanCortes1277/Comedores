@@ -14,6 +14,11 @@ namespace BackEndComedores.Models.ProcessModel
         public double UnitValue { get; set; }
         public double Cost { get; set; }
         public double ExpirationDays { get; set; }
-        public Nullable<System.DateTime> ExpirationDate { get; set; }
+        public double DurationValue { get; set; }
+        public string DurationText { get; set; }
+        public double DistanceValue { get; set; }
+        public string DistanceText { get; set; }
+        public string Effectiveness { get; set; }
+    
     }
 }
