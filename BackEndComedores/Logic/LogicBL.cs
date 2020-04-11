@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using BackEndComedores.Utils;
 using BackEndComedores.Models.ProcessModel;
-
+using Microsoft.SolverFoundation.Services;
 
 namespace BackEndComedores.Logic
 {
@@ -1015,9 +1015,17 @@ namespace BackEndComedores.Logic
             }
             return lstdisponibilities;
         }
+     
+    
+
 
         /*PROCESO DE ORDEN*/
+        //Simplex
+
+        
+
 
     }
+
 
 }
