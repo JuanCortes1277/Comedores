@@ -826,10 +826,11 @@ namespace BackEndComedores.Logic
             PreOrderBL preorderbl = new PreOrderBL();
             PreOrder preord = new PreOrder();
             preord.IDDiningRoom = preorder.IDDiningRoom;
+            DiningRoom diningRoom = GetComedorByID((long)preord.IDDiningRoom);
             preord.IDRecipe = preorder.IDRecipe;
             PreOrderItemBL preOrderItemBL = new PreOrderItemBL();
             List<PreOrderItem> preitems = new List<PreOrderItem>();
-            
+            DisponibilityBL disponibilityBL = new DisponibilityBL();
             string responseString = "";
             int respons = 0;
             responseString = preorderbl.insert(preord);
@@ -847,22 +848,31 @@ namespace BackEndComedores.Logic
                     pritem.IDPreOrder = respons;
                     pritem.IDProduct = produc.ID;
                     pritem.Quantity = produc.Quantity;
+                    double  sumProduct = (double) disponibilityBL.GetByProduct((long)pritem.IDProduct).Sum(x=> x.Quantity);
+                    double sumTotal = (double)(diningRoom.ChildNumber * pritem.Quantity);
+                    if (sumProduct < sumTotal)
+                    {
+                        return string.Format("0|Producto {1}-{0} no tiene la disponibilidad que se requiere por niño",produc.Name,produc.Code);
+                    }
                     preitems.Add(pritem);
                 }
+
+
+
                 string resultitems=(preOrderItemBL.InsertList(preitems));
                 int resultitemsNum = int.Parse(resultitems);
                 if (resultitemsNum > 0)
                 {
-                    return "registros insertados";
+                    return "1|Pre-pedido insertado";
 
                 }
                 else
                 {
-                    return "no se ha podido insertar los registros";
+                    return "0|No se pudo insertar el Pre-pedido";
                 }
 
             }
-            return "no se ha podido insertar los registros";
+            return "0|No se pudo insertar el Pre-pedido";
 
         }
 
