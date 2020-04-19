@@ -39,10 +39,10 @@ namespace BackEndComedores.Logic
 
         }
 
-        public List<RecipeProductModelEntity> GetRecomendedProducts()
+        public List<RecipeProductModelEntity> GetRecomendedProducts(int countChildren)
         {
             ProductDAL productDAL = new ProductDAL();
-            return productDAL.GetRecomendedProducts();
+            return productDAL.GetRecomendedProducts( countChildren);
 
         }
         public string Modify(Product product)

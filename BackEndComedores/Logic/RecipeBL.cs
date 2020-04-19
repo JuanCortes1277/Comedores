@@ -31,10 +31,10 @@ namespace BackEndComedores.Logic
             return userdal.GetAll();
         }
 
-        public List<Recipe> GetRecomendedRecipes()
+        public List<Recipe> GetRecomendedRecipes(int countChildren)
         {
             RecipeDAL userdal = new RecipeDAL();
-            return userdal.GetRecomendedRecipes();
+            return userdal.GetRecomendedRecipes(countChildren);
         }
         
         public string Update(Recipe user)

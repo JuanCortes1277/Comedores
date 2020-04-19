@@ -75,10 +75,10 @@ namespace BackEndComedores.Controllers.ControladoresPrincipales
         }
         [HttpGet]
         [Route("GetRecomendedRecipes")]
-        public List<Recipe> GetRecomendedRecipes()
+        public List<Recipe> GetRecomendedRecipes(int countChildren)
         {
             LogicBL logicBL = new LogicBL();
-            return logicBL.GetRecomendedRecipes();
+            return logicBL.GetRecomendedRecipes(countChildren);
 
         }
     }

@@ -98,10 +98,10 @@ namespace BackEndComedores.Logic
 
 
         }
-        public List<RecipeProductModelEntity> GetRecomendedProducts()
+        public List<RecipeProductModelEntity> GetRecomendedProducts(int countChildren)
         {
             ProductBL ProductBL = new ProductBL();
-            return ProductBL.GetRecomendedProducts();
+            return ProductBL.GetRecomendedProducts( countChildren);
         }
         public string UpdateProduct(Product product)
         {
@@ -538,10 +538,10 @@ namespace BackEndComedores.Logic
 
 
         }
-        public List<Recipe> GetRecomendedRecipes()
+        public List<Recipe> GetRecomendedRecipes(int countChildren)
         {
             RecipeBL userBL = new RecipeBL();
-            return userBL.GetRecomendedRecipes();
+            return userBL.GetRecomendedRecipes(countChildren);
 
         }
 

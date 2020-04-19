@@ -165,23 +165,23 @@ namespace BackEndComedores.DataACCESS
 
 
         }
-        public List<Recipe> GetRecomendedRecipes()
+        public List<Recipe> GetRecomendedRecipes(int countChildren)
         {
             List<Recipe> recipes = new List<Recipe>();
 
             using (var context = new ProyectoMaestriaEntities())
             {
 
-                var result =(
-   from R in context.Recipe
-   join I in context.Ingredient on R.ID equals I.IDRecipe
-   join D in context.Disponibility on I.IDProduct equals D.IDProduct
-   where D.Quantity > 0
-   group R by new { R.Code, R.ID, R.Name } into g
-   select new
-   {
+               var result =(
+               from R in context.Recipe
+               join I in context.Ingredient on R.ID equals I.IDRecipe
+               join D in context.Disponibility on I.IDProduct equals D.IDProduct
+               where D.Quantity >= countChildren
+               group R by new { R.Code, R.ID, R.Name } into g
+               select new
+               {
                 ID = g.Key.ID,
-                 Code = g.Key.Code,
+                Code = g.Key.Code,
                 Name= g.Key.Name,
 
              
@@ -200,9 +200,6 @@ namespace BackEndComedores.DataACCESS
                         recipe.ID = temp.ID;
                         recipe.Code = temp.Code;
                         recipe.Name = temp.Name;
-
-                        //  product.Disponibility = temp.Disponibility;
-
                         recipes.Add(recipe);
                     }
 

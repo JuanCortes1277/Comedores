@@ -67,10 +67,10 @@ namespace BackEndComedores.Controllers
         }
         [HttpGet]
         [Route("GetRecomendedProducts")]
-        public List<RecipeProductModelEntity> GetRecomendedProducts()
+        public List<RecipeProductModelEntity> GetRecomendedProducts(int countChildren )
         {
             LogicBL logicBL = new LogicBL();
-            return logicBL.GetRecomendedProducts();
+            return logicBL.GetRecomendedProducts(countChildren);
 
         }
     }
