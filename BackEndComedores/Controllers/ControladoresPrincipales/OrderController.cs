@@ -1,5 +1,6 @@
 ﻿using BackEndComedores.Entidades;
 using BackEndComedores.Logic;
+using BackEndComedores.Models.ProcessModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace BackEndComedores.Controllers.ControladoresPrincipales
 
         [HttpPost]
         [Route("ProcessOrder")]
-        public PreOrderReturnEntity ProcessOrder(long ID)
+        public List<DisponibilityProcess> ProcessOrder(long ID)
         {
             LogicBL logicBL = new LogicBL();
             return logicBL.ProcessOrder(ID); ;

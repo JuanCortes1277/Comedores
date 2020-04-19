@@ -18,7 +18,10 @@ namespace BackEndComedores.Models.ProcessModel
         public string DurationText { get; set; }
         public double DistanceValue { get; set; }
         public string DistanceText { get; set; }
-        public string Effectiveness { get; set; }
-    
+        public double Effectiveness { get; set; }
+
+        public Nullable<long> IDTransport { get; set; }
+        public Nullable<double> CostTransport { get; set; }
+
     }
 }
