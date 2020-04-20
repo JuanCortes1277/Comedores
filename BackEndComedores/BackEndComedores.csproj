@@ -241,6 +241,7 @@
     </Compile>
     <Compile Include="Entidades\CompleteRecipeReturnEntity.cs" />
     <Compile Include="Entidades\CompleteVerificationUserEntity.cs" />
+    <Compile Include="Entidades\CostSummaryEntity.cs" />
     <Compile Include="Entidades\DisponibilityReturnEntity.cs" />
     <Compile Include="Entidades\IngredientReturnEntity.cs" />
     <Compile Include="Entidades\IngredientWithoutRecipeEntity.cs" />

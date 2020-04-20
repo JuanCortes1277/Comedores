@@ -21,5 +21,6 @@ namespace BackEndComedores.Entidades
         public Nullable<int> PaymentUnity { get; set; }
         public Nullable<int> PaymentMeasurement { get; set; }
         public Provider IDProvider { get; set; }
+        //
     }
 }

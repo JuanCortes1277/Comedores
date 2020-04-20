@@ -869,7 +869,7 @@ namespace BackEndComedores.Logic
 
         /*PROCESO DE ORDEN*/
 
-        public List<DisponibilityProcess> ProcessOrder(long ID)
+        public CostSummaryEntity ProcessOrder(long ID)
         {
 
             /*ELEMENTO FINAL*/
@@ -892,7 +892,7 @@ namespace BackEndComedores.Logic
             List<PreOrderItem> ingredients = lstPreOrderItemBL.GetByOrder(id);
 
             List<DisponibilityProcess> lstdisponibilitiesProcess = new List<DisponibilityProcess>();
-
+            double? TotalCost = 0.0;
 
             foreach (PreOrderItem ing in ingredients)
             {
@@ -905,6 +905,37 @@ namespace BackEndComedores.Logic
                 {
                     lstdisponibilitiesProcess = createArrayProvider(createObjectDisponibilityProvider(lstDisponbilityHigher,true, quantityProduct , addressDining),ref diningRoom, true);
                     DisponibilityProcess disponFull = lstdisponibilitiesProcess.OrderByDescending(x => x.Effectiveness).First();
+
+                    /////
+                    Product productTemp =productbl.GetByID(disponFull.IDProduct);
+                    TransportBL transportbl = new TransportBL();
+                    Transport Transport= transportbl.GetMostSuitableTransport(productTemp.ProductType,disponFull.DistanceValue);
+                    double transportcost = Convert.ToDouble((Convert.ToDecimal(disponFull.DistanceValue) / Transport.PaymentUnity) * Transport.PaymentValue);
+                    disponFull.IDTransport = Transport.ID;
+                    disponFull.CostTransport = transportcost;
+
+
+
+
+                    ////////*
+                    ///
+                    /////  Transport MostEffectiveTransport=new Transport();
+                    //decimal ? effectivityTotal = 10000000;
+                    //decimal? effectivityActual = 0;
+                    //foreach (Transport T in transports)
+                    //{
+                    //    if (T.PaymentUnity != null && T.PaymentUnity != null)
+                    //    {
+                    //        effectivityActual = (Convert.ToDecimaldistancia / T.PaymentUnity) * T.PaymentValue;
+                    //        if (effectivityActual < effectivityTotal)
+                    //        {
+                    //            effectivityTotal = effectivityActual;
+                    //            MostEffectiveTransport = T;
+                    //        }
+                    //    }
+
+                    //}
+                    //////////
                     /*
                      buscar mejor transportador versus producto, costo y tipo
                     */
@@ -923,6 +954,13 @@ namespace BackEndComedores.Logic
                             /*
                              buscar mejor transportador versus producto, costo y tipo
                             */
+                            Product productTemp = productbl.GetByID(dispon.IDProduct);
+                            TransportBL transportbl = new TransportBL();
+                            Transport Transport = transportbl.GetMostSuitableTransport(productTemp.ProductType, dispon.DistanceValue);
+                            double transportcost = Convert.ToDouble((Convert.ToDecimal(dispon.DistanceValue) / Transport.PaymentUnity) * Transport.PaymentValue);
+                            dispon.IDTransport = Transport.ID;
+                            dispon.CostTransport = transportcost;
+
                             lstdisponibilitiesProcessFinal.Add(dispon);
                         }
                     }
@@ -931,9 +969,36 @@ namespace BackEndComedores.Logic
                     
                 }
             }
+            DisponibilityProcess anterior = new DisponibilityProcess();
+            TotalCost = 0;
+            var listproviders = lstdisponibilitiesProcessFinal.OrderBy(x => x.IDProvider);
+            for (int i=0;i<listproviders.Count();i++)
+            {
+                if(i + 1< listproviders.Count() ){
+                    if (listproviders.ElementAt(i + 1).IDProvider == listproviders.ElementAt(i).IDProvider)
+                    {
+                        if (listproviders.ElementAt(i + 1).IDTransport != listproviders.ElementAt(i).IDTransport)
+                            TotalCost += listproviders.ElementAt(i).CostTransport;
 
-            
-            return lstdisponibilitiesProcessFinal;
+                    }
+                    if (listproviders.ElementAt(i + 1).IDProvider != listproviders.ElementAt(i).IDProvider)
+                    {
+                        if (listproviders.ElementAt(i + 1).IDProvider == listproviders.ElementAt(i).IDProvider)
+                            TotalCost += listproviders.ElementAt(i).CostTransport;
+
+                    }
+                }
+               
+                TotalCost += listproviders.ElementAt(i).Cost;
+            }
+            CostSummaryEntity costsummary = new CostSummaryEntity();
+            costsummary.TotalCost = TotalCost;
+            costsummary.DisponibilityProcesses = lstdisponibilitiesProcessFinal;
+
+
+
+
+            return costsummary;
         }
 
          public List<DisponibilityProcess> createArrayProvider(List<DisponibilityProcess> lstdisponibilities, ref DiningRoom diningRoom, bool complete)
@@ -948,12 +1013,12 @@ namespace BackEndComedores.Logic
             /*MAXIMOS y MINIMOS*/
 
             double maxquantity = lstdisponibilities.Max(item => item.Quantity);
-            double minquantity = lstdisponibilities.Min(item => item.Quantity);
+            double minquantity = 0;
             double maxcost     = lstdisponibilities.Max(item => item.Cost);
-            double mincost     = lstdisponibilities.Min(item => item.Cost);
+            double mincost = 0;
             double maxdistance = 100000;
             double mindistance = 0.5;
-            double maxdayExperied = 20;
+            double maxdayExperied = lstdisponibilities.Max(item =>item.ExpirationDays); 
             double mindayExperied = 2;
 
             /*MAXIMOS y MINIMOS*/
@@ -980,11 +1045,11 @@ namespace BackEndComedores.Logic
 
             /*CREACION PROVEEDOR IDEAL*/
             
-                double quantityProv = Utils.Utils.minmax(minquantity, maxquantity, minquantity);
-                double costProv = Utils.Utils.minmax(0, maxcost, mincost);
+                double quantityProv = Utils.Utils.minmax(0.5, maxquantity, minquantity);
+                double costProv = Utils.Utils.minmax(0.5, maxcost, mincost);
                 double distanceProv = Utils.Utils.minmax(mindistance, maxdistance, mindistance);
                 double dayExperiedProv = Utils.Utils.minmax(mindayExperied, maxdayExperied, mindayExperied);
-                countProveedor++;
+               // countProveedor++;
 
                 if (complete)
                 {
@@ -996,18 +1061,35 @@ namespace BackEndComedores.Logic
                 }
 
             /*CREACION PROVEEDOR IDEAL*/
+            double effectiveness = 0;
 
 
             /*PROCESO  DE OBTENER EFICIENCIA*/
-            
+
             for (int i = 0; i < countProveedor; i++)
             {
-                double effectiveness = 0;
+                effectiveness = 0;
                 /*METODO  EFICIENCIA
                  
                  effectiveness =  Utils.Utils.simplex(ArrayProvider,i)
                  
                 */
+                if (complete)
+                {
+                    double[,] matrix = MatrixDimensions(ArrayProvider, countProveedor+1, 3);
+
+                    effectiveness = Utils.Utils.GetEffectivityPerProvider(matrix, countProveedor, i);
+
+                }
+                else
+                {
+
+
+
+                    double[,]matrix=MatrixDimensions(ArrayProvider, countProveedor+1,4);
+                    effectiveness = Utils.Utils.GetEffectivityPerProvider(matrix, countProveedor, i);
+
+                }
 
                 DisponibilityProcess disponibility = new DisponibilityProcess();
                 if (lstdisponibilities[i] != null)
@@ -1052,16 +1134,33 @@ namespace BackEndComedores.Logic
                 {
                     dispon.Quantity = (double)dis.Quantity;
                 }
-                dispon.DistanceValue = (double)distanceMatrix["distanceValue"];
+                var itest= distanceMatrix["distanceValue"];
+                dispon.DistanceValue =Convert.ToDouble( distanceMatrix["distanceValue"]);
+
+                //    dispon.DistanceValue = (double)distanceMatrix["distanceValue"];
                 dispon.DistanceText = distanceMatrix["distanceText"].ToString();
-                dispon.DurationValue = (double)distanceMatrix["durationValue"];
+                dispon.DurationValue = Convert.ToDouble(distanceMatrix["durationValue"]);
                 dispon.DurationText = distanceMatrix["durationText"].ToString();
                 dispon.Cost = dispon.UnitValue * dispon.Quantity;
-                dispon.ExpirationDays = (double)diffExperied.Days;
+                dispon.ExpirationDays = Convert.ToDouble(diffExperied.Days);
                 lstdisponibilities.Add(dispon);
 
             }
             return lstdisponibilities;
+        }
+        public double[,] MatrixDimensions(double[][]array, int NumElements, int Column )
+        {
+
+            double[,] arr = new double[NumElements, Column];//declaration of 2D array  
+            for (int i = 0; i < NumElements; i++)
+            {
+                for (int j = 0; j < Column; j++)
+                {
+                    arr[i, j] = array[i][j];
+                }
+            }
+            return arr;
+
         }
 
     }

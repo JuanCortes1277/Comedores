@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Configuration;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using Microsoft.SolverFoundation.Services;
 
 namespace BackEndComedores.Utils
 {
@@ -64,6 +65,75 @@ namespace BackEndComedores.Utils
             }
             return dictionaryDistanceMatrix;
         }
+        public static double GetEffectivityPerProvider(double[,] b, int totalproviders, int posicionacomparar)
+        {
+            Term goal = 0.0;
+            int status = 0;
+            int variablesQuantity = b.GetLength(1);
+            //   var efficiency = new Decision(Domain.RealNonnegative, "efficiency");
+
+
+            Console.WriteLine(variablesQuantity);
+            var solver = SolverContext.GetContext();
+            solver.ClearModel();
+            var model = solver.CreateModel();
+            var n = b.GetLength(1);
+            var x = new Decision[n];
+            for (var i = 0; i < n; ++i)
+            {
+                model.AddDecision(x[i] = new Decision(Domain.RealNonnegative, null));
+
+            }
+
+
+
+            for (int i = 0; i < variablesQuantity; i++)
+            {
+                goal += (Model.Power(x[i], 2));
+            }
+            Term sumatory = 0.0;
+            for (var i = 0; i < n; ++i)
+            {
+                sumatory += x[i];
+            }
+
+            model.AddConstraint("igual1", sumatory = 1.00000);
+            int constrainNumber = 0;
+            for (int i = 0; i < b.GetLength(1); i++)
+            {
+                Term a = 0.000;
+                for (int j = 0; j < b.GetLength(0); j++)
+                {
+
+                    if (i < 3)
+                    {
+
+                        a += ((b[j,i]) * x[status]) / (b[posicionacomparar, i]);
+                    //    Console.WriteLine("(b[posicionacomparar, i]) " + (b[posicionacomparar, i]));
+                    }
+
+                    if (i == 3)
+                    {
+                        a = a - (((b[j, i]) * x[status]) / (b[j, i]));
+                    //    Console.WriteLine("(b[j, i]) " + (b[j, i]));
+                    }
+
+                }
+                model.AddConstraint("constrain" + constrainNumber, a <= 1.000);
+                constrainNumber++;
+                status++;
+            }
+
+            model.AddGoal(null, GoalKind.Minimize, goal);
+
+            var solution = solver.Solve();
+           
+
+            return solution.Goals.First().ToDouble();
+
+
+        }
+
 
 
 

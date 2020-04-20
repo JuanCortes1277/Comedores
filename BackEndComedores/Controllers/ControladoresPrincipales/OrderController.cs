@@ -19,7 +19,7 @@ namespace BackEndComedores.Controllers.ControladoresPrincipales
 
         [HttpPost]
         [Route("ProcessOrder")]
-        public List<DisponibilityProcess> ProcessOrder(long ID)
+        public CostSummaryEntity ProcessOrder(long ID)
         {
             LogicBL logicBL = new LogicBL();
             return logicBL.ProcessOrder(ID); ;

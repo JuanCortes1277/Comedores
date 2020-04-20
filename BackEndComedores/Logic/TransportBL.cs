@@ -50,6 +50,15 @@ namespace BackEndComedores.Logic
             return providerdal.Delete(code);
 
         }
+        public Transport GetMostSuitableTransport(long? type,double distancia)
+        {
+            TransportDAL providerdal = new TransportDAL();
+
+
+            return providerdal.GetMostSuitableTransport(type,distancia);
+
+        }
+
 
 
     }

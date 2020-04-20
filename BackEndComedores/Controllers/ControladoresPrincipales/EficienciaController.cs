@@ -40,12 +40,12 @@ namespace BackEndComedores.Controllers.ControladoresPrincipales
         public void Delete(int id)
         {
         }
-        [HttpGet]
-        [Route("GeteficienciaPorPedido")]
-        public void GeteficienciaPorPedido(long Id)
-        {
-            LogicBL logic = new LogicBL();
-            logic.MostSuitableProvidersSimplex(Id);
-        }
+        //[HttpGet]
+        //[Route("GeteficienciaPorPedido")]
+        //public void GeteficienciaPorPedido(long Id)
+        //{
+        //    LogicBL logic = new LogicBL();
+        //    logic.MostSuitableProvidersSimplex(Id);
+        //}
     }
 }
