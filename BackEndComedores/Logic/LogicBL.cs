@@ -983,7 +983,7 @@ namespace BackEndComedores.Logic
             TotalCost = 0;
             var listproviders = lstdisponibilitiesProcessFinal.OrderBy(x => x.IDProvider);
             for (int i=0;i<listproviders.Count();i++)
-            {
+            { 
                 if(i + 1< listproviders.Count() ){
                     if (listproviders.ElementAt(i + 1).IDProvider == listproviders.ElementAt(i).IDProvider)
                     {
