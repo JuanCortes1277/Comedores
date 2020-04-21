@@ -810,9 +810,13 @@ namespace BackEndComedores.Logic
                     products.Add(pr);
                 }
                 PreOrderReturnEntity preordernew = new PreOrderReturnEntity();
+
                 preordernew.ID = pre.ID;
                 preordernew.IDDiningRoom = pre.IDDiningRoom;
                 preordernew.IDRecipe = pre.IDRecipe;
+                preordernew.PreOrderDate = pre.PreOrderDate;
+                preordernew.Accepted = pre.Accepted;
+
 
                 preordernew.IDProduct = products;
                 preordersforeturn.Add(preordernew);
@@ -833,12 +837,22 @@ namespace BackEndComedores.Logic
             DisponibilityBL disponibilityBL = new DisponibilityBL();
             string responseString = "";
             int respons = 0;
+
+            foreach (ProductReturnEntity produc in preorder.IDProduct)
+            {
+                double sumProduct = (double)disponibilityBL.GetByProduct((long)produc.ID).Sum(x => x.Quantity);
+                double sumTotal = (double)(diningRoom.ChildNumber * produc.Quantity);
+                if (sumProduct < sumTotal)
+                {
+                    return string.Format("0|Producto {1}-{0} no tiene la disponibilidad que se requiere por niño", produc.Name, produc.Code);
+                }
+            }
+
             responseString = preorderbl.insert(preord);
 
-            if (responseString.Length < 6)
+               if (responseString.Length < 6)
             {
                 respons = int.Parse(responseString);
-
             }
             if (respons > 0)
             {
@@ -848,12 +862,6 @@ namespace BackEndComedores.Logic
                     pritem.IDPreOrder = respons;
                     pritem.IDProduct = produc.ID;
                     pritem.Quantity = produc.Quantity;
-                    double  sumProduct = (double) disponibilityBL.GetByProduct((long)pritem.IDProduct).Sum(x=> x.Quantity);
-                    double sumTotal = (double)(diningRoom.ChildNumber * pritem.Quantity);
-                    if (sumProduct < sumTotal)
-                    {
-                        return string.Format("0|Producto {1}-{0} no tiene la disponibilidad que se requiere por niño",produc.Name,produc.Code);
-                    }
                     preitems.Add(pritem);
                 }
 
