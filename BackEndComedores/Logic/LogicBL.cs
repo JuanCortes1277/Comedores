@@ -659,13 +659,14 @@ namespace BackEndComedores.Logic
                 foreach (PreOrderItem ing in ingredients)
                 {
                     Product product = productbl.GetByID(ing.IDProduct);
+                    DiningRoom diningRoom = GetComedorByID((long)pre.IDDiningRoom);
                     ProductReturnEntity pr = new ProductReturnEntity();
                     pr.ID = product.ID;
                     pr.MeasurementUnit = product.MeasurementUnit;
                     pr.Name = product.Name;
                     pr.Code = product.Code;
                     pr.Preservation = product.Preservation;
-                    pr.Quantity = ing.Quantity;
+                    pr.Quantity = ing.Quantity * diningRoom.ChildNumber;
                     pr.Description = product.Description;
                     products.Add(pr);
                 }
@@ -702,18 +703,20 @@ namespace BackEndComedores.Logic
 
             List<PreOrderItem> ingredients = ingredientBL.GetByOrder(id);
             List<ProductReturnEntity> products = new List<ProductReturnEntity>();
+            DiningRoom diningRoom = GetComedorByID((long)preorders.IDDiningRoom);
 
             foreach (PreOrderItem ing in ingredients)
             {
 
                 Product product = productbl.GetByID(ing.IDProduct);
+               
                 ProductReturnEntity pr = new ProductReturnEntity();
                 pr.ID = product.ID;
                 pr.MeasurementUnit = product.MeasurementUnit;
                 pr.Name = product.Name;
                 pr.Code = product.Code;
                 pr.Preservation = product.Preservation;
-                pr.Quantity = ing.Quantity;
+                pr.Quantity = ing.Quantity * diningRoom.ChildNumber;
                 pr.Description = product.Description;
                 products.Add(pr);
 
@@ -755,13 +758,15 @@ namespace BackEndComedores.Logic
                 foreach (PreOrderItem ing in ingredients)
                 {
                     Product product = productbl.GetByID(ing.IDProduct);
+
+                    DiningRoom diningRoom = GetComedorByID((long)pre.IDDiningRoom);
                     ProductReturnEntity pr = new ProductReturnEntity();
                     pr.ID = product.ID;
                     pr.MeasurementUnit = product.MeasurementUnit;
                     pr.Name = product.Name;
                     pr.Code = product.Code;
                     pr.Preservation = product.Preservation;
-                    pr.Quantity = ing.Quantity;
+                    pr.Quantity = ing.Quantity * diningRoom.ChildNumber;
                     pr.Description = product.Description;
                     products.Add(pr);
                 }
@@ -795,6 +800,7 @@ namespace BackEndComedores.Logic
                 // long id =long.Parse( pre.IDRecipe);
                 List<PreOrderItem> ingredients = ingredientBL.GetByOrder(id);
                 List<ProductReturnEntity> products = new List<ProductReturnEntity>();
+                DiningRoom diningRoom = GetComedorByID((long)pre.IDDiningRoom);
 
                 foreach (PreOrderItem ing in ingredients)
                 {
@@ -805,7 +811,7 @@ namespace BackEndComedores.Logic
                     pr.Name = product.Name;
                     pr.Code = product.Code;
                     pr.Preservation = product.Preservation;
-                    pr.Quantity = ing.Quantity;
+                    pr.Quantity = ing.Quantity * diningRoom.ChildNumber;
                     pr.Description = product.Description;
                     products.Add(pr);
                 }
