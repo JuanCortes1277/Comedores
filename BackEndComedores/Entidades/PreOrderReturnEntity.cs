@@ -13,5 +13,6 @@ namespace BackEndComedores.Entidades
         public List<ProductReturnEntity> IDProduct;
         public Nullable<System.DateTime> PreOrderDate { get; set; }
         public Nullable<bool> Accepted { get; set; }
+        public Nullable <double> NumKids { get; set; }
     }
 }

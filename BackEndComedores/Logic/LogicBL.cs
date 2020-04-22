@@ -928,7 +928,7 @@ namespace BackEndComedores.Logic
                if (lstDisponbilityHigher.Count > 0)
                 {
                     lstdisponibilitiesProcess = createArrayProvider(createObjectDisponibilityProvider(lstDisponbilityHigher,true, quantityProduct , addressDining),ref diningRoom, true);
-                    DisponibilityProcess disponFull = lstdisponibilitiesProcess.OrderBy(x => x.Effectiveness).First();
+                    DisponibilityProcess disponFull = lstdisponibilitiesProcess.OrderByDescending(x => x.Effectiveness).First();
 
                     /////
                     Product productTemp =productbl.GetByID(disponFull.IDProduct);
@@ -970,7 +970,7 @@ namespace BackEndComedores.Logic
                 {
                     lstdisponibilitiesProcess =  createArrayProvider(createObjectDisponibilityProvider(lstDisponbilityMinimum, false, quantityProduct, addressDining), ref diningRoom,false);
                     double quantityFinal = 0;
-                    foreach (DisponibilityProcess dispon in lstdisponibilitiesProcess.OrderBy(x => x.Effectiveness))
+                    foreach (DisponibilityProcess dispon in lstdisponibilitiesProcess.OrderByDescending(x => x.Effectiveness))
                     {
                         quantityFinal = quantityFinal + dispon.Quantity;
                         if (quantityFinal <=  quantityProduct )
