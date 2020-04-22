@@ -158,7 +158,7 @@ namespace BackEndComedores.DataACCESS
                 using (var context = new ProyectoMaestriaEntities())
                 {
 
-                    var result = context.Transport.Where(x => x.TransportType == type).ToList();
+                    var result = context.Transport.Where(x => x.TransportType == type && x.Availability==true).ToList();
 
 
                     if (result != null)
