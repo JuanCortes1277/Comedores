@@ -190,7 +190,7 @@ namespace BackEndComedores.DataACCESS
                     {
                         if(T.PaymentUnity!=null && T.PaymentUnity != null)
                         {
-                            effectivityActual =(Convert.ToDecimal(distancia)/ T.PaymentUnity) * T.PaymentValue;
+                            effectivityActual =(Convert.ToDecimal((distancia/1000))/ T.PaymentUnity) * T.PaymentValue;
                             if (effectivityActual < effectivityTotal)
                             {
                                 effectivityTotal = effectivityActual;
