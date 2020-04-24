@@ -11,13 +11,13 @@ using System.Web.Http.Cors;
 
 namespace BackEndComedores.Controllers.ControladoresPrincipales
 {
-    [AllowAnonymous]
+    [Authorize]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     [RoutePrefix("api/Order")]
     public class OrderController : ApiController
     {
 
-        [HttpPost]
+        [HttpGet]
         [Route("ProcessOrder")]
         public CostSummaryEntity ProcessOrder(long ID)
         {
