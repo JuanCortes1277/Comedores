@@ -9,17 +9,17 @@ using System.Web.Http.Cors;
 
 namespace BackEndComedores.Controllers.ControladoresPrincipales
 {
-    //[Authorize]
+    [Authorize]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     [RoutePrefix("api/OrderItem")]
     public class OrderItemController : ApiController
     {
         [HttpPost]
         [Route("InsertOrderItem")]
-        public string InsertOrderItem(OrderItem orderItem)
+        public string InsertOrderItem(List<OrderItem> lstorderItem)
         {
             LogicBL orderItemDAL = new LogicBL();
-            return orderItemDAL.InsertOrderItem(orderItem);
+            return orderItemDAL.InsertOrderItem(lstorderItem);
         }
         [HttpGet]
         [Route("GetOrderItemById")]

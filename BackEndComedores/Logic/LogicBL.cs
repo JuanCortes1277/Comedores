@@ -1168,7 +1168,6 @@ namespace BackEndComedores.Logic
                 var itest= distanceMatrix["distanceValue"];
                 dispon.DistanceValue =Convert.ToDouble( distanceMatrix["distanceValue"]);
 
-                //    dispon.DistanceValue = (double)distanceMatrix["distanceValue"];
                 dispon.DistanceText = distanceMatrix["distanceText"].ToString();
                 dispon.DurationValue = Convert.ToDouble(distanceMatrix["durationValue"]);
                 dispon.DurationText = distanceMatrix["durationText"].ToString();
@@ -1193,10 +1192,15 @@ namespace BackEndComedores.Logic
             return arr;
 
         }
-        public string InsertOrderItem(OrderItem orderItem)
+        public string InsertOrderItem(List<OrderItem> lstorderItem)
         {
             OrderItemBLL orderItemDAL = new OrderItemBLL();
-            return orderItemDAL.InsertOrderItem(orderItem);
+            string result = string.Empty;
+            foreach(OrderItem orderItem in lstorderItem)
+            {
+                result = orderItemDAL.InsertOrderItem(orderItem);
+            }
+            return result;
         }
         public OrderItem GetOrderItemById(long Id)
         {
