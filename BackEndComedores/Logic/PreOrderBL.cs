@@ -33,6 +33,11 @@ namespace BackEndComedores.Logic
             PreOrderDAL preorderdal = new PreOrderDAL();
             return preorderdal.InsertarPreorder(preorder);
         }
+        public string update(PreOrder preorder)
+        {
+            PreOrderDAL preorderdal = new PreOrderDAL();
+            return preorderdal.UpdatePreorder(preorder);
+        }
 
 
     }

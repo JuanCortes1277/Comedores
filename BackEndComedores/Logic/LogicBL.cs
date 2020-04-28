@@ -1229,7 +1229,10 @@ namespace BackEndComedores.Logic
         }
         public string DeleteOrderItem(long Id)
         {
-
+            PreOrderBL preorderdal = new PreOrderBL();
+            PreOrder preorders = preorderdal.GetById(Id);
+            preorders.Accepted = false;
+            preorderdal.update(preorders);
             OrderItemBLL orderItemDAL = new OrderItemBLL();
             return orderItemDAL.Delete(Id);
         }

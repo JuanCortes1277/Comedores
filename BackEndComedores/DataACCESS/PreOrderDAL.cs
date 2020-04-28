@@ -201,6 +201,52 @@ namespace BackEndComedores.DataACCESS
 
         }
 
+        public string UpdatePreorder(PreOrder preorder)
+        {
+
+            int modify = 0;
+            try
+            {
+                using (var context = new ProyectoMaestriaEntities())
+                {
+
+                    var result = context.PreOrder.SingleOrDefault(b => b.ID == preorder.ID);
+                    if (result != null)
+                    {
+
+                        result.IDDiningRoom = preorder.IDDiningRoom;
+                        result.IDRecipe = preorder.IDRecipe;
+                        result.PreOrderDate = preorder.PreOrderDate;
+                        result.Accepted = preorder.Accepted;
+                         modify = context.SaveChanges();
+                        if (modify == 0)
+                        {
+                            return "no se ha podido modificar el registro";
+                        }
+                        else
+                        {
+                            return "se ha modificado el registro satisfactoriamente";
+                        }
+                    }
+                    else
+                    {
+                        return "no se ha encontrado coincidencia en la base de datos";
+
+                    }
+
+                }
+
+
+            }
+
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+
+
+        }
+
 
 
     }

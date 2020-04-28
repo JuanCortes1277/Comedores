@@ -324,18 +324,23 @@ namespace BackEndComedores.DataACCESS
                 using (var context = new ProyectoMaestriaEntities())
                 {
 
-                    var result = context.OrderItem.SingleOrDefault(b => b.ID == Id);
+                    var result = context.OrderItem.Where(x => x.IDPreOrder == Id).ToList();
                     if (result != null)
                     {
-                        context.OrderItem.Remove(result);
-                        context.SaveChanges();
+                        foreach (var temp in result)
+                        {
+                            context.OrderItem.Remove(temp);
+                            context.SaveChanges();
+                        }
                         return "Registro eliminado satisfactroriamente";
+
                     }
                     else return "no se ha encontrado el registro a eliminar";
 
 
 
                 }
+                return  "";
 
 
             }
