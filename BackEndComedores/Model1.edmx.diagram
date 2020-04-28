@@ -17,6 +17,8 @@
         <AssociationConnector Association="ProyectoMaestriaModel.FK_Disponibility_Provider" />
         <EntityTypeShape EntityType="ProyectoMaestriaModel.Product" Width="1.5" PointX="3.375" PointY="9" />
         <AssociationConnector Association="ProyectoMaestriaModel.FK_Disponibility_Product" />
+        <EntityTypeShape EntityType="ProyectoMaestriaModel.Order" Width="1.5" PointX="9.375" PointY="6.75" />
+        <EntityTypeShape EntityType="ProyectoMaestriaModel.OrderItem" Width="1.5" PointX="9.375" PointY="9.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

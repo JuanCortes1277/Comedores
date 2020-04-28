@@ -35,5 +35,7 @@ namespace BackEndComedores
         public virtual DbSet<PreOrder> PreOrder { get; set; }
         public virtual DbSet<PreOrderItem> PreOrderItem { get; set; }
         public virtual DbSet<Product> Product { get; set; }
+        public virtual DbSet<Order> Order { get; set; }
+        public virtual DbSet<OrderItem> OrderItem { get; set; }
     }
 }

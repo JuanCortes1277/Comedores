@@ -7,6 +7,7 @@ namespace BackEndComedores.Models.ProcessModel
 {
     public class DisponibilityProcess
     {
+        public String ProductName { get; set; }
         public Nullable<long> IDProvider { get; set; }
         public long ID { get; set; }
         public Nullable<long> IDProduct { get; set; }

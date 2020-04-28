@@ -934,9 +934,13 @@ namespace BackEndComedores.Logic
                     Product productTemp =productbl.GetByID(disponFull.IDProduct);
                     TransportBL transportbl = new TransportBL();
                     Transport Transport= transportbl.GetMostSuitableTransport(productTemp.ProductType,disponFull.DistanceValue);
-                    double transportcost = Convert.ToDouble((Convert.ToDecimal(disponFull.DistanceValue) / Transport.PaymentUnity) * Transport.PaymentValue);
+                    //  double transportcost = Convert.ToDouble((Convert.ToDecimal(disponFull.DistanceValue) / Transport.PaymentUnity) * Transport.PaymentValue);
+                      double transportcost = Convert.ToDouble((Convert.ToDecimal(disponFull.DistanceValue) * Transport.PaymentValue )/ Transport.PaymentUnity );
+
                     disponFull.IDTransport = Transport.ID;
                     disponFull.CostTransport = transportcost;
+                    disponFull.ProductName = productTemp.Name;
+
 
 
 
@@ -981,9 +985,12 @@ namespace BackEndComedores.Logic
                             Product productTemp = productbl.GetByID(dispon.IDProduct);
                             TransportBL transportbl = new TransportBL();
                             Transport Transport = transportbl.GetMostSuitableTransport(productTemp.ProductType, dispon.DistanceValue);
-                            double transportcost = Convert.ToDouble((Convert.ToDecimal(dispon.DistanceValue) / Transport.PaymentUnity) * Transport.PaymentValue);
+                            //  double transportcost = Convert.ToDouble((Convert.ToDecimal(dispon.DistanceValue) / Transport.PaymentUnity) * Transport.PaymentValue);
+                            double transportcost = Convert.ToDouble((Convert.ToDecimal(dispon.DistanceValue ) * Transport.PaymentValue) / Transport.PaymentUnity);
+
                             dispon.IDTransport = Transport.ID;
                             dispon.CostTransport = transportcost;
+                            dispon.ProductName = productTemp.Name;
 
                             lstdisponibilitiesProcessFinal.Add(dispon);
                         }
@@ -995,7 +1002,7 @@ namespace BackEndComedores.Logic
             }
             DisponibilityProcess anterior = new DisponibilityProcess();
             TotalCost = 0;
-            var listproviders = lstdisponibilitiesProcessFinal.OrderBy(x => x.IDProvider);
+            var listproviders = lstdisponibilitiesProcessFinal.OrderByDescending(x => x.IDProvider);
             for (int i=0;i<listproviders.Count();i++)
             { 
                 if(i + 1< listproviders.Count() ){
@@ -1185,6 +1192,47 @@ namespace BackEndComedores.Logic
             }
             return arr;
 
+        }
+        public string InsertOrderItem(OrderItem orderItem)
+        {
+            OrderItemBLL orderItemDAL = new OrderItemBLL();
+            return orderItemDAL.InsertOrderItem(orderItem);
+        }
+        public OrderItem GetOrderItemById(long Id)
+        {
+            OrderItemBLL orderItemDAL = new OrderItemBLL();
+            return orderItemDAL.GetOrderItemById(Id);
+        }
+        public List<OrderItem> GetOrderItemByTransport(long Id)
+        {
+            OrderItemBLL orderItemDAL = new OrderItemBLL();
+            return orderItemDAL.GetOrderItemByTransport(Id);
+        }
+        public List<OrderItem> GetOrderItemByProvider(long Id)
+        {
+            OrderItemBLL orderItemDAL = new OrderItemBLL();
+            return orderItemDAL.GetOrderItemByProvider(Id);
+        }
+        public List<OrderItem> GetOrderItemByPreorder(long Id)
+        {
+            OrderItemBLL orderItemDAL = new OrderItemBLL();
+            return orderItemDAL.GetOrderItemByPreorder(Id);
+        }
+        public string UpdateOrderItem(OrderItem orderItem)
+        {
+            OrderItemBLL orderItemDAL = new OrderItemBLL();
+            return orderItemDAL.UpdateOrderItem(orderItem);
+        }
+        public string DeleteOrderItem(long Id)
+        {
+
+            OrderItemBLL orderItemDAL = new OrderItemBLL();
+            return orderItemDAL.Delete(Id);
+        }
+        public List<OrderItem> GettAllOrderItems()
+        {
+            OrderItemBLL orderItemDAL = new OrderItemBLL();
+            return orderItemDAL.GettAllOrderItems();
         }
 
     }

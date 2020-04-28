@@ -43,6 +43,35 @@
           <Property Name="IDProduct" Type="bigint" />
           <Property Name="Quantity" Type="int" />
         </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDDiningRoom" Type="bigint" />
+          <Property Name="OrderDate" Type="date" />
+        </EntityType>
+        <EntityType Name="OrderItem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDPreOrder" Type="bigint" />
+          <Property Name="IDProduct" Type="bigint" />
+          <Property Name="IDProvider" Type="bigint" />
+          <Property Name="Quantity" Type="numeric" Precision="14" Scale="2" />
+          <Property Name="UnitValue" Type="numeric" Precision="14" Scale="2" />
+          <Property Name="ExpirationDays" Type="numeric" Precision="14" Scale="2" />
+          <Property Name="Cost" Type="numeric" Precision="14" Scale="2" />
+          <Property Name="DurationText" Type="nvarchar" MaxLength="20" />
+          <Property Name="DistanceText" Type="nvarchar" MaxLength="20" />
+          <Property Name="IDTransport" Type="bigint" />
+          <Property Name="CostTransport" Type="numeric" Precision="14" Scale="2" />
+          <Property Name="Total" Type="numeric" Precision="14" Scale="2" />
+          <Property Name="AcceptedProvider" Type="bit" />
+          <Property Name="AcceptedTransport" Type="bit" />
+          <Property Name="TimeOrderItem" Type="time" Precision="4" />
+        </EntityType>
         <EntityType Name="PreOrder">
           <Key>
             <PropertyRef Name="ID" />
@@ -159,6 +188,8 @@
           <EntitySet Name="DiningRoom" EntityType="Self.DiningRoom" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Disponibility" EntityType="Self.Disponibility" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ingredient" EntityType="Self.Ingredient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderItem" EntityType="Self.OrderItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PreOrder" EntityType="Self.PreOrder" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PreOrderItem" EntityType="Self.PreOrderItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
@@ -198,6 +229,8 @@
             <End Role="Product" EntitySet="Product" />
             <End Role="Disponibility" EntitySet="Disponibility" />
           </AssociationSet>
+          <EntitySet Name="Order" EntityType="ProyectoMaestriaModel.Order" />
+          <EntitySet Name="OrderItem" EntityType="ProyectoMaestriaModel.OrderItem" />
           </EntityContainer>
         <EntityType Name="Disponibility">
           <Key>
@@ -353,6 +386,35 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDDiningRoom" Type="Int64" />
+          <Property Name="OrderDate" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="OrderItem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDPreOrder" Type="Int64" />
+          <Property Name="IDProduct" Type="Int64" />
+          <Property Name="IDProvider" Type="Int64" />
+          <Property Name="Quantity" Type="Decimal" Precision="14" Scale="2" />
+          <Property Name="UnitValue" Type="Decimal" Precision="14" Scale="2" />
+          <Property Name="ExpirationDays" Type="Decimal" Precision="14" Scale="2" />
+          <Property Name="Cost" Type="Decimal" Precision="14" Scale="2" />
+          <Property Name="DurationText" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DistanceText" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="IDTransport" Type="Int64" />
+          <Property Name="CostTransport" Type="Decimal" Precision="14" Scale="2" />
+          <Property Name="Total" Type="Decimal" Precision="14" Scale="2" />
+          <Property Name="AcceptedProvider" Type="Boolean" />
+          <Property Name="AcceptedTransport" Type="Boolean" />
+          <Property Name="TimeOrderItem" Type="Time" Precision="4" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -491,6 +553,37 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order">
+            <EntityTypeMapping TypeName="ProyectoMaestriaModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="IDDiningRoom" ColumnName="IDDiningRoom" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderItem">
+            <EntityTypeMapping TypeName="ProyectoMaestriaModel.OrderItem">
+              <MappingFragment StoreEntitySet="OrderItem">
+                <ScalarProperty Name="TimeOrderItem" ColumnName="TimeOrderItem" />
+                <ScalarProperty Name="AcceptedTransport" ColumnName="AcceptedTransport" />
+                <ScalarProperty Name="AcceptedProvider" ColumnName="AcceptedProvider" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="CostTransport" ColumnName="CostTransport" />
+                <ScalarProperty Name="IDTransport" ColumnName="IDTransport" />
+                <ScalarProperty Name="DistanceText" ColumnName="DistanceText" />
+                <ScalarProperty Name="DurationText" ColumnName="DurationText" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="ExpirationDays" ColumnName="ExpirationDays" />
+                <ScalarProperty Name="UnitValue" ColumnName="UnitValue" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="IDProvider" ColumnName="IDProvider" />
+                <ScalarProperty Name="IDProduct" ColumnName="IDProduct" />
+                <ScalarProperty Name="IDPreOrder" ColumnName="IDPreOrder" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
