@@ -32,10 +32,10 @@ namespace BackEndComedores.Controllers.ControladoresPrincipales
         }
         [HttpGet]
         [Route("GetOrderItemByTransport")]
-        public List<OrderItem> GetOrderItemByTransport(long Id)
+        public List<OrderReturnEntity> GetOrderItemByTransport(long Id, DateTime Date)
         {
             LogicBL orderItemDAL = new LogicBL();
-            return orderItemDAL.GetOrderItemByTransport(Id);
+            return orderItemDAL.GetOrderItemByTransport(Id,Date);
         }
         [HttpGet]
         [Route("GetOrderItemByProvider")]

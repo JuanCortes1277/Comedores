@@ -20,7 +20,10 @@ namespace BackEndComedores.Entidades
         public Nullable<decimal> Cost { get; set; }
         public string DurationText { get; set; }
         public string DistanceText { get; set; }
-        public Nullable<long> IDTransport { get; set; }
+        public string Origin { get; set; }
+        public string Destination { get; set; }
+        public string NameProv { get; set; }
+         public Nullable<long> IDTransport { get; set; }
         public Nullable<decimal> CostTransport { get; set; }
         public Nullable<decimal> Total { get; set; }
         public Nullable<bool> AcceptedProvider { get; set; }

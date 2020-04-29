@@ -1238,10 +1238,71 @@ namespace BackEndComedores.Logic
             OrderItemBLL orderItemDAL = new OrderItemBLL();
             return orderItemDAL.GetOrderItemById(Id);
         }
-        public List<OrderItem> GetOrderItemByTransport(long Id)
+        public List<OrderReturnEntity> GetOrderItemByTransport(long Id, DateTime Date)
         {
+            TransportBL transportBL = new TransportBL();
             OrderItemBLL orderItemDAL = new OrderItemBLL();
-            return orderItemDAL.GetOrderItemByTransport(Id);
+            PreOrderBL preorderdal = new PreOrderBL();
+            ProductBL productbl = new ProductBL();
+            ProviderBL providerBL = new ProviderBL();
+            
+
+            List<PreOrder> preorders = preorderdal.GetPreorderByDate(Date);
+            List<OrderReturnEntity> preordersforeturn = new List<OrderReturnEntity>();
+
+            var lstTransport = transportBL.ExtractAllTransports().Where(x => x.IDProvider == Id);
+            foreach (var item in lstTransport) {
+
+                List<OrderItem> order = orderItemDAL.GetOrderItemByTransport(item.ID);
+
+                var join = from p in preorders
+                           from o in order
+                           where p.ID == o.IDPreOrder
+                           select new { p.ID, p.IDDiningRoom, p.IDRecipe, p.PreOrderDate, p.Accepted };
+
+                var prepedido = join.ToList().GroupBy(p => p.ID)
+                                .Select(g => g.First())
+                                .ToList();
+
+                foreach (var pre in prepedido)
+                {
+                    long id = pre.ID;
+                    OrderReturnEntity preordernew = new OrderReturnEntity();
+                    DiningRoom diningRoom = GetComedorByID((long)pre.IDDiningRoom);
+
+                    preordernew.ID = pre.ID;
+                    preordernew.IDDiningRoom = pre.IDDiningRoom;
+                    preordernew.IDRecipe = pre.IDRecipe;
+                    preordernew.PreOrderDate = pre.PreOrderDate;
+                    preordernew.Accepted = pre.Accepted;
+
+                    var items = order.Where(x => x.IDPreOrder == id).ToList();
+                    List<OrderItemReturnEnity> itemorder = new List<OrderItemReturnEnity>();
+                    foreach (var objOr in items)
+                    {
+                        OrderItemReturnEnity obj = new OrderItemReturnEnity();
+                        Product product = productbl.GetByID(objOr.IDProduct);
+                        Provider prov = providerBL.ExtractById(objOr.IDProvider);
+                        obj.ID = objOr.ID;
+                        obj.Code = product.Code;
+                        obj.NameProduct = product.Name;
+                        obj.Quantity = objOr.Quantity;
+                        obj.UnitMeasure = product.MeasurementUnit;
+                        obj.Cost = objOr.Cost;
+                        obj.DurationText = objOr.DurationText;
+                        obj.DistanceText = objOr.DistanceText;
+                        obj.CostTransport = objOr.CostTransport;
+                        obj.Origin = string.Format("{0},Bogotá,Colombia", prov.Address);
+                        obj.Destination = string.Format("{0},Bogotá,Colombia", diningRoom.Address);
+                        obj.NameProv = prov.Name + "  Tel: " + prov.Phone;
+                        itemorder.Add(obj);
+                    }
+                    preordernew.IDProduct = itemorder;
+                    preordersforeturn.Add(preordernew);
+
+                }
+             }
+             return preordersforeturn;
         }
         public List<OrderReturnEntity> GetOrderItemByProvider(long Id,DateTime Date)
         {
