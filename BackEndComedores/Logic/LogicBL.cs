@@ -1202,6 +1202,37 @@ namespace BackEndComedores.Logic
             }
             return result;
         }
+
+        public string ResponseProviders(ResponseProvider response)
+        {
+            OrderItemBLL orderItemDAL = new OrderItemBLL();
+            var lstorderItem = orderItemDAL.GetOrderItemByProvider(response.ID).Where(x=> x.IDPreOrder == response.IDPreOrden).ToList();
+            string result = string.Empty;
+            foreach (OrderItem orderItem in lstorderItem)
+            {
+                orderItem.AcceptedProvider = response.Response;
+                result = orderItemDAL.UpdateOrderItem(orderItem);
+            }
+            return result;
+        }
+
+
+        public string ResponseTransport(ResponseProvider response)
+        {
+            OrderItemBLL orderItemDAL = new OrderItemBLL();
+            var lstorderItem = orderItemDAL.GetOrderItemByTransport(response.ID).Where(x => x.IDPreOrder == response.IDPreOrden).ToList();
+            string result = string.Empty;
+            foreach (OrderItem orderItem in lstorderItem)
+            {
+                orderItem.AcceptedProvider = response.Response;
+                result = orderItemDAL.UpdateOrderItem(orderItem);
+            }
+            return result;
+        }
+
+
+
+
         public OrderItem GetOrderItemById(long Id)
         {
             OrderItemBLL orderItemDAL = new OrderItemBLL();

@@ -114,7 +114,7 @@ namespace BackEndComedores.DataACCESS
             using (var context = new ProyectoMaestriaEntities())
             {
 
-                var result = context.OrderItem.Where(x => x.IDTransport == Id).ToList();
+                var result = context.OrderItem.Where(x => x.IDTransport == Id && x.AcceptedTransport == null).ToList();
 
 
                 if (result != null)
@@ -163,7 +163,7 @@ namespace BackEndComedores.DataACCESS
             using (var context = new ProyectoMaestriaEntities())
             {
 
-                var result = context.OrderItem.Where(x => x.IDProvider == Id).ToList();
+                var result = context.OrderItem.Where(x => x.IDProvider == Id && x.AcceptedProvider == null).ToList();
 
 
                 if (result != null)
