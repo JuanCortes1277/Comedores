@@ -247,6 +247,7 @@
     <Compile Include="Entidades\DisponibilityReturnEntity.cs" />
     <Compile Include="Entidades\IngredientReturnEntity.cs" />
     <Compile Include="Entidades\IngredientWithoutRecipeEntity.cs" />
+    <Compile Include="Entidades\OrderItemReturnEnity.cs" />
     <Compile Include="Entidades\PreOrderReturnEntity.cs" />
     <Compile Include="Entidades\ProductReturnEntity.cs" />
     <Compile Include="Entidades\RecipeProductModelEntity.cs" />

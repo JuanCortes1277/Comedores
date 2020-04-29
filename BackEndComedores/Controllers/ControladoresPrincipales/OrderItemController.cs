@@ -1,4 +1,5 @@
-﻿using BackEndComedores.Logic;
+﻿using BackEndComedores.Entidades;
+using BackEndComedores.Logic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,10 +38,10 @@ namespace BackEndComedores.Controllers.ControladoresPrincipales
         }
         [HttpGet]
         [Route("GetOrderItemByProvider")]
-        public List<OrderItem> GetOrderItemByProvider(long Id)
+        public List<OrderReturnEntity> GetOrderItemByProvider(long Id, DateTime Date)
         {
             LogicBL orderItemDAL = new LogicBL();
-            return orderItemDAL.GetOrderItemByProvider(Id);
+            return orderItemDAL.GetOrderItemByProvider(Id,Date);
         }
         [HttpGet]
         [Route("GetOrderItemByPreorder")]
