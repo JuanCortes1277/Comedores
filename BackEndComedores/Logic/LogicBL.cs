@@ -1224,7 +1224,7 @@ namespace BackEndComedores.Logic
             string result = string.Empty;
             foreach (OrderItem orderItem in lstorderItem)
             {
-                orderItem.AcceptedProvider = response.Response;
+                orderItem.AcceptedTransport = response.Response;
                 result = orderItemDAL.UpdateOrderItem(orderItem);
             }
             return result;
