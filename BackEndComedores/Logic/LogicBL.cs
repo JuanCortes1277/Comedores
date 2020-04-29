@@ -1206,13 +1206,12 @@ namespace BackEndComedores.Logic
         public string ResponseProviders(ResponseProvider response)
         {
             OrderItemBLL orderItemDAL = new OrderItemBLL();
-            var lstorderItem = orderItemDAL.GetOrderItemByProvider(response.ID).Where(x=> x.IDPreOrder == response.IDPreOrden).ToList();
+            var item = orderItemDAL.GetOrderItemById(response.ID);
             string result = string.Empty;
-            foreach (OrderItem orderItem in lstorderItem)
-            {
-                orderItem.AcceptedProvider = response.Response;
-                result = orderItemDAL.UpdateOrderItem(orderItem);
-            }
+
+            item.AcceptedProvider = response.Response;
+            result = orderItemDAL.UpdateOrderItem(item);
+            
             return result;
         }
 
@@ -1220,17 +1219,14 @@ namespace BackEndComedores.Logic
         public string ResponseTransport(ResponseProvider response)
         {
             OrderItemBLL orderItemDAL = new OrderItemBLL();
-            var lstorderItem = orderItemDAL.GetOrderItemByTransport(response.ID).Where(x => x.IDPreOrder == response.IDPreOrden).ToList();
+            var item = orderItemDAL.GetOrderItemById(response.ID);
             string result = string.Empty;
-            foreach (OrderItem orderItem in lstorderItem)
-            {
-                orderItem.AcceptedTransport = response.Response;
-                result = orderItemDAL.UpdateOrderItem(orderItem);
-            }
+
+            item.AcceptedTransport = response.Response;
+            result = orderItemDAL.UpdateOrderItem(item);
+
             return result;
         }
-
-
 
 
         public OrderItem GetOrderItemById(long Id)
@@ -1284,6 +1280,8 @@ namespace BackEndComedores.Logic
                         Product product = productbl.GetByID(objOr.IDProduct);
                         Provider prov = providerBL.ExtractById(objOr.IDProvider);
                         obj.ID = objOr.ID;
+                        obj.IDPreOrder = objOr.IDPreOrder;
+                        obj.IDTransport = objOr.IDTransport;
                         obj.Code = product.Code;
                         obj.NameProduct = product.Name;
                         obj.Quantity = objOr.Quantity;
@@ -1342,6 +1340,8 @@ namespace BackEndComedores.Logic
                     OrderItemReturnEnity obj = new OrderItemReturnEnity();
                     Product product = productbl.GetByID(item.IDProduct);
                     obj.ID = item.ID;
+                    obj.IDPreOrder = obj.IDPreOrder;
+                    obj.IDProvider = obj.IDProvider;
                     obj.Code = product.Code;
                     obj.NameProduct = product.Name;
                     obj.UnitValue = item.UnitValue;

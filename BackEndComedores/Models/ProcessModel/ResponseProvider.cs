@@ -8,6 +8,7 @@ namespace BackEndComedores.Models.ProcessModel
     public class ResponseProvider
     {
         public long ID { get; set; }
+        public long IDProvider { get; set; }
         public long IDPreOrden { get; set; }
         public bool Response { get; set; }
     }
