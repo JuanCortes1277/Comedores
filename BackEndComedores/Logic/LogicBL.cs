@@ -893,6 +893,123 @@ namespace BackEndComedores.Logic
 
         /*PROCESO DE ORDEN*/
 
+
+        public CostSummaryEntity ProcessOrderRejected(long ID, List<OrderItem> orderItems)
+        {
+
+            /*ELEMENTO FINAL*/
+            List<DisponibilityProcess> lstdisponibilitiesProcessFinal = new List<DisponibilityProcess>();
+            /*ELEMENTO FINAL*/
+
+
+            PreOrderBL preorderdal = new PreOrderBL();
+            PreOrder preorders = preorderdal.GetById(ID);
+
+
+            List<PreOrderReturnEntity> preordersforeturn = new List<PreOrderReturnEntity>();
+            ProductBL productbl = new ProductBL();
+
+            PreOrderItemBL lstPreOrderItemBL = new PreOrderItemBL();
+            DisponibilityBL disponibilityBL = new DisponibilityBL();
+            DiningRoom diningRoom = GetComedorByID((long)preorders.IDDiningRoom);
+
+            long id = preorders.ID;
+         
+
+            List<DisponibilityProcess> lstdisponibilitiesProcess = new List<DisponibilityProcess>();
+            double? TotalCost = 0.0;
+
+            foreach (var ing in orderItems)
+            {
+                Product product = productbl.GetByID(ing.IDProduct);
+                 List<Disponibility> lstDisponbilityHigher = disponibilityBL.GetByProduct(product.ID).Where(x => x.Quantity >= ing.Quantity).ToList();
+                List<Disponibility> lstDisponbilityMinimum = disponibilityBL.GetByProduct(product.ID).Where(x => x.Quantity < ing.Quantity).ToList();
+                string addressDining = string.Format("{0},Bogotá,Colombia", diningRoom.Address);
+
+                if (lstDisponbilityHigher.Count > 0)
+                {
+                    lstdisponibilitiesProcess = createArrayProvider(createObjectDisponibilityProvider(lstDisponbilityHigher, true, Convert.ToDouble(ing.Quantity), addressDining), ref diningRoom, true);
+                    DisponibilityProcess disponFull = lstdisponibilitiesProcess.OrderByDescending(x => x.Effectiveness).First();
+
+
+                    Product productTemp = productbl.GetByID(disponFull.IDProduct);
+                    TransportBL transportbl = new TransportBL();
+                    Transport Transport = transportbl.GetMostSuitableTransport(productTemp.ProductType, disponFull.DistanceValue);
+                    double transportcost = Convert.ToDouble((Convert.ToDecimal(disponFull.DistanceValue) * Transport.PaymentValue) / Transport.PaymentUnity);
+
+                    disponFull.IDTransport = Transport.ID;
+                    disponFull.CostTransport = transportcost;
+                    disponFull.ProductName = productTemp.Name;
+                    lstdisponibilitiesProcessFinal.Add(disponFull);
+
+
+                }
+                else
+                {
+                    lstdisponibilitiesProcess = createArrayProvider(createObjectDisponibilityProvider(lstDisponbilityMinimum, false, Convert.ToDouble(ing.Quantity), addressDining), ref diningRoom, false);
+                    double quantityFinal = 0;
+                    foreach (DisponibilityProcess dispon in lstdisponibilitiesProcess.OrderByDescending(x => x.Effectiveness))
+                    {
+                        quantityFinal = quantityFinal + dispon.Quantity;
+                        if (quantityFinal <= Convert.ToDouble(ing.Quantity))
+                        {
+
+                            Product productTemp = productbl.GetByID(dispon.IDProduct);
+                            TransportBL transportbl = new TransportBL();
+                            Transport Transport = transportbl.GetMostSuitableTransport(productTemp.ProductType, dispon.DistanceValue);
+                            double transportcost = Convert.ToDouble((Convert.ToDecimal(dispon.DistanceValue) * Transport.PaymentValue) / Transport.PaymentUnity);
+
+                            dispon.IDTransport = Transport.ID;
+                            dispon.CostTransport = transportcost;
+                            dispon.ProductName = productTemp.Name;
+
+                            lstdisponibilitiesProcessFinal.Add(dispon);
+                        }
+                    }
+
+
+
+                }
+            }
+            DisponibilityProcess anterior = new DisponibilityProcess();
+            TotalCost = 0;
+            var listproviders = lstdisponibilitiesProcessFinal.OrderByDescending(x => x.IDProvider);
+            for (int i = 0; i < listproviders.Count(); i++)
+            {
+                if (i + 1 < listproviders.Count())
+                {
+                    if (listproviders.ElementAt(i + 1).IDProvider == listproviders.ElementAt(i).IDProvider)
+                    {
+                        if (listproviders.ElementAt(i + 1).IDTransport != listproviders.ElementAt(i).IDTransport)
+                            TotalCost += listproviders.ElementAt(i).CostTransport;
+
+                    }
+                    if (listproviders.ElementAt(i + 1).IDProvider != listproviders.ElementAt(i).IDProvider)
+                    {
+                        if (listproviders.ElementAt(i + 1).IDProvider == listproviders.ElementAt(i).IDProvider)
+                            TotalCost += listproviders.ElementAt(i).CostTransport;
+
+                    }
+                }
+
+                TotalCost += listproviders.ElementAt(i).Cost;
+            }
+            CostSummaryEntity costsummary = new CostSummaryEntity();
+            costsummary.TotalCost = TotalCost;
+            costsummary.DisponibilityProcesses = lstdisponibilitiesProcessFinal;
+
+
+
+
+            return costsummary;
+        }
+
+
+
+
+
+
+
         public CostSummaryEntity ProcessOrder(long ID)
         {
 
@@ -930,43 +1047,15 @@ namespace BackEndComedores.Logic
                     lstdisponibilitiesProcess = createArrayProvider(createObjectDisponibilityProvider(lstDisponbilityHigher,true, quantityProduct , addressDining),ref diningRoom, true);
                     DisponibilityProcess disponFull = lstdisponibilitiesProcess.OrderByDescending(x => x.Effectiveness).First();
 
-                    /////
+                    
                     Product productTemp =productbl.GetByID(disponFull.IDProduct);
                     TransportBL transportbl = new TransportBL();
                     Transport Transport= transportbl.GetMostSuitableTransport(productTemp.ProductType,disponFull.DistanceValue);
-                    //  double transportcost = Convert.ToDouble((Convert.ToDecimal(disponFull.DistanceValue) / Transport.PaymentUnity) * Transport.PaymentValue);
-                      double transportcost = Convert.ToDouble((Convert.ToDecimal(disponFull.DistanceValue) * Transport.PaymentValue )/ Transport.PaymentUnity );
+                    double transportcost = Convert.ToDouble((Convert.ToDecimal(disponFull.DistanceValue) * Transport.PaymentValue )/ Transport.PaymentUnity );
 
                     disponFull.IDTransport = Transport.ID;
                     disponFull.CostTransport = transportcost;
                     disponFull.ProductName = productTemp.Name;
-
-
-
-
-
-                    ////////*
-                    ///
-                    /////  Transport MostEffectiveTransport=new Transport();
-                    //decimal ? effectivityTotal = 10000000;
-                    //decimal? effectivityActual = 0;
-                    //foreach (Transport T in transports)
-                    //{
-                    //    if (T.PaymentUnity != null && T.PaymentUnity != null)
-                    //    {
-                    //        effectivityActual = (Convert.ToDecimaldistancia / T.PaymentUnity) * T.PaymentValue;
-                    //        if (effectivityActual < effectivityTotal)
-                    //        {
-                    //            effectivityTotal = effectivityActual;
-                    //            MostEffectiveTransport = T;
-                    //        }
-                    //    }
-
-                    //}
-                    //////////
-                    /*
-                     buscar mejor transportador versus producto, costo y tipo
-                    */
                     lstdisponibilitiesProcessFinal.Add(disponFull);
 
 
@@ -979,14 +1068,11 @@ namespace BackEndComedores.Logic
                         quantityFinal = quantityFinal + dispon.Quantity;
                         if (quantityFinal <=  quantityProduct )
                         {
-                            /*
-                             buscar mejor transportador versus producto, costo y tipo
-                            */
+                         
                             Product productTemp = productbl.GetByID(dispon.IDProduct);
                             TransportBL transportbl = new TransportBL();
                             Transport Transport = transportbl.GetMostSuitableTransport(productTemp.ProductType, dispon.DistanceValue);
-                            //  double transportcost = Convert.ToDouble((Convert.ToDecimal(dispon.DistanceValue) / Transport.PaymentUnity) * Transport.PaymentValue);
-                            double transportcost = Convert.ToDouble((Convert.ToDecimal(dispon.DistanceValue ) * Transport.PaymentValue) / Transport.PaymentUnity);
+                             double transportcost = Convert.ToDouble((Convert.ToDecimal(dispon.DistanceValue ) * Transport.PaymentValue) / Transport.PaymentUnity);
 
                             dispon.IDTransport = Transport.ID;
                             dispon.CostTransport = transportcost;
