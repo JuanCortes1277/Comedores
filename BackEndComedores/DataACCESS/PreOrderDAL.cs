@@ -124,7 +124,7 @@ namespace BackEndComedores.DataACCESS
             {
                 //var comedor = context.DiningRoom.SingleOrDefault(x => x.ID == id);
 
-                var result = context.PreOrder.Where(x => x.PreOrderDate == ID && x.Accepted != false);
+                var result = context.PreOrder.Where(x => x.PreOrderDate == ID && x.Accepted == null);
 
 
                 if (result != null)
