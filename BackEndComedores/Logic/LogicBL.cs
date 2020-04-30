@@ -893,7 +893,30 @@ namespace BackEndComedores.Logic
 
         /*PROCESO DE ORDEN*/
 
-        public string ProcessOrderRejectedTransport(long ID)
+        public string Accepted(long ID)
+        {
+            string result = string.Empty;
+            OrderItemBLL orderItemBLL = new OrderItemBLL();
+            DisponibilityBL dispon = new DisponibilityBL();
+            PreOrderBL preorderdal = new PreOrderBL();
+            var orderItems = orderItemBLL.GetOrderItemByPreorder(ID).Where(x => x.AcceptedTransport == true &&  x.AcceptedProvider == true).ToList();
+            foreach (OrderItem item in orderItems)
+            {
+                Disponibility disponibility = dispon.GetByProduct((long)item.IDProduct).Where(x=> x.IDProvider == item.IDProvider).First();
+                disponibility.Quantity = (int)(disponibility.Quantity - item.Quantity);
+                result = dispon.Update(disponibility);
+             
+                PreOrder preorders = preorderdal.GetById(ID);
+                preorders.Accepted = true;
+                preorderdal.update(preorders);
+
+            }
+
+            return result;
+
+        }
+
+            public string ProcessOrderRejectedTransport(long ID)
         {
             string result = string.Empty;
             PreOrderBL preorderdal = new PreOrderBL();

@@ -26,9 +26,15 @@ namespace BackEndComedores.Controllers.ControladoresPrincipales
 
         }
 
+        [HttpGet]
+        [Route("Accepted")]
+        public string Accepted(long ID)
+        {
+            LogicBL logicBL = new LogicBL();
+            return logicBL.Accepted(ID); ;
 
-
-
+        }
+        
         [HttpGet]
         [Route("ProcessOrderRejectedTransport")]
         public string ProcessOrderRejectedTransport(long ID)
