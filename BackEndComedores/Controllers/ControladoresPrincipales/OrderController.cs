@@ -26,16 +26,28 @@ namespace BackEndComedores.Controllers.ControladoresPrincipales
 
         }
 
+
+
+
         [HttpGet]
-        [Route("ProcessOrderRejected")]
-        public CostSummaryEntity ProcessOrderRejected(long ID, List<OrderItem> orderItems)
+        [Route("ProcessOrderRejectedTransport")]
+        public string ProcessOrderRejectedTransport(long ID)
         {
             LogicBL logicBL = new LogicBL();
-            return logicBL.ProcessOrderRejected(ID, orderItems); ;
+            return logicBL.ProcessOrderRejectedTransport(ID); ;
 
         }
 
 
+        [HttpGet]
+        [Route("ProcessOrderRejected")]
+        public CostSummaryRejectedEntity ProcessOrderRejected(long ID)
+        {
+            LogicBL logicBL = new LogicBL();
+            return logicBL.ProcessOrderRejected(ID); ;
+
+        }
+        
         [HttpGet]
         [Route("DistanceMatrix")]
         public Object DistanceMatrix(string origin, string destination)

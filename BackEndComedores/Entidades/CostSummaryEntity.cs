@@ -11,4 +11,10 @@ namespace BackEndComedores.Entidades
         public double? TotalCost { get; set; }
         public List<DisponibilityProcess>DisponibilityProcesses{get;set;}
     }
+
+    public class CostSummaryRejectedEntity
+    {
+        public double? TotalCost { get; set; }
+        public List<OrderItem> DisponibilityProcesses { get; set; }
+    }
 }

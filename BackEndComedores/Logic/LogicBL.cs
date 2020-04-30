@@ -893,8 +893,44 @@ namespace BackEndComedores.Logic
 
         /*PROCESO DE ORDEN*/
 
+        public string ProcessOrderRejectedTransport(long ID)
+        {
+            string result = string.Empty;
+            PreOrderBL preorderdal = new PreOrderBL();
+            PreOrder preorders = preorderdal.GetById(ID);
 
-        public CostSummaryEntity ProcessOrderRejected(long ID, List<OrderItem> orderItems)
+            DisponibilityBL disponibilityBL = new DisponibilityBL();
+            DiningRoom diningRoom = GetComedorByID((long)preorders.IDDiningRoom);
+            string addressDining = string.Format("{0},Bogotá,Colombia", diningRoom.Address);
+            OrderItemBLL orderItemBLL = new OrderItemBLL();
+            var orderItems = orderItemBLL.GetOrderItemByPreorder(ID).Where(x => x.AcceptedTransport == false).ToList();
+            ProviderBL providerBL = new ProviderBL();
+
+            foreach(var item in orderItems)
+            {
+                Provider prov = providerBL.ExtractById(item.IDProvider);
+                string addressProvider = string.Format("{0},Bogotá,Colombia", prov.Address);
+                var distanceMatrix = Utils.Utils.getDistanceMatrix(addressProvider, addressDining);
+                item.DistanceText = distanceMatrix["distanceText"].ToString();
+                item.DurationText = distanceMatrix["durationText"].ToString();
+                var DistanceValue = Convert.ToDouble(distanceMatrix["distanceValue"]);
+                /* METODO PARA BUSCAR MEJOR TRANSPORTE */
+
+                 item.IDTransport = 0;
+                 item.CostTransport = 0;
+
+                /* METODO PARA BUSCAR MEJOR TRANSPORTE */
+
+
+                orderItemBLL.UpdateOrderItem(item);
+                
+            }
+            return result;
+        }
+
+
+
+        public CostSummaryRejectedEntity ProcessOrderRejected(long ID)
         {
 
             /*ELEMENTO FINAL*/
@@ -915,7 +951,7 @@ namespace BackEndComedores.Logic
             DiningRoom diningRoom = GetComedorByID((long)preorders.IDDiningRoom);
 
             long id = preorders.ID;
-         
+            var orderItems = orderItemBLL.GetOrderItemByPreorder(ID).Where(x=> x.AcceptedProvider == false);
 
             List<DisponibilityProcess> lstdisponibilitiesProcess = new List<DisponibilityProcess>();
             double? TotalCost = 0.0;
@@ -972,10 +1008,19 @@ namespace BackEndComedores.Logic
 
                 }
                 orderItemBLL.Delete(ing.ID);
+                
             }
-            DisponibilityProcess anterior = new DisponibilityProcess();
+
+            foreach(var item  in lstdisponibilitiesProcessFinal)
+            {
+
+                OrderItem order = new OrderItem();
+
+                orderItemBLL.InsertOrderItem(order);
+            }
+            
             TotalCost = 0;
-            var listproviders = lstdisponibilitiesProcessFinal.OrderByDescending(x => x.IDProvider);
+            var listproviders = orderItemBLL.GetOrderItemByPreorder(ID).OrderByDescending(x => x.IDProvider).ToList();
             for (int i = 0; i < listproviders.Count(); i++)
             {
                 if (i + 1 < listproviders.Count())
@@ -983,26 +1028,24 @@ namespace BackEndComedores.Logic
                     if (listproviders.ElementAt(i + 1).IDProvider == listproviders.ElementAt(i).IDProvider)
                     {
                         if (listproviders.ElementAt(i + 1).IDTransport != listproviders.ElementAt(i).IDTransport)
-                            TotalCost += listproviders.ElementAt(i).CostTransport;
+                            TotalCost += Convert.ToDouble(listproviders.ElementAt(i).CostTransport);
 
                     }
                     if (listproviders.ElementAt(i + 1).IDProvider != listproviders.ElementAt(i).IDProvider)
                     {
                         if (listproviders.ElementAt(i + 1).IDProvider == listproviders.ElementAt(i).IDProvider)
-                            TotalCost += listproviders.ElementAt(i).CostTransport;
+                            TotalCost += Convert.ToDouble(listproviders.ElementAt(i).CostTransport);
 
                     }
                 }
 
-                TotalCost += listproviders.ElementAt(i).Cost;
+                TotalCost += Convert.ToDouble(listproviders.ElementAt(i).Cost);
             }
-            CostSummaryEntity costsummary = new CostSummaryEntity();
+
+
+            CostSummaryRejectedEntity costsummary = new CostSummaryRejectedEntity();
             costsummary.TotalCost = TotalCost;
-            costsummary.DisponibilityProcesses = lstdisponibilitiesProcessFinal;
-
-
-
-
+            costsummary.DisponibilityProcesses = listproviders;
             return costsummary;
         }
 
