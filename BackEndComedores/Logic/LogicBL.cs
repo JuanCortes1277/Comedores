@@ -910,6 +910,7 @@ namespace BackEndComedores.Logic
             ProductBL productbl = new ProductBL();
 
             PreOrderItemBL lstPreOrderItemBL = new PreOrderItemBL();
+            OrderItemBLL orderItemBLL = new OrderItemBLL();
             DisponibilityBL disponibilityBL = new DisponibilityBL();
             DiningRoom diningRoom = GetComedorByID((long)preorders.IDDiningRoom);
 
@@ -970,6 +971,7 @@ namespace BackEndComedores.Logic
 
 
                 }
+                orderItemBLL.Delete(ing.ID);
             }
             DisponibilityProcess anterior = new DisponibilityProcess();
             TotalCost = 0;
