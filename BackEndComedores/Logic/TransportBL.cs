@@ -58,6 +58,15 @@ namespace BackEndComedores.Logic
             return providerdal.GetMostSuitableTransport(type,distancia);
 
         }
+        public Transport GetMostSuitableTransportByRejection(long? type, double distancia, long? idtransportRejected)
+        {
+            TransportDAL providerdal = new TransportDAL();
+
+
+            return providerdal.GetMostSuitableTransportByRejection( type,  distancia,  idtransportRejected);
+
+        }
+
 
 
 

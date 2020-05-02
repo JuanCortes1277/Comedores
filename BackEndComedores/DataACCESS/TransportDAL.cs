@@ -217,7 +217,73 @@ namespace BackEndComedores.DataACCESS
 
 
 
-            public Transport ExtractById(long code)
+
+        public Transport GetMostSuitableTransportByRejection(long? type, double distancia,long? idtransportRejected)
+        {
+
+            List<Transport> transports = new List<Transport>();
+
+            using (var context = new ProyectoMaestriaEntities())
+            {
+
+                var result = context.Transport.Where(x => x.TransportType == type && x.Availability == true && x.ID!=idtransportRejected).ToList();
+
+
+                if (result != null)
+                {
+
+                    foreach (var temp in result)
+                    {
+                        Transport transport = new Transport();
+                        transport.ID = temp.ID;
+                        transport.Code = temp.Code;
+                        transport.CarPlate = temp.CarPlate;
+                        transport.Brand = temp.Brand;
+                        transport.Year = temp.Year;
+                        transport.PersonInCharge = temp.PersonInCharge;
+                        transport.PhonePersonInCharge = temp.PhonePersonInCharge;
+                        transport.MailPersonInCharge = temp.MailPersonInCharge;
+                        transport.PaymentUnity = temp.PaymentUnity;
+                        transport.PaymentMeasurement = temp.PaymentMeasurement;
+                        transport.PaymentValue = temp.PaymentValue;
+                        transport.Availability = temp.Availability;
+                        transport.TransportType = temp.TransportType;
+                        transport.IDProvider = temp.IDProvider;
+                        transports.Add(transport);
+                    }
+                    Transport MostEffectiveTransport = new Transport();
+                    decimal? effectivityTotal = 10000000000000000000;
+                    decimal? effectivityActual = 0;
+                    foreach (Transport T in transports)
+                    {
+                        if (T.PaymentUnity != null && T.PaymentUnity != null)
+                        {
+                            double transportcost = Convert.ToDouble(((Convert.ToDecimal(distancia) / 1000) * T.PaymentValue) / T.PaymentUnity);
+
+                            if (effectivityActual < effectivityTotal)
+                            {
+                                effectivityTotal = effectivityActual;
+                                MostEffectiveTransport = T;
+                            }
+                        }
+
+                    }
+                    return MostEffectiveTransport;
+
+                }
+                else
+                    return null;
+
+
+
+
+            }
+
+
+        }
+
+
+        public Transport ExtractById(long code)
         {
 
             using (var context = new ProyectoMaestriaEntities())

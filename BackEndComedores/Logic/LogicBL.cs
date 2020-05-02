@@ -929,7 +929,7 @@ namespace BackEndComedores.Logic
             var orderItems = orderItemBLL.GetOrderItemByPreorder(ID).Where(x => x.AcceptedTransport == false).ToList();
             ProviderBL providerBL = new ProviderBL();
 
-            foreach(var item in orderItems)
+            foreach (var item in orderItems)
             {
                 Provider prov = providerBL.ExtractById(item.IDProvider);
                 string addressProvider = string.Format("{0},Bogotá,Colombia", prov.Address);
@@ -939,12 +939,18 @@ namespace BackEndComedores.Logic
                 var DistanceValue = Convert.ToDouble(distanceMatrix["distanceValue"]);
                 /* METODO PARA BUSCAR MEJOR TRANSPORTE */
 
-                 item.IDTransport = 0;
-                 item.CostTransport = 0;
-
+                item.IDTransport = 0;
+                item.CostTransport = 0;
+                
                 /* METODO PARA BUSCAR MEJOR TRANSPORTE */
+                Transport transport = new Transport();
+                TransportBL transportBL = new TransportBL();
+                ProductBL productBL = new ProductBL();
+                Product product = productBL.GetByID(item.IDProduct);
+                transport = transportBL.GetMostSuitableTransportByRejection(product.ProductType, DistanceValue,item.IDTransport);
+                double transportcost = Convert.ToDouble((Convert.ToDecimal(DistanceValue) * transport.PaymentValue) / transport.PaymentUnity);
 
-
+                item.IDTransport = transport.ID;
                 orderItemBLL.UpdateOrderItem(item);
                 
             }
@@ -1038,8 +1044,28 @@ namespace BackEndComedores.Logic
             {
 
                 OrderItem order = new OrderItem();
+                order.IDProduct = item.IDProduct;
+                order.IDProvider = item.IDProvider;
+                order.Quantity = Convert.ToInt64(item.Quantity);
+                order.UnitValue =Convert.ToInt64( item.UnitValue);
+                order.ExpirationDays = Convert.ToInt64(item.ExpirationDays);
+                order.Cost = Convert.ToInt64(item.Cost);
+                order.DurationText = item.DurationText;
+                order.DistanceText = item.DistanceText;
+                order.IDTransport = item.IDTransport;
+                order.CostTransport = Convert.ToInt64( item.CostTransport);
+                
 
-                orderItemBLL.InsertOrderItem(order);
+
+
+       // public Nullable<long> IDPreOrder { get; set; }//
+   
+        //public Nullable<decimal> Total { get; set; }//
+       // public Nullable<bool> AcceptedProvider { get; set; }//
+       // public Nullable<bool> AcceptedTransport { get; set; }//
+      //  public Nullable<System.TimeSpan> TimeOrderItem { get; set; }
+
+        orderItemBLL.InsertOrderItem(order);
             }
             
             TotalCost = 0;
