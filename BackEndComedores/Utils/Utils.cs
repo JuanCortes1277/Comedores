@@ -76,6 +76,7 @@ namespace BackEndComedores.Utils
             Console.WriteLine(variablesQuantity);
             var solver = SolverContext.GetContext();
             solver.ClearModel();
+            
             var model = solver.CreateModel();
             var n = b.GetLength(1);
             var x = new Decision[n];
@@ -85,12 +86,24 @@ namespace BackEndComedores.Utils
 
             }
 
-
+            Term temp = 0;
 
             for (int i = 0; i < variablesQuantity; i++)
             {
-                goal += (Model.Power(x[i], 2));
+                //este temp+= (Model.Power(x[i], 2));
+                if (i == 1 || i == 3)
+                {
+
+                    temp += ((x[i]* 2));
+
+                }
+               else if (i == 0 || i == 2)
+                {
+                    temp -= ((x[i]  *2));
+
+                }
             }
+            goal = temp;
             Term sumatory = 0.0;
             for (var i = 0; i < n; ++i)
             {

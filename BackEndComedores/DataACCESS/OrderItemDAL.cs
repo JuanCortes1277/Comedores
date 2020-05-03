@@ -340,7 +340,6 @@ namespace BackEndComedores.DataACCESS
 
 
                 }
-                return  "";
 
 
             }

@@ -1016,9 +1016,10 @@ namespace BackEndComedores.Logic
                     double quantityFinal = 0;
                     foreach (DisponibilityProcess dispon in lstdisponibilitiesProcess.OrderByDescending(x => x.Effectiveness))
                     {
-                        quantityFinal = quantityFinal + dispon.Quantity;
+                        double finalQuantity = 0.0;
                         if (quantityFinal <= Convert.ToDouble(ing.Quantity))
                         {
+                            quantityFinal = quantityFinal + dispon.Quantity;
 
                             Product productTemp = productbl.GetByID(dispon.IDProduct);
                             TransportBL transportbl = new TransportBL();
@@ -1028,6 +1029,12 @@ namespace BackEndComedores.Logic
                             dispon.IDTransport = Transport.ID;
                             dispon.CostTransport = transportcost;
                             dispon.ProductName = productTemp.Name;
+                            if (quantityFinal > Convert.ToDouble(ing.Quantity))
+                            {
+                                finalQuantity = dispon.Quantity - (quantityFinal - Convert.ToDouble(ing.Quantity));
+                                dispon.Quantity = finalQuantity;
+                                dispon.Cost = finalQuantity * dispon.UnitValue;
+                            }
 
                             lstdisponibilitiesProcessFinal.Add(dispon);
                         }
@@ -1069,27 +1076,62 @@ namespace BackEndComedores.Logic
             }
             
             TotalCost = 0;
-            var listproviders = orderItemBLL.GetOrderItemByPreorder(ID).OrderByDescending(x => x.IDProvider).ToList();
+            var listproviders = orderItemBLL.GetOrderItemByPreorder(ID).OrderByDescending(x => x.CostTransport).ToList();
             for (int i = 0; i < listproviders.Count(); i++)
             {
+
+                TotalCost +=Convert.ToDouble( (listproviders.ElementAt(i).Cost));
+
                 if (i + 1 < listproviders.Count())
                 {
                     if (listproviders.ElementAt(i + 1).IDProvider == listproviders.ElementAt(i).IDProvider)
                     {
+                        if (listproviders.ElementAt(i + 1).IDTransport == listproviders.ElementAt(i).IDTransport)
+                        {
+                          
+                                continue;
+                            
+
+                        }
+                    }
+                    if (listproviders.ElementAt(i + 1).IDProvider == listproviders.ElementAt(i).IDProvider)
+
+                    {
                         if (listproviders.ElementAt(i + 1).IDTransport != listproviders.ElementAt(i).IDTransport)
-                            TotalCost += Convert.ToDouble(listproviders.ElementAt(i).CostTransport);
+                        {
+                          
+                                TotalCost += Convert.ToDouble(listproviders.ElementAt(i).CostTransport);
+                            
+
+                        }
 
                     }
+
+
+
                     if (listproviders.ElementAt(i + 1).IDProvider != listproviders.ElementAt(i).IDProvider)
                     {
-                        if (listproviders.ElementAt(i + 1).IDProvider == listproviders.ElementAt(i).IDProvider)
-                            TotalCost += Convert.ToDouble(listproviders.ElementAt(i).CostTransport);
+                        if (listproviders.ElementAt(i + 1).IDTransport == listproviders.ElementAt(i).IDTransport)
+                        {
+                            
+                                TotalCost += Convert.ToDouble(listproviders.ElementAt(i).CostTransport);
+                            
+
+                        }
 
                     }
+
+
                 }
 
-                TotalCost += Convert.ToDouble(listproviders.ElementAt(i).Cost);
+
+
+
             }
+            TotalCost += Convert.ToDouble(listproviders.ElementAt(listproviders.Count() - 1).CostTransport);
+
+
+
 
 
             CostSummaryRejectedEntity costsummary = new CostSummaryRejectedEntity();
@@ -1159,10 +1201,12 @@ namespace BackEndComedores.Logic
                     double quantityFinal = 0;
                     foreach (DisponibilityProcess dispon in lstdisponibilitiesProcess.OrderByDescending(x => x.Effectiveness))
                     {
-                        quantityFinal = quantityFinal + dispon.Quantity;
+                        double finalQuantity = 0.0;
                         if (quantityFinal <=  quantityProduct )
                         {
-                         
+
+                            quantityFinal = quantityFinal + dispon.Quantity;
+
                             Product productTemp = productbl.GetByID(dispon.IDProduct);
                             TransportBL transportbl = new TransportBL();
                             Transport Transport = transportbl.GetMostSuitableTransport(productTemp.ProductType, dispon.DistanceValue);
@@ -1171,6 +1215,13 @@ namespace BackEndComedores.Logic
                             dispon.IDTransport = Transport.ID;
                             dispon.CostTransport = transportcost;
                             dispon.ProductName = productTemp.Name;
+                            if(quantityFinal > quantityProduct)
+                            {
+                                finalQuantity = dispon.Quantity-( quantityFinal-quantityProduct) ;
+                                dispon.Quantity = finalQuantity;
+                                dispon.Cost = finalQuantity * dispon.UnitValue;
+                            }
+                           
 
                             lstdisponibilitiesProcessFinal.Add(dispon);
                         }
@@ -1182,26 +1233,74 @@ namespace BackEndComedores.Logic
             }
             DisponibilityProcess anterior = new DisponibilityProcess();
             TotalCost = 0;
-            var listproviders = lstdisponibilitiesProcessFinal.OrderByDescending(x => x.IDProvider);
+            List<DisponibilityProcess> obtenidos = new List<DisponibilityProcess>();
+            var listproviders = lstdisponibilitiesProcessFinal.OrderByDescending(x =>  x.IDProvider);
             for (int i=0;i<listproviders.Count();i++)
-            { 
-                if(i + 1< listproviders.Count() ){
+            {
+
+                //var result = listproviders.Where(p => !obtenidos.Any(p2 => p2.ID == p.ID));
+
+                //foreach(var r in result)
+                //{
+                //    TotalCost += r.CostTransport;
+                //    obtenidos.Add(r);
+                //}
+                TotalCost += (listproviders.ElementAt(i).Cost);
+
+                if (i + 1 < listproviders.Count())
+                {
                     if (listproviders.ElementAt(i + 1).IDProvider == listproviders.ElementAt(i).IDProvider)
                     {
+                        if (listproviders.ElementAt(i + 1).IDTransport == listproviders.ElementAt(i).IDTransport)
+                        {
+
+                            continue;
+
+
+                        }
+                    }
+                    if (listproviders.ElementAt(i + 1).IDProvider == listproviders.ElementAt(i).IDProvider)
+
+                    {
                         if (listproviders.ElementAt(i + 1).IDTransport != listproviders.ElementAt(i).IDTransport)
+                        {
+
                             TotalCost += listproviders.ElementAt(i).CostTransport;
 
+
+                        }
+
                     }
+
+
+
                     if (listproviders.ElementAt(i + 1).IDProvider != listproviders.ElementAt(i).IDProvider)
                     {
-                        if (listproviders.ElementAt(i + 1).IDProvider == listproviders.ElementAt(i).IDProvider)
+                        if (listproviders.ElementAt(i + 1).IDTransport == listproviders.ElementAt(i).IDTransport)
+                        {
+
                             TotalCost += listproviders.ElementAt(i).CostTransport;
 
+
+                        }
+
                     }
+
+
                 }
-               
-                TotalCost += listproviders.ElementAt(i).Cost;
+
+
+
+
             }
+            TotalCost += Convert.ToDouble(listproviders.ElementAt(listproviders.Count() - 1).CostTransport);
+
+
+
+
+
+            //  TotalCost += listproviders.ElementAt(i).Cost;
+
             CostSummaryEntity costsummary = new CostSummaryEntity();
             costsummary.TotalCost = TotalCost;
             costsummary.DisponibilityProcesses = lstdisponibilitiesProcessFinal;
