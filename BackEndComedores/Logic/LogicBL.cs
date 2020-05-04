@@ -1006,6 +1006,12 @@ namespace BackEndComedores.Logic
                     disponFull.IDTransport = Transport.ID;
                     disponFull.CostTransport = transportcost;
                     disponFull.ProductName = productTemp.Name;
+
+                    var count = lstdisponibilitiesProcessFinal.Select(x => x.IDProvider == disponFull.IDProvider && x.IDTransport == disponFull.IDTransport).Count();
+                    if (count > 1)
+                    {
+                        disponFull.CostTransport = 0;
+                    }
                     lstdisponibilitiesProcessFinal.Add(disponFull);
 
 
@@ -1035,6 +1041,11 @@ namespace BackEndComedores.Logic
                                 dispon.Quantity = finalQuantity;
                                 dispon.Cost = finalQuantity * dispon.UnitValue;
                             }
+                            var count = lstdisponibilitiesProcessFinal.Select(x => x.IDProvider == dispon.IDProvider && x.IDTransport == dispon.IDTransport).Count();
+                            if (count > 1)
+                            {
+                                dispon.CostTransport = 0;
+                            }
 
                             lstdisponibilitiesProcessFinal.Add(dispon);
                         }
@@ -1061,79 +1072,16 @@ namespace BackEndComedores.Logic
                 order.DistanceText = item.DistanceText;
                 order.IDTransport = item.IDTransport;
                 order.CostTransport = Convert.ToInt64( item.CostTransport);
-                
-
-
-
-       // public Nullable<long> IDPreOrder { get; set; }//
-   
-        //public Nullable<decimal> Total { get; set; }//
-       // public Nullable<bool> AcceptedProvider { get; set; }//
-       // public Nullable<bool> AcceptedTransport { get; set; }//
-      //  public Nullable<System.TimeSpan> TimeOrderItem { get; set; }
-
-        orderItemBLL.InsertOrderItem(order);
+                orderItemBLL.InsertOrderItem(order);
             }
             
             TotalCost = 0;
             var listproviders = orderItemBLL.GetOrderItemByPreorder(ID).OrderByDescending(x => x.CostTransport).ToList();
-            for (int i = 0; i < listproviders.Count(); i++)
+            foreach (var reject in listproviders)
             {
-
-                TotalCost +=Convert.ToDouble( (listproviders.ElementAt(i).Cost));
-
-                if (i + 1 < listproviders.Count())
-                {
-                    if (listproviders.ElementAt(i + 1).IDProvider == listproviders.ElementAt(i).IDProvider)
-                    {
-                        if (listproviders.ElementAt(i + 1).IDTransport == listproviders.ElementAt(i).IDTransport)
-                        {
-                          
-                                continue;
-                            
-
-                        }
-                    }
-                    if (listproviders.ElementAt(i + 1).IDProvider == listproviders.ElementAt(i).IDProvider)
-
-                    {
-                        if (listproviders.ElementAt(i + 1).IDTransport != listproviders.ElementAt(i).IDTransport)
-                        {
-                          
-                                TotalCost += Convert.ToDouble(listproviders.ElementAt(i).CostTransport);
-                            
-
-                        }
-
-                    }
-
-
-
-                    if (listproviders.ElementAt(i + 1).IDProvider != listproviders.ElementAt(i).IDProvider)
-                    {
-                        if (listproviders.ElementAt(i + 1).IDTransport == listproviders.ElementAt(i).IDTransport)
-                        {
-                            
-                                TotalCost += Convert.ToDouble(listproviders.ElementAt(i).CostTransport);
-                            
-
-                        }
-
-                    }
-
-
-                }
-
-
-
-
+                TotalCost = TotalCost + (Double)(reject.Cost + reject.CostTransport);
             }
-            TotalCost += Convert.ToDouble(listproviders.ElementAt(listproviders.Count() - 1).CostTransport);
-
-
-
-
-
+            
             CostSummaryRejectedEntity costsummary = new CostSummaryRejectedEntity();
             costsummary.TotalCost = TotalCost;
             costsummary.DisponibilityProcesses = listproviders;
@@ -1192,6 +1140,12 @@ namespace BackEndComedores.Logic
                     disponFull.IDTransport = Transport.ID;
                     disponFull.CostTransport = transportcost;
                     disponFull.ProductName = productTemp.Name;
+
+                    var count = lstdisponibilitiesProcessFinal.Select(x => x.IDProvider == disponFull.IDProvider && x.IDTransport == disponFull.IDTransport).Count();
+                    if (count > 1)
+                    {
+                        disponFull.CostTransport = 0;
+                    }
                     lstdisponibilitiesProcessFinal.Add(disponFull);
 
 
@@ -1221,8 +1175,12 @@ namespace BackEndComedores.Logic
                                 dispon.Quantity = finalQuantity;
                                 dispon.Cost = finalQuantity * dispon.UnitValue;
                             }
-                           
 
+                            var count = lstdisponibilitiesProcessFinal.Select(x => x.IDProvider == dispon.IDProvider && x.IDTransport == dispon.IDTransport).Count();
+                            if(count > 1)
+                            {
+                                dispon.CostTransport = 0;
+                            }
                             lstdisponibilitiesProcessFinal.Add(dispon);
                         }
                     }
@@ -1231,82 +1189,15 @@ namespace BackEndComedores.Logic
                     
                 }
             }
-            DisponibilityProcess anterior = new DisponibilityProcess();
+          
             TotalCost = 0;
-            List<DisponibilityProcess> obtenidos = new List<DisponibilityProcess>();
-            var listproviders = lstdisponibilitiesProcessFinal.OrderByDescending(x =>  x.IDProvider);
-            for (int i=0;i<listproviders.Count();i++)
+            foreach (var reject in lstdisponibilitiesProcessFinal)
             {
-
-                //var result = listproviders.Where(p => !obtenidos.Any(p2 => p2.ID == p.ID));
-
-                //foreach(var r in result)
-                //{
-                //    TotalCost += r.CostTransport;
-                //    obtenidos.Add(r);
-                //}
-                TotalCost += (listproviders.ElementAt(i).Cost);
-
-                if (i + 1 < listproviders.Count())
-                {
-                    if (listproviders.ElementAt(i + 1).IDProvider == listproviders.ElementAt(i).IDProvider)
-                    {
-                        if (listproviders.ElementAt(i + 1).IDTransport == listproviders.ElementAt(i).IDTransport)
-                        {
-
-                            continue;
-
-
-                        }
-                    }
-                    if (listproviders.ElementAt(i + 1).IDProvider == listproviders.ElementAt(i).IDProvider)
-
-                    {
-                        if (listproviders.ElementAt(i + 1).IDTransport != listproviders.ElementAt(i).IDTransport)
-                        {
-
-                            TotalCost += listproviders.ElementAt(i).CostTransport;
-
-
-                        }
-
-                    }
-
-
-
-                    if (listproviders.ElementAt(i + 1).IDProvider != listproviders.ElementAt(i).IDProvider)
-                    {
-                        if (listproviders.ElementAt(i + 1).IDTransport == listproviders.ElementAt(i).IDTransport)
-                        {
-
-                            TotalCost += listproviders.ElementAt(i).CostTransport;
-
-
-                        }
-
-                    }
-
-
-                }
-
-
-
-
+                TotalCost = TotalCost + (Double)(reject.Cost + reject.CostTransport);
             }
-            TotalCost += Convert.ToDouble(listproviders.ElementAt(listproviders.Count() - 1).CostTransport);
-
-
-
-
-
-            //  TotalCost += listproviders.ElementAt(i).Cost;
-
             CostSummaryEntity costsummary = new CostSummaryEntity();
             costsummary.TotalCost = TotalCost;
             costsummary.DisponibilityProcesses = lstdisponibilitiesProcessFinal;
-
-
-
 
             return costsummary;
         }
