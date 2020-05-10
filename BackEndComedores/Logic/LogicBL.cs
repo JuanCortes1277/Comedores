@@ -1046,8 +1046,11 @@ namespace BackEndComedores.Logic
                             {
                                 dispon.CostTransport = 0;
                             }
+                            if (dispon.Quantity > 0)
+                            {
+                                lstdisponibilitiesProcessFinal.Add(dispon);
 
-                            lstdisponibilitiesProcessFinal.Add(dispon);
+                            }
                         }
                     }
 
@@ -1181,7 +1184,11 @@ namespace BackEndComedores.Logic
                             {
                                 dispon.CostTransport = 0;
                             }
-                            lstdisponibilitiesProcessFinal.Add(dispon);
+                            if (dispon.Quantity>0)
+                            {
+                                lstdisponibilitiesProcessFinal.Add(dispon);
+
+                            }
                         }
                     }
                         

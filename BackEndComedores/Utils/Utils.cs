@@ -18,7 +18,7 @@ namespace BackEndComedores.Utils
     {
          
 
-        public static double minmax(double x, double max, double min, double new_max = 1, double new_min = 0)
+        public static double minmax(double x, double max, double min, double new_max = 2, double new_min = 1)
         {
             x = (x - min) * (new_max - new_min) / (max - min) + new_min;
             return x;
