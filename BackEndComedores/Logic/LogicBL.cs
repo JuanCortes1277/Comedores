@@ -1001,14 +1001,14 @@ namespace BackEndComedores.Logic
                     Product productTemp = productbl.GetByID(disponFull.IDProduct);
                     TransportBL transportbl = new TransportBL();
                     Transport Transport = transportbl.GetMostSuitableTransport(productTemp.ProductType, disponFull.DistanceValue);
-                    double transportcost = Convert.ToDouble((Convert.ToDecimal(disponFull.DistanceValue) * Transport.PaymentValue) / Transport.PaymentUnity);
+                    double transportcost = Convert.ToDouble((Convert.ToDecimal(disponFull.DistanceValue / 1000) * Transport.PaymentValue) / Transport.PaymentUnity);
 
                     disponFull.IDTransport = Transport.ID;
                     disponFull.CostTransport = transportcost;
                     disponFull.ProductName = productTemp.Name;
 
-                    var count = lstdisponibilitiesProcessFinal.Select(x => x.IDProvider == disponFull.IDProvider && x.IDTransport == disponFull.IDTransport).Count();
-                    if (count > 1)
+                    var count = lstdisponibilitiesProcessFinal.Where(x => x.IDProvider == disponFull.IDProvider && x.IDTransport == disponFull.IDTransport).Count();
+                    if (count >= 1)
                     {
                         disponFull.CostTransport = 0;
                     }
@@ -1030,7 +1030,7 @@ namespace BackEndComedores.Logic
                             Product productTemp = productbl.GetByID(dispon.IDProduct);
                             TransportBL transportbl = new TransportBL();
                             Transport Transport = transportbl.GetMostSuitableTransport(productTemp.ProductType, dispon.DistanceValue);
-                            double transportcost = Convert.ToDouble((Convert.ToDecimal(dispon.DistanceValue) * Transport.PaymentValue) / Transport.PaymentUnity);
+                            double transportcost = Convert.ToDouble((Convert.ToDecimal(dispon.DistanceValue / 1000) * Transport.PaymentValue) / Transport.PaymentUnity);
 
                             dispon.IDTransport = Transport.ID;
                             dispon.CostTransport = transportcost;
@@ -1041,8 +1041,8 @@ namespace BackEndComedores.Logic
                                 dispon.Quantity = finalQuantity;
                                 dispon.Cost = finalQuantity * dispon.UnitValue;
                             }
-                            var count = lstdisponibilitiesProcessFinal.Select(x => x.IDProvider == dispon.IDProvider && x.IDTransport == dispon.IDTransport).Count();
-                            if (count > 1)
+                            var count = lstdisponibilitiesProcessFinal.Where(x => x.IDProvider == dispon.IDProvider && x.IDTransport == dispon.IDTransport).Count();
+                            if (count >= 1)
                             {
                                 dispon.CostTransport = 0;
                             }
@@ -1138,17 +1138,19 @@ namespace BackEndComedores.Logic
                     Product productTemp =productbl.GetByID(disponFull.IDProduct);
                     TransportBL transportbl = new TransportBL();
                     Transport Transport= transportbl.GetMostSuitableTransport(productTemp.ProductType,disponFull.DistanceValue);
-                    double transportcost = Convert.ToDouble((Convert.ToDecimal(disponFull.DistanceValue) * Transport.PaymentValue )/ Transport.PaymentUnity );
+                    double transportcost = Convert.ToDouble((Convert.ToDecimal(disponFull.DistanceValue / 1000) * Transport.PaymentValue )/ Transport.PaymentUnity );
 
                     disponFull.IDTransport = Transport.ID;
                     disponFull.CostTransport = transportcost;
                     disponFull.ProductName = productTemp.Name;
 
-                    var count = lstdisponibilitiesProcessFinal.Select(x => x.IDProvider == disponFull.IDProvider && x.IDTransport == disponFull.IDTransport).Count();
-                    if (count > 1)
+                    var count = lstdisponibilitiesProcessFinal.Where(x => x.IDProvider == disponFull.IDProvider && x.IDTransport == disponFull.IDTransport).Count();
+                  
+                    if (count >= 1)
                     {
                         disponFull.CostTransport = 0;
                     }
+
                     lstdisponibilitiesProcessFinal.Add(disponFull);
 
 
@@ -1167,7 +1169,7 @@ namespace BackEndComedores.Logic
                             Product productTemp = productbl.GetByID(dispon.IDProduct);
                             TransportBL transportbl = new TransportBL();
                             Transport Transport = transportbl.GetMostSuitableTransport(productTemp.ProductType, dispon.DistanceValue);
-                             double transportcost = Convert.ToDouble((Convert.ToDecimal(dispon.DistanceValue ) * Transport.PaymentValue) / Transport.PaymentUnity);
+                             double transportcost = Convert.ToDouble((Convert.ToDecimal(dispon.DistanceValue / 1000) * Transport.PaymentValue) / Transport.PaymentUnity);
 
                             dispon.IDTransport = Transport.ID;
                             dispon.CostTransport = transportcost;
@@ -1179,8 +1181,8 @@ namespace BackEndComedores.Logic
                                 dispon.Cost = finalQuantity * dispon.UnitValue;
                             }
 
-                            var count = lstdisponibilitiesProcessFinal.Select(x => x.IDProvider == dispon.IDProvider && x.IDTransport == dispon.IDTransport).Count();
-                            if(count > 1)
+                            var count = lstdisponibilitiesProcessFinal.Where(x => x.IDProvider == dispon.IDProvider && x.IDTransport == dispon.IDTransport).Count();
+                            if(count >= 1)
                             {
                                 dispon.CostTransport = 0;
                             }
