@@ -948,7 +948,7 @@ namespace BackEndComedores.Logic
                 ProductBL productBL = new ProductBL();
                 Product product = productBL.GetByID(item.IDProduct);
                 transport = transportBL.GetMostSuitableTransportByRejection(product.ProductType, DistanceValue,item.IDTransport);
-                double transportcost = Convert.ToDouble((Convert.ToDecimal(DistanceValue) * transport.PaymentValue) / transport.PaymentUnity);
+                double transportcost = Convert.ToDouble((Convert.ToDecimal(DistanceValue / 1000) * transport.PaymentValue) / transport.PaymentUnity);
 
                 item.IDTransport = transport.ID;
                 orderItemBLL.UpdateOrderItem(item);
