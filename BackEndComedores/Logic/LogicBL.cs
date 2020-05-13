@@ -949,7 +949,7 @@ namespace BackEndComedores.Logic
                 Product product = productBL.GetByID(item.IDProduct);
                 transport = transportBL.GetMostSuitableTransportByRejection(product.ProductType, DistanceValue,item.IDTransport);
                 double transportcost = Convert.ToDouble((Convert.ToDecimal(DistanceValue / 1000) * transport.PaymentValue) / transport.PaymentUnity);
-
+                item.AcceptedTransport = null;
                 item.IDTransport = transport.ID;
                 orderItemBLL.UpdateOrderItem(item);
                 
@@ -1057,7 +1057,7 @@ namespace BackEndComedores.Logic
 
 
                 }
-                orderItemBLL.Delete(ing.ID);
+                orderItemBLL.DeleteById(ing.ID);
                 
             }
 
@@ -1075,6 +1075,8 @@ namespace BackEndComedores.Logic
                 order.DistanceText = item.DistanceText;
                 order.IDTransport = item.IDTransport;
                 order.CostTransport = Convert.ToInt64( item.CostTransport);
+                order.AcceptedProvider = null;
+                order.AcceptedTransport = null;
                 orderItemBLL.InsertOrderItem(order);
             }
             

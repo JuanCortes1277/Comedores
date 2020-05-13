@@ -44,6 +44,12 @@ namespace BackEndComedores.Logic
             OrderItemDAL orderItemDAL = new OrderItemDAL();
             return orderItemDAL.Delete(Id);
         }
+        public string DeleteById(long Id)
+        {
+
+            OrderItemDAL orderItemDAL = new OrderItemDAL();
+            return orderItemDAL.DeleteById(Id);
+        }
         public List<OrderItem> GettAllOrderItems()
         {
             OrderItemDAL orderItemDAL = new OrderItemDAL();

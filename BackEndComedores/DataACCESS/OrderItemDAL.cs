@@ -351,6 +351,41 @@ namespace BackEndComedores.DataACCESS
 
 
         }
+        public string DeleteById(long Id)
+        {
+
+            try
+            {
+                using (var context = new ProyectoMaestriaEntities())
+                {
+
+                    var result = context.OrderItem.Where(x => x.ID == Id).ToList();
+                    if (result != null)
+                    {
+                        foreach (var temp in result)
+                        {
+                            context.OrderItem.Remove(temp);
+                            context.SaveChanges();
+                        }
+                        return "Registro eliminado satisfactroriamente";
+
+                    }
+                    else return "no se ha encontrado el registro a eliminar";
+
+
+
+                }
+
+
+            }
+
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+
+
+        }
         public List<OrderItem> GettAllOrderItems()
         {
             List<OrderItem> diningRooms = new List<OrderItem>();
