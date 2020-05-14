@@ -988,8 +988,8 @@ namespace BackEndComedores.Logic
             foreach (var ing in orderItems)
             {
                 Product product = productbl.GetByID(ing.IDProduct);
-                 List<Disponibility> lstDisponbilityHigher = disponibilityBL.GetByProduct(product.ID).Where(x => x.Quantity >= ing.Quantity).ToList();
-                List<Disponibility> lstDisponbilityMinimum = disponibilityBL.GetByProduct(product.ID).Where(x => x.Quantity < ing.Quantity).ToList();
+                 List<Disponibility> lstDisponbilityHigher = disponibilityBL.GetByProduct(product.ID).Where(x => x.Quantity >= ing.Quantity && x.IDProvider!=ing.IDProvider).ToList();
+                List<Disponibility> lstDisponbilityMinimum = disponibilityBL.GetByProduct(product.ID).Where(x => x.Quantity < ing.Quantity && x.IDProvider != ing.IDProvider).ToList();
                 string addressDining = string.Format("{0},Bogotá,Colombia", diningRoom.Address);
 
                 if (lstDisponbilityHigher.Count > 0)
@@ -1067,6 +1067,7 @@ namespace BackEndComedores.Logic
                 OrderItem order = new OrderItem();
                 order.IDProduct = item.IDProduct;
                 order.IDProvider = item.IDProvider;
+                order.IDPreOrder = ID;
                 order.Quantity = Convert.ToInt64(item.Quantity);
                 order.UnitValue =Convert.ToInt64( item.UnitValue);
                 order.ExpirationDays = Convert.ToInt64(item.ExpirationDays);
@@ -1458,6 +1459,7 @@ namespace BackEndComedores.Logic
                     foreach (var objOr in items)
                     {
                         OrderItemReturnEnity obj = new OrderItemReturnEnity();
+                        obj.CarPlate = item.CarPlate;
                         Product product = productbl.GetByID(objOr.IDProduct);
                         Provider prov = providerBL.ExtractById(objOr.IDProvider);
                         obj.ID = objOr.ID;

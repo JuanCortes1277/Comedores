@@ -29,5 +29,6 @@ namespace BackEndComedores.Entidades
         public Nullable<bool> AcceptedProvider { get; set; }
         public Nullable<bool> AcceptedTransport { get; set; }
         public Nullable<System.TimeSpan> TimeOrderItem { get; set; }
+        public string CarPlate { get; set; }
     }
 }
