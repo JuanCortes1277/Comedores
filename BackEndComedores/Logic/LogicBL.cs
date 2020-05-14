@@ -926,11 +926,18 @@ namespace BackEndComedores.Logic
             DiningRoom diningRoom = GetComedorByID((long)preorders.IDDiningRoom);
             string addressDining = string.Format("{0},Bogotá,Colombia", diningRoom.Address);
             OrderItemBLL orderItemBLL = new OrderItemBLL();
+            TransportBL transportbl = new TransportBL();
+            
+            
             var orderItems = orderItemBLL.GetOrderItemByPreorder(ID).Where(x => x.AcceptedTransport == false).ToList();
             ProviderBL providerBL = new ProviderBL();
 
             foreach (var item in orderItems)
             {
+                Transport transport = transportbl.ExtractTransportByID((long)item.IDTransport);
+                
+                transport.Availability = false;
+                transportbl.ModifyTransport(transport);
                 Provider prov = providerBL.ExtractById(item.IDProvider);
                 string addressProvider = string.Format("{0},Bogotá,Colombia", prov.Address);
                 var distanceMatrix = Utils.Utils.getDistanceMatrix(addressProvider, addressDining);
@@ -943,7 +950,6 @@ namespace BackEndComedores.Logic
                 item.CostTransport = 0;
                 
                 /* METODO PARA BUSCAR MEJOR TRANSPORTE */
-                Transport transport = new Transport();
                 TransportBL transportBL = new TransportBL();
                 ProductBL productBL = new ProductBL();
                 Product product = productBL.GetByID(item.IDProduct);
